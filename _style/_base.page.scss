@@ -1,0 +1,35 @@
+/*------------------------------------*\
+    #PAGE
+\*------------------------------------*/
+
+* {
+  padding: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: $clr-primary;
+  color: $clr-def-darker;
+  overflow-x: hidden;
+  font-family: $ft-fm-def;
+  font-weight: $ft-wt-def;
+  font-size: $ft-sz-def;
+}
+
+::selection {
+  background-color: $clr-light;
+}
+
+#contentDiv {
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.container {
+  padding: 50px 80px;
+  display: inline-block;
+  width: 100%;
+}
+

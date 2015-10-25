@@ -1,0 +1,58 @@
+/*------------------------------------*\
+    #IMAGES
+\*------------------------------------*/
+
+img, video {
+  max-width: 100%;
+  
+  &.post-title-img {
+    display: block;
+    margin: 0.5em auto;
+  }
+  
+  &.book-img {
+    max-width: 200px;
+    float: right;
+    margin: 0 0 1em 1em;
+  }
+
+  &.post-img {
+    max-width: 300px;
+    float: right;
+    margin: 0 0 1em 1em;
+  }
+  
+  &.inline-img {
+    float: right;
+    margin: 0 0 0.8em 0.8em;
+  }
+  
+  &.tip-book {
+    max-width: 80px;
+    max-height: 110px;
+  }
+
+  &.single-img {
+    display: block;
+    margin: 0 auto;
+  }
+}
+
+p {
+  > {
+    img, a > img {
+      border: dashed;
+      border-width: 2px;
+      border-color: $clr-lighter;
+      max-width: 100%;
+      text-decoration: none;
+      @include transition-duration(0.5s);
+    }
+  }
+
+
+
+  > a > img:hover {
+    border-color: $clr-light;
+  }
+}

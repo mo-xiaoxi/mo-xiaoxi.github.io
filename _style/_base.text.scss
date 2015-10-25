@@ -1,0 +1,75 @@
+/*------------------------------------*\
+    #TEXT
+\*------------------------------------*/
+
+hr {
+  background-color: $clr-primary;
+  height: 3px;
+  border: 0;
+  margin: 10px 0;
+}
+
+.no-indent, .no-indent * {
+  text-indent: 0;
+}
+
+.deleted, del {
+  text-decoration: line-through;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.updated {
+  color: $clr-contrast-dark;
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+}
+
+ul, ol {
+  margin: 10px 2em;
+  font-family: $ft-fm-def;
+}
+
+li {
+  line-height: 1.8em;
+  border-left: 2px solid $clr-light;
+  padding-left: 0.5rem;
+  transition: 0.5s;
+
+  &:hover {
+    border-left-color: $clr-primary;
+  }
+
+  p {
+    margin: 0;
+
+    &:last-of-type {
+      text-indent: 0;
+      margin-bottom: 1rem;
+    }
+  }
+}
+
+em {
+  font-style: italic;
+}
+
+.center {
+  text-align: center;
+}
+
+.text-xlarge {
+  font-size: 4rem;
+  line-height: 4rem;
+}
+
+.text-primary {
+  color: $clr-primary;
+}
+
+.text-secondary {
+  color: $clr-contrast;
+}

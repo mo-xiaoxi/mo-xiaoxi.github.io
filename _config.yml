@@ -1,0 +1,13 @@
+name: "Blog of Wenli Zhang"
+description: "Web Front-End Blog by Wenli Zhang"
+
+url: "http://zhangwenli.com/blog"
+
+timezone: Asia/Shanghai
+
+paginate: 20
+
+highlighter: pygments
+
+markdown: rdiscount
+permalink: pretty

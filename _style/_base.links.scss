@@ -1,0 +1,67 @@
+/*------------------------------------*\
+    #LINKS
+\*------------------------------------*/
+
+a {
+  color: $clr-link;
+  font-weight: bold;
+  text-decoration: none;
+  text-shadow: $sd-link;
+  word-wrap: break-word;
+  @include transition-duration(0.5s);
+  
+  &:visited {
+    color: $clr-link--visited;
+  }
+  
+  &:hover {
+    color: $clr-link--hover;
+  }
+  
+  &:active {
+    color: $clr-link--active;
+  }
+  
+  &:visited:hover {
+    color: $clr-link--hover;
+  }
+}
+
+h1>a {
+  border: 0;
+  text-shadow: $sd-h1-link;
+}
+
+.button {
+  padding: 0.4em 1em;
+  border-radius: 1.2em;
+  background-color: $clr-primary;
+  color: $clr-def-lighter;
+  text-shadow: none;
+  text-indent: 0;
+  font-size: $ft-sz-sm;
+  margin: 0 0.2em 0.5em 0.2em;
+  display: inline-block;
+  
+  &:visited {
+    color: $clr-def-lighter;
+  }
+  
+  &:hover {
+    color: $clr-def-lighter;
+    background-color: $clr-contrast;
+  }
+  
+  &:visited:hover {
+    color: $clr-def-lighter;
+  }
+  
+  &.def {
+    background-color: $clr-def;
+    
+    &:hover {
+      color: $clr-def-lighter;
+      background-color: $clr-contrast;
+    }
+  }
+}

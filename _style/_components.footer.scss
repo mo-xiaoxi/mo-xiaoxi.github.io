@@ -1,0 +1,58 @@
+/*------------------------------------*\
+    #FOOTER
+\*------------------------------------*/
+
+// footer nav
+#footer-nav {
+  text-align: center;
+  color: $clr-def-lighter;
+  margin: 1em 0;
+  
+  a {
+    text-shadow: none;
+    color: $clr-def-lighter;
+    margin: 0 0.8em;
+    
+    &:visited {
+      color: $clr-def-lighter;
+    }
+    
+    &:hover {
+      color: $clr-link;
+    }
+    
+    &:hover:visited {
+      color: $clr-link;
+    }
+    
+    &:active {
+      color: $clr-link--active;
+    }
+  }
+}
+
+#footer-follow {
+  margin-bottom: 2rem;
+}
+
+// footer black decoration area
+#footerDiv {
+  width: 100%;
+  
+  #footerImg {
+    width: 100%;
+    height: 10px;
+    background: url(../img/footer.png);
+    background-repeat: repeat-x;
+  }
+
+  #footerCnt {
+    width: 100%;
+    background-color: $clr-page-footer-back;
+    
+    #footer {
+      margin: 0 auto;
+      padding: 40px 0;
+    }
+  }
+}
