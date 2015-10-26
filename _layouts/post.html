@@ -4,7 +4,7 @@
     {% if page.series %}
         : {{ page.series }}
     {% endif %}
- - test</title>
+ - 羡辙杂俎</title>
 
 
 {% assign isZn = false %}
@@ -17,7 +17,7 @@
 <div class="rotRight rotTop pageBack"></div>
 <div class="container page{% if isZn %} cn{% endif %}">
     <div class="simpleNav">
-        <a href="http://momomoxiaoxi.com" class="pageDiv" onclick="_gaq.push(['_trackEvent', 'ToHome', 'InPost', window.location.pathname]);">{% if isZn %}首页{% else %}Home{% endif %}</a>
+        <a href="http://zhangwenli.com" class="pageDiv" onclick="_gaq.push(['_trackEvent', 'ToHome', 'InPost', window.location.pathname]);">{% if isZn %}首页{% else %}Home{% endif %}</a>
         <a href="{{ site.url }}" class="pageDiv" onclick="_gaq.push(['_trackEvent', 'ToBlog', 'InPost', window.location.pathname]);">{% if isZn %}博客{% else %}Blog{% endif %}</a>
     </div>
     {% assign time = page.time %}

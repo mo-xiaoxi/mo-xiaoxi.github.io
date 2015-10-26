@@ -1,9 +1,9 @@
-name: "Blog of Xiaoxi Mo"
-description: "Web Front-End Blog by Xiaoxi Mo"
+name: "Blog of Wenli Zhang"
+description: "Web Front-End Blog by Wenli Zhang"
 
-url: "http://momomoxiaoxi.com/blog"
+url: "http://zhangwenli.com/blog"
 
-timezone: Asia/Changsha
+timezone: Asia/Shanghai
 
 paginate: 20
 
