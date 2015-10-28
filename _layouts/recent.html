@@ -18,80 +18,23 @@
                 <div class="pageTitle center">小西的博客</div>
                 
                 {% include aboutMe.html %}
-                
-                <h1>Technical Posts<a class="title-img" href="{{ site.url }}/feed-en.xml" title="RSS of Technical Posts" target="_blank" ><img src="{{ site.url }}/img/rss-green.png" /></a></h1>
-
-                {% assign start = paginator.page | minus: 1 | times: 20 %}
+               
+ 
+                <h1>博文<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss-green.png" /></a></h1>
+               {% assign start = paginator.page | minus: 1 | times: 20 %}
                 {% assign end = start | plus: 20 %}
                 {% assign sortedPost = site.posts | sort: 'time' | slice: start, 10 %}
                 {% for post in sortedPost reversed %}
                     {% if forloop.index > start and forloop.index < end %}
-                    {% if post.hide != true %}
-                        {% assign isZn = false %}
-                        {% for tag in post.tags %}
-                            {% if tag == '中文'%}
-                                {% assign isZn = true %}
-                            {% endif %}
-                        {% endfor %}
-
-                        {% if isZn == false %}
-                        <div class="post-block">
-                            {% assign time = post.time %}
-                            <div class="timeago" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
-                            
-                            <h2>
-                                <a href="{{ site.url }}{{ post.url }}" >{% if post.subtitle != null %}{{ post.subtitle }} {% endif %}{{ post.title }}</a>
-                            </h2>
-                            <h5>
-                                {% if post.series %}
-                                <a href="{{ site.url }}{{ post.url }}" class="series-recent">Series: {{ post.series }}</a>
-                                {% endif %}
-                            </h5>
-
-                            <div class="tagPanel">
-                            {% for tag in post.tags %}
-                                <a href="{{ site.url }}/all?tag={{ tag }}" ><div class="tag">{{ tag }}</div></a>
-                            {% endfor%}
-                            {% if post.category == 'note' %}
-                                <a href="{{ site.url }}/notes" ><div class="tag">Note</div></a>
-                            {% endif %}
-                            </div>
-
-                            {{ post.excerpt | markdownify }}
-                        </div>
-                        {% endif %}
-                    {% endif %}
+                    	{% if post.hide != true %}
+                    	{% endif %}
                     {% endif %}
                 {% endfor %}
-
-                <div class="pagination">
-                {% if paginator.previous_page %}
-                    {% if paginator.previous_page == 1 %}
-                        <a href="{{ site.url }}" class="previous" >Previous</a>
-                    {% else %}
-                        <a href="{{ site.url }}/page{{ paginator.previous_page }}" class="previous" >Previous</a>
-                    {% endif %}
-                {% endif %}
-                <span class="page_number">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
-                {% if paginator.next_page %}
-                    <a href="{{ site.url }}/page{{ paginator.next_page }}" class="next" >Next</a>
-                {% endif %}
-                <a href="{{ site.url }}/all/" class="allPostLink" >All Posts</a>
-                </div>
-
-                <h1>中文博客<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅中文博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss-green.png" /></a></h1>
 
                 {% for post in sortedPost reversed %}
                     {% if forloop.index > start and forloop.index < end %}
                     {% if post.hide != true %}
-                        {% assign isZn = false %}
-                        {% for tag in post.tags %}
-                            {% if tag == '中文'%}
-                                {% assign isZn = true %}
-                            {% endif %}
-                        {% endfor %}
 
-                        {% if isZn == true %}
                         <div class="post-block cn">
                             {% assign time = post.time %}
                             <div class="timeago cn" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
@@ -115,7 +58,7 @@
 
                             {{ post.excerpt | markdownify }}
                         </div>
-                        {% endif %}
+                        
                     {% endif %}
                     {% endif %}
                 {% endfor %}
