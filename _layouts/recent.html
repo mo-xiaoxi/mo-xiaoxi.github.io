@@ -6,20 +6,20 @@
             <div class="rotRight rotTop pageBack"></div>
             <div class="container page">
                 <div class="simpleNav">
-                    <a href="http://momomoxiaoxi.com/#xiaoxi-home" >Home</a>
+                    <a href="{{ site.url }}/#xiaoxi-home" >Home</a>
                 </div>
                 <h2 class="subtitle">
-                    Blog of Xiaoxi
+                    Welcome
                     <a class="title-img" href="{{ site.url }}/feed.xml" title="RSS of Xiaoxi Mo" target="_blank" >
-                        <img src="/img/rss-blue.png" />
+                        <img src="/img/rss.png" />
                     </a>
                 </h2>
-                <div class="pageTitle center">小西的博客</div>
+                <div class="pageTitle center">Blog of Xiaoxi</div>
                 
                 {% include aboutMe.html %}
                
  
-                <h1>博文<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss-green.png" /></a></h1>
+                <h1>博文<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss.png" /></a></h1>
                {% assign start = paginator.page | minus: 1 | times: 20 %}
                 {% assign end = start | plus: 20 %}
                 {% assign sortedPost = site.posts | sort: 'time' | slice: start, 10 %}
