@@ -1,16 +1,35 @@
 <div class="center">
-    <a class="button" href="{{ site.url }}" onclick="_gaq.push(['_trackEvent', 'ToBlog', 'InNav', window.location.pathname]);">Blog</a>
-    <a class="button" href="http://momomoxiaoxi.com/cv" target="_blank" onclick="_gaq.push(['_trackEvent', 'ToCv', 'InNav', window.location.pathname]);">CV</a>
-    <a class="button" href="http://momomoxiaoxi.com/#moxiaoxi-home" onclick="_gaq.push(['_trackEvent', 'ToHome', 'InNav', window.location.pathname]);">About Me</a>
-    <!--a class="button" href="http://zhangwenli.com/#projects" onclick="_gaq.push(['_trackEvent', 'ToProject', 'InNav', window.location.pathname]);">Projects</a-->
-    <a class="button" href="mailto:momomomoxiaoxi@gmail.com" target="_blank" onclick="_gaq.push(['_trackEvent', 'ToEmail', 'InNav', window.location.pathname]);">Email Me</a>
-    <a class="button" href="{{ site.url }}/meta" target="_blank" onclick="_gaq.push(['_trackEvent', 'ToSiteMap', 'InNav', window.location.pathname]);">Site Map</a>
+    <a class="button" href="{{ site.url }}" >blog</a>
+    <a class="button" href="{{ site.url }}/#xiaoxi-home">About Me</a>
+    <a class="button" href="{{ site.url }}/#projects" >Projects</a>
+    <a class="button" href="mailto:{{ site.email }}" target="_blank" >Email Me</a>
+    <a class="button" href="{{ site.url }}/meta" target="_blank" >Site Map</a>
 </div>
 
-<p><strong>默小西</strong>，test1<strong>test2</strong>，号<strong>灵石笠翁</strong>。<a href="{{ site.url }}/2015/04/29/new-name/" onclick="_gaq.push(['_trackEvent', 'ToPost', 'InRecent', 'AboutMe']);">（求解释）</a></p>
+<p><h3>默小西</H3></p>
 
-<p>I'm <em>Ovilia</em> and this blog is concerned about <em>Web Front-End</em>, my book reviews and other interesting topics. Please feel free to <a href="#comments">leave a comment</a> or contact me by <a href="mailto:me@zhangwenli.com?subject=Interested+In+Your+Blog+Posts" target="_blank">email</a> if you have any question.</p>
+<p>幼时玩闹时，耍出来的小名。一场玩闹，一个名字。<br> 
+	该博客主要写一些个人的杂谈，偶尔写一写编程与安全相关的知识。<br> 
+      如果你觉得我很有趣，值得成为你到朋友。可以随时在博客下<a href="#comments">留言 </a>或者通过 <a href="mailto:{{ site.email }}?subject=Interested+In+Your+Blog+Posts" target="_blank">邮件</a> 联系我！</p>
 
-{% include license.html %}
+	<table id="content">
+<tr>
+<td colspan="2" class="title"><h3>目前状况：</h3></td>
+</tr>
+<tr>
+<td>	<div class="content-left1"><h4>学业:</h4><p>大三狗 操作系统 密码学 通信原理 物联网 软件工程 </p></div></td>
+<td>	<div class="content-right1"><h4>SIT:</h4><p>无线传感网下的入侵检测系统：<strong>NBIDS</strong></p></div></td>
+</tr>
 
-<p class="center"><a class="button" href="{{ site.url }}/tip" onclick="_gaq.push(['_trackEvent', 'ToTip', 'InAboutMe', window.location.pathname]);">送羡辙一本书，让她写出更棒的作品！</a></p>
+<tr>
+<td><div class="content-left2"><h4>安全:</h4><p>1.可视化大数据安全<br>2.业余CTF选手</p></div></td>
+<td><div class="content-right2"><h4>兼职:</h4><p>1.Cocos2d-x游戏搬砖开发者<br>2."帽子戏法"翻译小组负责人</p></div></td>
+</tr>
+</table>
+
+
+    <div class="follow-me">
+        <div class="follow-me-txt">Follow <strong>Xiaoxi Mo</strong> at</div>
+        {% include follow.html %}
+    </div><br><br><br>
+<p class="center-right"><a class="button" href="{{ site.url }}/tip" >打赏一杯咖啡！</a></p>
