@@ -6,13 +6,13 @@
 {% endif %}
     
     <ul>
-    {% if page.series == '送 Wenli 一本书，让她写出更棒的作品' %}
-        <li class="series-not-self"><a href="{{ site.url }}/tip/" onclick="_gaq.push(['_trackEvent', 'ToTip', 'InSeries', window.location.pathname]);">送 Wenli 一本书，让她写出更棒的作品！</a></li>
+    {% if page.series == '送 xiaoxi 一本书，让他写出更棒的作品' %}
+        <li class="series-not-self"><a href="{{ site.url }}/tip/">送 Xiaoxi 一本书，让他写出更棒的作品！</a></li>
     {% endif %}
     {% for post in site.posts reversed %}
         {% if post.series == page.series %}
             {% if page.url != post.url %}
-                <li class="series-not-self"><a href="{{ site.url }}{{ post.url }}" onclick="_gaq.push(['_trackEvent', 'ToPost', 'InSeries', window.location.pathname]);">
+                <li class="series-not-self"><a href="{{ site.url }}{{ post.url }}" >
             {% else %}
                 <li class="series-self">
             {% endif %}

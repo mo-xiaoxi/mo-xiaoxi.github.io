@@ -20,8 +20,8 @@
 <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
 {% else %}
 {% if page.tags[0] == '中文' %}
-<p>本页不允许评论，如需讨论，可以<a href="mailto:me@zhangwenli.com?subject=comments on {{ page.title }}">给我发邮件</a>。</p>
+<p>本页不允许评论，如需讨论，可以<a href="mailto:{{ site.email }}?subject=comments on {{ page.title }}">给我发邮件</a>。</p>
 {% else %}
-<p>Comments are disabled in this page. You may <a href="mailto:me@zhangwenli.com?subject=comments on {{ page.title }}">email me</a> for private discussion.</p>
+<p>Comments are disabled in this page. You may <a href="mailto:{{ site.email }}?subject=comments on {{ page.title }}">email me</a> for private discussion.</p>
 {% endif %}
 {% endif %}
