@@ -12,4 +12,6 @@ highlighter: pygments
 markdown: rdiscount
 permalink: pretty
 
+gems: [jekyll-paginate]
+
 email: momomomoxiaoxi@gamil.com
