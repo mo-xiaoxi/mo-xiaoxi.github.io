@@ -7,7 +7,7 @@ tags:
 - JavaScript
 - CSS
 - Project
-excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，而且不是契合信息安全的主题，所以，我以jekyll在github上搭建了这个博客。
+excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，而且不是契合信息安全的主题。所以，我以jekyll在github上搭建了这个博客。
     
 ---
 #建立这个博客的过程
@@ -41,6 +41,7 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 不得不说，wenli的代码写的非常漂亮。
 3. 再参照她的代码，修改到了如今的版本。
 4. 最后，在github pages中上线－[源码](https://github.com/momomoxiaoxi/momomoxiaoxi.github.io)
+
 ###4.购买域名
 - 使用支付宝在 godaddy 购买域名：momomoxiaoxi.com.
 
@@ -49,7 +50,7 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 - 这里提醒大家一下，由于godaddy是国外的网站，所以购买会有延迟。如果你发现你支付了钱，缺仍未收到购买成功的信息，千万不要着急。10分钟左右就会成功。
 - 具体流程参照：[购买过程](http://jingyan.baidu.com/album/6c67b1d6dac7e02787bb1e92.html)
 
-###3.将独立域名与 GitHub Pages 的空间绑定
+###5.将独立域名与 GitHub Pages 的空间绑定
 ####DNS 设置
 用 DNSpod，快，免费，稳定。
 注册[DNSpod](https://www.dnspod.cn)，添加域名，如下图设置
@@ -66,9 +67,10 @@ www 指定的记录是你在 github 注册的仓库。
 更改 godaddy 的 Nameservers 为 DNSpod 的 NameServers。
 ![image](http://cnfeat.qiniudn.com/16.png)
 
-####4.测试博客
+####6.测试博客
 ![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site-2.png)
 测试成功，这样大体的博客框架就做好了。接下里就是写博文了：）
+(由于这个博文是后期写的，所以可能有点简略。想详细了解的，可以联系我－｀－)
 
 
 
