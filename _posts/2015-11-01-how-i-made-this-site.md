@@ -68,5 +68,8 @@ www 指定的记录是你在 github 注册的仓库。
 
 ####4.测试博客
 ![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site-2.png)
+测试成功，这样大体的博客框架就做好了。接下里就是写博文了：）
+
+
 
 
