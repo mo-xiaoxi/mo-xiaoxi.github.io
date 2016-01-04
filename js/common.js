@@ -2,7 +2,6 @@ var isFirstToggleMusic = true;
 function toggleMusicPanel() {
     $('#music-control').toggleClass('on');
     if (isFirstToggleMusic) {
-        _gaq.push(['_trackEvent', 'ToggleMusic', 'InRecent', window.location.pathname]);
         isFirstToggleMusic = false;
     }
 }
@@ -14,7 +13,7 @@ function processPageView(rows) {
     $('.post-block').each(function() {
         var myPath = $(this).children('h2').children('a').attr('href');
         if (myPath) {
-            myPath = myPath.slice('http://zhangwenli.com'.length);
+            myPath = myPath.slice('http://momomoxiaoxi.com'.length);
             var len = rows.length;
             var cnt = 0;
             for (var i = 0; i < len; ++i) {
@@ -36,9 +35,9 @@ function processPageView(rows) {
     });
 }
 
-LazyLoad.css('/blog/css/font.css');
+LazyLoad.css('/css/font.css');
 
-LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
+LazyLoad.js('/js/jquery-1.11.1.min.js', function () {
     $('h1').each(function() {
         if ($(this).children('.h1-link').length === 0) {
             var id = $(this).text().replace(/\ /g, '-').replace(/\W^\-/g, '')
@@ -51,12 +50,12 @@ LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
     });
 
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) === false) {
-        LazyLoad.js('/blog/js/jquery.timeago.min.js', function () {
+        LazyLoad.js('/js/jquery.timeago.min.js', function () {
             $('.timeago').timeago().show();
         });
     }
 
-    LazyLoad.js('/blog/js/unviel.min.js', function () {
+    LazyLoad.js('/js/unviel.min.js', function () {
         $("img").unveil();
 
         // google pageview
@@ -72,7 +71,7 @@ LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
                     // if fail to get up-to-date data from GAE, get cached local version
                     console.log('Failed to get page view from GAE!');
                     $.ajax({
-                        url: '/blog/pageview.json',
+                        url: '/pageview.json',
                         dataType: 'json',
                         success: function(data) {
                             console.log('Local page view used.');
@@ -91,8 +90,8 @@ LazyLoad.js('/blog/js/jquery-1.11.1.min.js', function () {
 
 // emoji
 setTimeout(function() {
-    LazyLoad.css('/blog/css/emojify.min.css', function () {
-        LazyLoad.js('/blog/js/emojify.min.js', function () {
+    LazyLoad.css('/css/emojify.min.css', function () {
+        LazyLoad.js('/js/emojify.min.js', function () {
             emojify.setConfig({
                 emoticons_enabled: true,
                 people_enabled: true,

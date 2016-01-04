@@ -24,8 +24,10 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 4. github 是趋势；
 5. 就算 github 被墙了，还可以搬到国内的 gitcafe 中去。
 6. 用github pages搭建博客很有big。
-![image](http://cnfeat.qiniudn.com/bg2012082502.jpg)
+
 进一步了解：[pages](https://pages.github.com)
+![image](http://cnfeat.qiniudn.com/bg2012082502.jpg)
+
 
 ###2.学习jekyll相关知识
 1. jekyll主要就是将纯文本转化为静态网站和博客。
