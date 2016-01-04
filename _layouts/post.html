@@ -57,7 +57,7 @@
     {% endif %}
     <hr />
     
-    <p class="no-indent"><a href="{{ site.url }}/tip/" >觉得博文很赞？来打赏一下我吧！——送小西一杯咖啡，让他写出更棒的作品！:heart_eyes: </a></p>
+    <p class="no-indent"><a href="{{ site.url }}/tip/" >觉得博文很赞？来打赏一下我吧！——送小西一本书，让他写出更棒的作品！:heart_eyes: </a></p>
     
     <div class="social-share">
         <a class="social-share-element social-twitter" href="https://twitter.com/intent/tweet?text={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}&url={{ url }}&via=Xiaoxi Mo&hashtags={{ tagStr }}" target="_blank" title="Share this post on Twitter" ></a-->
@@ -80,22 +80,13 @@
                 {% for thisTag in page.tags %}
                     {% if postHasSimilar == false and hasSimilar.size < 5 and tag == thisTag %}
                         {% if hasSimilar.size == 0 %}
-                        <h4>{% if isZn %}相似博文{% else %}Similar Posts{% endif %}</h4>
+                        <h4>相似博文</h4>
                         <ul>
                         {% endif %}
                         <li class="relatedPost">
                             <a href="{{ site.url }}{{ post.url }}" >
-                            {% assign isZn = false %}
-                            {% for pt in post.tags %}
-                                {% if pt == '中文' %}
-                                    {% assign isZn = true %}
-                                {% endif %}
-                            {% endfor %}
-                            {% if isZn %}
+
                                 {{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}
-                            {% else %}
-                                {% if post.subtitle != null %}{{ post.subtitle }} {% endif %}{{ post.title }}
-                            {% endif %}
                             </a>
                         </li>
                         {% capture hasSimilar %}{{ hasSimilar }}*{% endcapture %}
@@ -109,22 +100,12 @@
             </ul>
         {% endif %}
 
-        <h4>{% if isZn %}最近发表{% else %}Recent Posts{% endif %}</h4>
+        <h4>最近发表</h4>
         <ul>
         {% for post in site.posts limit:5 %}
             <li class="relatedPost">
                 <a href="{{ site.url }}{{ post.url }}" >
-                {% assign isZn = false %}
-                {% for pt in post.tags %}
-                    {% if pt == '中文' %}
-                        {% assign isZn = true %}
-                    {% endif %}
-                {% endfor %}
-                {% if isZn %}
                     {{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}
-                {% else %}
-                    {% if post.subtitle != null %}{{ post.subtitle }} {% endif %}{{ post.title }}
-                {% endif %}
                 </a>
             </li>
         {% endfor %}
