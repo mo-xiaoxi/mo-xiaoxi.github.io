@@ -12,7 +12,7 @@ subtitle: 送小西一本书，让他写出更棒的作品！
 从 2016 年 1 月 1 日起，打赏任意一本书，发送邮件至 <a href="mailto:momomomoxiaoxi@gmail.com">momomomoxiaoxi@gmail.com</a> 告知你的地址邮编收件人，就可以在春节那天收到我**手绘的明信片**一枚~ 大约有一半的人没给我发邮件，不知道是不是不想告诉我地址的关系，那就只能收不到明信片咯~
 
 ## 方法一：支付宝扫一扫
-
+![image](http://momomoxiaoxi.com/img/pay.png)
 
 
 ## 方法二：转账到我的支付宝账号
