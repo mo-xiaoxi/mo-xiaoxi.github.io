@@ -27,23 +27,46 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 ![image](http://cnfeat.qiniudn.com/bg2012082502.jpg)
 进一步了解：[pages](https://pages.github.com)
 
-###2.购买域名
-使用支付宝在 godaddy 购买域名：momomoxiaoxi.com.
+###2.学习jekyll相关知识
+1. jekyll主要就是将纯文本转化为静态网站和博客。
+2. jekyll对博客很专注
+3. 具体参考下列链接：
+[jekyll](http://jekyll.bootcss.com)
 
-本来是想买moxiaoxi.com的域名的，可惜被别人注册了＝ ＝
+###3.学习Wenli Zhang的代码
+1. 之所以选Wenli的代码，是因为一个偶然的契机－正好浏览到了她的网站，
+感觉她写的非常棒，而且也是用jekyll搭建的。所以，就发邮件联系了Wenli
+想她申请源码使用权。
+2. 然后，我花了3天的时间，学习了她的[代码](https://github.com/Ovilia/blog)
+不得不说，wenli的代码写的非常漂亮。
+3. 再参照她的代码，修改到了如今的版本。
+4. 最后，在github pages中上线－[源码](https://github.com/momomoxiaoxi/momomoxiaoxi.github.io)
+###4.购买域名
+- 使用支付宝在 godaddy 购买域名：momomoxiaoxi.com.
 
-这里提醒大家一下，由于godaddy是国外的网站，所以购买会有延迟。
+- 本来是想买moxiaoxi.com的域名的，可惜被别人注册了＝ ＝
 
-如果你发现你支付了钱，缺仍未收到购买成功的信息，千万不要着急。
-
-10分钟左右就会成功。
-具体流程参照：[购买过程](http://jingyan.baidu.com/album/6c67b1d6dac7e02787bb1e92.html)
+- 这里提醒大家一下，由于godaddy是国外的网站，所以购买会有延迟。如果你发现你支付了钱，缺仍未收到购买成功的信息，千万不要着急。10分钟左右就会成功。
+- 具体流程参照：[购买过程](http://jingyan.baidu.com/album/6c67b1d6dac7e02787bb1e92.html)
 
 ###3.将独立域名与 GitHub Pages 的空间绑定
 ####DNS 设置
 用 DNSpod，快，免费，稳定。
 注册[DNSpod](https://www.dnspod.cn)，添加域名，如下图设置
-![image](http://momomoxiaoxi.com/img/post/)
+![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site.png)
+其中A的两条记录指向的ip地址是github Pages的提供的ip
 
+- 192.30.252.153
+- 192.30.252.154
+如博客不能登录，有可能是 github 更改了空间服务的 ip 地址，记得及时到在GitHub Pages查看最新的ip即可
+
+www 指定的记录是你在 github 注册的仓库。
+
+####去 Godaddy 修改 DNS 地址
+更改 godaddy 的 Nameservers 为 DNSpod 的 NameServers。
+![image](http://cnfeat.qiniudn.com/16.png)
+
+####4.测试博客
+![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site-2.png)
 
 
