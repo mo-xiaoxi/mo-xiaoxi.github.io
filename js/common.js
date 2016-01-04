@@ -27,9 +27,9 @@ function processPageView(rows) {
                 }
             }
             if ($(this).hasClass('cn')) {
-                $(this).append('<div class="view-cnt">（' + cnt + ' 人已阅）</div>');
+                //$(this).append('<div class="view-cnt">（' + cnt + ' 人已阅（）</div>');
             } else {
-                $(this).append('<div class="view-cnt">(' + cnt + ' viewed)</div>');
+                //$(this).append('<div class="view-cnt">(' + cnt + ' viewed)</div>');
             }
         }
     });
