@@ -43,6 +43,7 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 ####DNS 设置
 用 DNSpod，快，免费，稳定。
 注册[DNSpod](https://www.dnspod.cn)，添加域名，如下图设置
+![image](http://momomoxiaoxi.com/img/post/)
 
 
 
