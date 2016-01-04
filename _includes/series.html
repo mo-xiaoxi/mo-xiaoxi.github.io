@@ -17,11 +17,8 @@
                 <li class="series-self">
             {% endif %}
             
-            {% if isZn %}
                 {{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}
-            {% else %}
-                {% if post.subtitle != null %}{{ post.subtitle }} {% endif %}{{ post.title }}
-            {% endif %}
+    
             
             {% if page.url != post.url %}
                 </a>
