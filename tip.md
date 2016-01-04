@@ -9,7 +9,7 @@ subtitle: 送小西一本书，让他写出更棒的作品！
 
 我就是小西！活跃的 GitHub 用户一枚，喜欢在业余时间捣腾些<a href="https://github.com/momomoxiaoxi" target="_blank">有意思的项目</a>。
 
-从 2016 年 1 月 1 日起，打赏任意一本书，发送邮件至 <a href="mailto:momomomoxiaoxi@gmail.com">momomomoxiaoxi@gmail.com</a> 告知你的地址邮编收件人，就可以在圣诞节那天收到我**手绘的明信片**一枚~ 大约有一半的人没给我发邮件，不知道是不是不想告诉我地址的关系，那就只能收不到明信片咯~
+从 2016 年 1 月 1 日起，打赏任意一本书，发送邮件至 <a href="mailto:momomomoxiaoxi@gmail.com">momomomoxiaoxi@gmail.com</a> 告知你的地址邮编收件人，就可以在春节那天收到我**手绘的明信片**一枚~ 大约有一半的人没给我发邮件，不知道是不是不想告诉我地址的关系，那就只能收不到明信片咯~
 
 ## 方法一：支付宝扫一扫
 
@@ -19,7 +19,7 @@ subtitle: 送小西一本书，让他写出更棒的作品！
 
 `momomomoxiaoxi@gmail.com`
 
-
+好了，不多说了，我学习技术去了。
 
 <script type="text/javascript">
     var loadJs = [['{{ site.url }}/js/echarts-all.js', function() {
