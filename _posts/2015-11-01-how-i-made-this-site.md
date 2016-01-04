@@ -1,5 +1,5 @@
 ---
-title: 一些说明
+title: 建立这个博客的初衷与过程
 time: 2015.11.30 21:47:00
 layout: post
 tags:
@@ -7,11 +7,42 @@ tags:
 - JavaScript
 - CSS
 - Project
-excerpt: I've re-designed my personal site recently since the old version had too much description words, which is not the best design I could offer as a Web Front-End Designer :smirk:. You may probably find some interesting features at this site (especially the home page), so this post is served as an introduction of how to implement them.
+excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，而且不是契合信息安全的主题，所以，我以jekyll在github上搭建了这个博客。
     
 ---
-#一些说明
+#建立这个博客的过程
+##前言
 我前面几年一直在csdn写博客。然而，越来越感觉csdn博客的界面比较丑。所以，打算这次用jekyll搭建一个个人博客。直至今日，博客的初始版本刚刚完成。
 本博客主要采用github托管的方式，进行发布，是一个静态的网页，管理比较方便。在模版的采用方面，我借鉴了很多wenli博客的表现方式。在此，再次感谢wenli在我搭建博客中，提供的帮助。而由于最近又开始忙一些其它的项目。所以，这个博客的一些内容我仍然未完全迁移过来，仍发布在原网站上。所以可以说，这个网站仍未建设完毕，我打算寒假的时候，最终搭建完毕。也因此，如果你在浏览网页的同时，发现一些bug，请不要介怀。谢谢
+##过程
+###1.选择github pages的原因
+很多人用 wordpress，那么我为什么要用 github pages 来搭建？
+
+1. github pages有300M免费空间，资料自己管理，保存可靠；
+2. 学着用 github，享受 github 的便利，上面有很多大牛，眼界会开阔很多；
+3. 顺便看看 github 工作原理，最好的团队协作流程；
+4. github 是趋势；
+5. 就算 github 被墙了，还可以搬到国内的 gitcafe 中去。
+6. 用github pages搭建博客很有big。
+![image](http://cnfeat.qiniudn.com/bg2012082502.jpg)
+进一步了解：[pages](https://pages.github.com)
+
+###2.购买域名
+使用支付宝在 godaddy 购买域名：momomoxiaoxi.com.
+
+本来是想买moxiaoxi.com的域名的，可惜被别人注册了＝ ＝
+
+这里提醒大家一下，由于godaddy是国外的网站，所以购买会有延迟。
+
+如果你发现你支付了钱，缺仍未收到购买成功的信息，千万不要着急。
+
+10分钟左右就会成功。
+具体流程参照：[购买过程](http://jingyan.baidu.com/album/6c67b1d6dac7e02787bb1e92.html)
+
+###3.将独立域名与 GitHub Pages 的空间绑定
+####DNS 设置
+用 DNSpod，快，免费，稳定。
+注册[DNSpod](https://www.dnspod.cn)，添加域名，如下图设置
+
 
 
