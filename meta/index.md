@@ -22,7 +22,7 @@ Find more information about me at:
 <a class="button" href="http://momomoxiaoxi.com/#moxiaoxi-home" target="_blank" >Home</a>
 <a class="button" href="{{ site.url }}" target="_blank">Blog</a>
 <a class="button" href="http://momomoxiaoxi.com/#projects" target="_blank">Projects</a>
-<-a class="button" href="http://zhangwenli.com/#hire-me" target="_blank" onclick="_gaq.push(['_trackEvent', 'ToHome', 'InSiteMap', 'hireMe']);">Hire Me</a>
+<!--a class="button" href="http://moxiaoxi.com/#hire-me" target="_blank" onclick="_gaq.push(['_trackEvent', 'ToHome', 'InSiteMap', 'hireMe']);">Hire Me</a-->
 <a class="button" href="mailto:momomomoxiaoxi@gmail.com" target="_blank" >Email Me</a>
 
 # About This Site
