@@ -26,6 +26,8 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 6. 用github pages搭建博客很有big。
 
 进一步了解：[pages](https://pages.github.com)
+
+
 ![image](http://cnfeat.qiniudn.com/bg2012082502.jpg)
 
 
@@ -61,6 +63,9 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 
 - 192.30.252.153
 - 192.30.252.154
+
+
+
 如博客不能登录，有可能是 github 更改了空间服务的 ip 地址，记得及时到在GitHub Pages查看最新的ip即可
 
 www 指定的记录是你在 github 注册的仓库。
