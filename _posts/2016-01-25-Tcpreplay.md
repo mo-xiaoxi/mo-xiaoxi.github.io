@@ -136,4 +136,4 @@ cache文件,用于分离通信流量中的两方(通常叫做主要的/次要的
 ![image](http://momomoxiaoxi.com/img/post/Tcpreplay/6.png)
 ---
 ## 6. 参考资料
-http://tcpreplay.synfin.nethttps://en.wikipedia.org/wiki/Replay_attackhttps://cnodejs.org/topic/557c354d16839d2d539362b6
+http://tcpreplay.synfin.nethttps://en.wikipedia.org/wiki/Replay_attackhttps://cnodejs.org/topic/557c354d16839d2d539362b6https://github.com/appneta/tcpreplay
