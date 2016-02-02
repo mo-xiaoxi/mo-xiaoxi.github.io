@@ -20,14 +20,7 @@
                
  
                 <h1>博文<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss.png" /></a></h1>
-               {% assign start = paginator.page | minus: 1 | times: 20 %}
-                {% assign end = start | plus: 20 %}
-                {% assign sortedPost = site.posts | sort: 'time' | slice: start, 20 %}
-
-                {% for post in sortedPost reversed %}
-                    {% if forloop.index > start and forloop.index < end %}
-
-
+                {% for post in paginator.posts %}
                      <div class="post-block cn">
                         {% assign time = post.time %}
                         <div class="timeago cn" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
@@ -51,16 +44,22 @@
                         </div>
                         {{ post.excerpt | markdownify }}
                     </div>
-                   {% endif %}
+
                 {% endfor %}
 
-                <div class="pagination">
+                <div id="post-pagination" class="pagination">
                 {% if paginator.previous_page %}
+                 <p class="previous">
                     {% if paginator.previous_page == 1 %}
-                        <a href="{{ site.url }}" class="previous">上一页</a>
+                        <a href="/" class="previous">上一页</a>
                     {% else %}
-                        <a href="{{ site.url }}/page{{ paginator.previous_page }}" class="previous" class="previous" >上一页</a>
+                        <a href="{{ paginator.previous_page_path }}" class="previous" >上一页</a>
                     {% endif %}
+                 </p>
+                 {% else %}
+                    <p class="previous disabled">
+                        <span></span>
+                    </p>
                 {% endif %}
                 <span class="page_number">第{{ paginator.page }}页，共{{ paginator.total_pages }}页</span>
                 {% if paginator.next_page %}
