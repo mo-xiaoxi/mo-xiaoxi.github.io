@@ -22,44 +22,36 @@
                 <h1>博文<a class="title-img" href="{{ site.url }}/feed-cn.xml" title="订阅博客RSS" target="_blank" ><img src="{{ site.url }}/img/rss.png" /></a></h1>
                {% assign start = paginator.page | minus: 1 | times: 20 %}
                 {% assign end = start | plus: 20 %}
-                {% assign sortedPost = site.posts | sort: 'time' | slice: start, 10 %}
-                {% for post in sortedPost reversed %}
-                    {% if forloop.index > start and forloop.index < end %}
-                    	{% if post.hide != true %}
-                    	{% endif %}
-                    {% endif %}
-                {% endfor %}
+                {% assign sortedPost = site.posts | sort: 'time' | slice: start, 20 %}
 
                 {% for post in sortedPost reversed %}
                     {% if forloop.index > start and forloop.index < end %}
-                    {% if post.hide != true %}
 
-                        <div class="post-block cn">
-                            {% assign time = post.time %}
-                            <div class="timeago cn" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
-                            <h2>
-                                <a href="{{ site.url }}{{ post.url }}" >{{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}</a>
-                            </h2>
-                            <h5>
-                                {% if post.series %}
-                                <a href="{{ site.url }}{{ post.url }}" class="series-recent" >系列博文：{{ post.series }}</a>
-                                {% endif %}
-                            </h5>
 
-                            <div class="tagPanel">
-                            {% for tag in post.tags %}
-                                <a href="{{ site.url }}/all?tag={{ tag }}" ><div class="tag">{{ tag }}</div></a>
-                            {% endfor%}
-                            {% if post.category == 'note' %}
-                                <a href="{{ site.url }}/notes" ><div class="tag">笔记</div></a>
+                     <div class="post-block cn">
+                        {% assign time = post.time %}
+                        <div class="timeago cn" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
+
+                        <h5 class="post-series">
+                            {% if post.series %}
+                            <a href="{{ site.url }}{{ post.url }}" class="series-recent" >系列博文：{{ post.series }}</a>
                             {% endif %}
-                            </div>
+                        </h5>
+                        <h2>
+                            <a href="{{ site.url }}{{ post.url }}" >{{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}</a>
+                        </h2>
 
-                            {{ post.excerpt | markdownify }}
+                        <div class="tagPanel">
+                        {% for tag in post.tags %}
+                            <a href="{{ site.url }}/all?tag={{ tag }}" ><div class="tag">{{ tag }}</div></a>
+                        {% endfor%}
+                        {% if post.category == 'note' %}
+                            <a href="{{ site.url }}/notes" ><div class="tag">笔记</div></a>
+                        {% endif %}
                         </div>
-                        
-                    {% endif %}
-                    {% endif %}
+                        {{ post.excerpt | markdownify }}
+                    </div>
+                   {% endif %}
                 {% endfor %}
 
                 <div class="pagination">
