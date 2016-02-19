@@ -10,7 +10,7 @@ paginate: 10
 
 paginate_path: "page:num"
 
-highlighter: pygments
+highlighter: rouge
 
 markdown: rdiscount
 permalink: pretty
