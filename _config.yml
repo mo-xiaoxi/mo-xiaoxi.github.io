@@ -12,7 +12,7 @@ paginate_path: "page:num"
 
 highlighter: rouge
 
-markdown: rdiscount
+
 permalink: pretty
 
 gems: [jekyll-paginate]
