@@ -12,9 +12,15 @@ paginate_path: "page:num"
 
 highlighter: rouge
 
+markdown: kramdown
+kramdown:
+  input: GFM
+highlighter: rouge
 
 permalink: pretty
 
-gems: [jekyll-paginate]
+gems:
+- jekyll-paginate
+
 
 email: momomomoxiaoxi@gamil.com
