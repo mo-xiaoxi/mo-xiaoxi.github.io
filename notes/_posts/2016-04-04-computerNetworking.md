@@ -74,7 +74,9 @@ b. UDP服务
 	首先客户端发送一个小的报文(不是请求)给服务器（第一次），服务器收到发回一个确认和响应并建立TCP连接（第二次），客户端收到响应，再向服务器发送请求（第三次）。至此，三次握手结束。最后服务器发回相应（客户端想要的文件）
 
 - HTTP请求报文格式：
+
 ![image](http://img.blog.csdn.net/20131026014257984?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGppYW5odWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 	```
 	GET /somedir/page.html HTTP/1.1 //请求字段，URL字段，HTTP协议字段
 	Host:www.someschool.edu //主机域名
@@ -84,7 +86,9 @@ b. UDP服务
 	```
 
 - HTTP响应报文格式：
+
 ![image](http://img.blog.csdn.net/20131026014310000?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvbGppYW5odWk=/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
+
 ```
 HTTP/1.1 200 OK //状态行
 Connection: close //告诉客户机发送玩关闭该连接
@@ -142,8 +146,10 @@ Content-Type: text/html //被发送对象的类型
 	用户代理A 发送到 A的邮件服务器 A的服务器用SMTP协议发送到 B的服务器 发送到 用户代理B
 
 	SMTP 架起了A的服务器和B的服务器发送的流程（是一种推协议）。
+	
 
-	![image](http://momomoxiaoxi.com/img/post/comNet/1.gif)
+![image](http://momomoxiaoxi.com/img/post/comNet/1.gif)
+
 
 #### c. SMTP协议和HTTP协议的比较
 
@@ -159,21 +165,21 @@ Content-Type: text/html //被发送对象的类型
 	![image](http://momomoxiaoxi.com/img/post/comNet/2.gif)
 - 邮件转发的原理：
 
-	首先用户是用用户代理(user agent，通常是outlook/apple mail/再或者现在很多基于WEB的邮箱如QQ邮箱)要发送一封邮件。
+	1. 首先用户是用用户代理(user agent，通常是outlook/apple mail/再或者现在很多基于WEB的邮箱如QQ邮箱)要发送一封邮件。
 	
-	那么用户代理就会去找它对应的邮箱的所有服务器(SMTP服务器)，找到了服务器。这个服务器检查邮件的目的地服务器地址(SMTP服务器)。然后建立TCP连接。如果对方的服务器开启着，就将该报文发送，否则在本地队列中每个一段时间(通常是半小时)再重新发送。
+	2. 那么用户代理就会去找它对应的邮箱的所有服务器(SMTP服务器)，找到了服务器。这个服务器检查邮件的目的地服务器地址(SMTP服务器)。然后建立TCP连接。如果对方的服务器开启着，就将该报文发送，否则在本地队列中每个一段时间(通常是半小时)再重新发送。
 
-	对方的服务器通过SMTP协议收到了来自（客户机）SMTP服务器发来的邮件。注意：SMTP是推协议，即只能把信息往外推的，而目标用户代理需要的是拉取信息，所以需要的是拉协议，所以SMTP在这里就不再适用了。
+	3. 对方的服务器通过SMTP协议收到了来自（客户机）SMTP服务器发来的邮件。注意：SMTP是推协议，即只能把信息往外推的，而目标用户代理需要的是拉取信息，所以需要的是拉协议，所以SMTP在这里就不再适用了。
 
-	所以这里，我们使用的通常是POP3/IMAP等协议来拉回信息到目标用户代理。
+	4. 所以这里，我们使用的通常是POP3/IMAP等协议来拉回信息到目标用户代理。
 
 - POP3相比IMAP更加简单。但是IMAP更加的强大。区别在于（引自腾讯邮箱的介绍）
 
-	POP允许电子邮件客户端下载服务器上的邮件，但是您在电子邮件客户端的操作（如：移动邮件、标记已读等），这是不会反馈到服务器上的，比如：您通过电子邮件客户端收取了QQ邮箱中的3封邮件并移动到了其他文件夹，这些移动动作是不会反馈到服务器上的，也就是说，QQ邮箱服务器上的这些邮件是没有同时被移动的 。但是IMAP就不同了，电子邮件客户端的操作都会反馈到服务器上，您对邮件进行的操作（如：移动邮件、标记已读等），服务器上的邮件也会做相应的动作。也就是说，IMAP是“双向”的。
+	1. POP允许电子邮件客户端下载服务器上的邮件，但是您在电子邮件客户端的操作（如：移动邮件、标记已读等），这是不会反馈到服务器上的，比如：您通过电子邮件客户端收取了QQ邮箱中的3封邮件并移动到了其他文件夹，这些移动动作是不会反馈到服务器上的，也就是说，QQ邮箱服务器上的这些邮件是没有同时被移动的 。但是IMAP就不同了，电子邮件客户端的操作都会反馈到服务器上，您对邮件进行的操作（如：移动邮件、标记已读等），服务器上的邮件也会做相应的动作。也就是说，IMAP是“双向”的。
 
-	同时，IMAP可以只下载邮件的主题，只有当您真正需要的时候，才会下载邮件的所有内容。
+	2. 同时，IMAP可以只下载邮件的主题，只有当您真正需要的时候，才会下载邮件的所有内容。
 
-	说白了，POP不会留下东西在服务器，而IMAP允许服务器与本地操作同步。
+	3. 说白了，POP不会留下东西在服务器，而IMAP允许服务器与本地操作同步。
 
 ### DNS：因特网的目录服务
 #### 主要服务
@@ -199,11 +205,11 @@ DNS域名系统可以把主机名(www.xxx.yy)转化为对应IP的机制。
 
 先在客户端上请求主机(如cis.poly.edu) 经由本地DNS服务器(dns.poly.edu)分别与根DNS服务器，TLD DNS服务器 ，权威服务器(dns.cs.umass.edu)交互后得到目的主机IP。如图：
 
-
-
 #### DNS缓存
 
 和WEB缓存一样，设置一个DNS缓存可以很大程度加快获取目标的速度
+
+----
 
 ###  P2P应用
 1. P2P文件分发(双向，可扩展性)
@@ -225,5 +231,5 @@ DNS域名系统可以把主机名(www.xxx.yy)转化为对应IP的机制。
 -------
 ## 参考：
 1. http://www.zhuangjingyang.com/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%B1%82%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93.html
-2. 2
+2. http://zhenhua-lee.github.io/tech/network.html
 3. http://blog.163.com/magicc_love/blog/static/185853662201321423527263/
