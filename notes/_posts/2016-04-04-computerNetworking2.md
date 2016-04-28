@@ -300,7 +300,7 @@ TCP设有一个保活计时器。服务端每收到一次客户的数据都会�
 
 ---- 
 # 参考：
-1. [\[http://www.zhuangjingyang.com/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E5%BA%94%E7%94%A8%E5%B1%82%E7%9F%A5%E8%AF%86%E6%80%BB%E7%BB%93.html]][2]
+1. https://zh.wikipedia.org/wiki/%E7%94%A8%E6%88%B7%E6%95%B0%E6%8D%AE%E6%8A%A5%E5%8D%8F%E8%AE%AE
 2. [http://zhenhua-lee.github.io/tech/network.html][3]
 3. [http://blog.163.com/magicc\_love/blog/static/][4]
 
