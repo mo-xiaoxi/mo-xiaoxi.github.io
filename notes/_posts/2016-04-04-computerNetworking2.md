@@ -20,7 +20,7 @@ tags:
 
 主要有以下几个知识点：
 
-	1.多路复用和多路分解
+	1. 多路复用和多路分解
  	2. UDP协议
  	3. TCP协议
  	4. TCP协议的可靠传输机制
@@ -154,7 +154,7 @@ TCP的差错恢复方法有两种：
 
 	GBN协议常常被称为滑动窗口协议。
 	来看一个发送方的示例图：
-	![image](http://momomoxiaoxi.com/img/network/gbn.png)
+	![image](http://momomoxiaoxi.com/img/network/gbn.jpeg)
 	
 	base是基序号，指示最早的未确认分组的序号。 nextseqnum是下一个序号，指示最小的下一个待发送分组的序号。	window size就是窗口大小。
 
