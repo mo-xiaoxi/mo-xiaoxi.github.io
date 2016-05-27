@@ -23,10 +23,49 @@ Windows的系统密码hash默认情况下一般由两部分组成：第一部分
 8. Ophcrack
 
 -----
-# 常用命令操作
-	
+# 常用命令操作：
+### 最常用
 	net user username password /add 增加一个username的用户，密码为password
 	net localgroup Administrators username /add 把username添加到Administrator组
+	net start telnet 开对方的TELNET服务
+	net use Z:\127.0.0.1c$ 映射对方的C盘
+	net user guest /active:yes 将Guest用户激活
+	net user guest password 把guest的密码改为password
+	net user username /delete  删除用户
+	net password 密码 更改系统登陆密码 
+	netstat -a 查看开启了哪些端口,常用netstat -an 
+	netstat -n 查看端口的网络连接情况，常用netstat -an 
+	netstat -v 查看正在进行的工作
+	如果在linux下，首先cat /etc/shadow
+1.Net常用命令:
+
+	(1)net share - 查看共享命令
+   		net share ipc$ - 设置ipc$共享
+   		net share ipc$ /del - 删除ipc$共享 (xp系统无法删除)
+   		net share c$=c: - 设置c盘为共享
+	(2)net user - 查看本地的用户列表
+   		net user 用户名 密码 /add - 增加一个用户
+   		net user 用户名 /add 或 net user 用户名 "" /add - 增加一个密码为空的用户
+   		net user 用户名 /del - 删除某个用户名
+   		net user 用户名 /active:yes(no) - 设置某个用户的状态为启用(禁用)
+	(3)net localgroup administrators - 查看管理员组里的用户(即权限为管理员的用户)
+   		net localgroup administrators 用户名 /add - 把某个用户增加到管理员组里
+   		net localgroup administrators 用户名 /del - 从管理员组里删除某个用户
+   		注意:1.增加到某个组里的用户必须是已经被创建过的用户.
+        	2.增加到的组必须为存在的组.
+	(4)net start - 查看已经启动的服务列表
+   		net start 服务名 - 开启某个服务   注意:要想成功的开启一个服务,前提是它被停用了,而不是被禁止
+   		net stop 服务名  - 停止某个服务   注意:停止的服务必须是已经启动的,而不是已经停止或是被禁止的
+	(5)net use \\ip地址\ipc$ "密码" /user:用户名 - 和某个ip地址建立一个ipc$连接(ipc$入侵)
+   		net use \\ip地址\ipc$ /del - 删除建立的ipc$连接
+   		命令成功与否的前提:1.对方操作系统是否为NT以上的(除xp外)
+                      2.对方系统是否开启了ipc$共享
+                      3.输入的用户名和密码是否正确
+	(6)net use h: \\ip地址\c$ - 将对方c盘映射到本地的h盘
+   		net use h: /del -删除映射到本地的磁盘
+   		注意:1.要映射到本地的磁盘名不能与本地现有的磁盘名重复(冲突)
+        	2.想要映射对方的某个磁盘或目录的前提是对方的此磁盘或目录设置了共享
+
 
 
 
