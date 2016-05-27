@@ -22,6 +22,13 @@ Windows的系统密码hash默认情况下一般由两部分组成：第一部分
 7. ppa：要用ppa配合彩虹表破解的方法也比较简单，Attack选择“Rainbow”->“NTLM attack”->“Rainbow tables list…”->“Add”选择导入彩虹表文件
 8. Ophcrack
 
+-----
+# 常用命令操作
+	
+	net user username password /add 增加一个username的用户，密码为password
+	net localgroup Administrators username /add 把username添加到Administrator组
+
+
 
 
 ----
