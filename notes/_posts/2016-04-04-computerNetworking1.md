@@ -99,12 +99,12 @@ Content-Length: 6812 //被发送对象的字节数
 Content-Type: text/html //被发送对象的类型
 ```
 
-- 常见的HTTP状态码
-200 OK：请求成功，信息包含在返回的响应报文中。
-301 Moved Permanently：请求的对象已经被永久转移了，新的URL定义在响应报文的Location 首部行中指定。客户机可自动用新的URL获取该对象。
-400 Bad Repuest：一个通用差错代码，指示该请求不能被服务器所理解。
-404 Not Found：被请求的文档不在服务器上。
-505 HTTP Version Not Supported：服务器不支持请求报文使用的HTTP协议版本。
+- 常见的HTTP状态码 
+	1. 200 OK：请求成功，信息包含在返回的响应报文中。
+	2. 301 Moved Permanently：请求的对象已经被永久转移了，新的URL定义在响应报文的Location 首部行中指定。客户机可自动用新的URL获取该对象。
+	3. 400 Bad Repuest：一个通用差错代码，指示该请求不能被服务器所理解。
+	4. 404 Not Found：被请求的文档不在服务器上。
+	5. 505 HTTP Version Not Supported：服务器不支持请求报文使用的HTTP协议版本。
 - Web缓存：
 
 	Web缓存器也叫做代理服务器。它可以大大地减少对客户机的响应时间，并且可以大大减少一个机构内部网与因特网接入链路上的通信量。
@@ -127,10 +127,9 @@ Content-Type: text/html //被发送对象的类型
 
 	2. 控制连接用于两个主机之间传输控制信息。像这种使用一个分离的控制连接我们称之为带内传送。相应的HTTP我们称之为带外传送。
 
-	3. 对FTP而言，控制连接贯穿整个用户会话期间而数据连接对于每一个文件传输都需要建立一条新
-的。并且FTP服务器必须在整个会话期间保留用户的状态，相比之下HTTP则是无状态的。
+	3. 对FTP而言，控制连接贯穿整个用户会话期间而数据连接对于每一个文件传输都需要建立一条新的。并且FTP服务器必须在整个会话期间保留用户的状态，相比之下HTTP则是无状态的。
 
-![image](http://momomoxiaoxi.com/img/post/comNet/3.gif)
+	![image](http://momomoxiaoxi.com/img/post/comNet/3.gif)
 
 ----
 ## 因特网中的电子邮件
