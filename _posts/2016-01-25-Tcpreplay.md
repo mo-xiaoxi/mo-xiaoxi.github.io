@@ -13,6 +13,7 @@ excerpt: 主要介绍一些Tcpreplay工具的使用方法，与通过结合wires
 #Tcpreplay
 
 ---
+
 ## 1. 简介
 Tcpreplay是一系列工具的总称，包括tcpreplay、tcprewrite和tcpprep等工具，它可以用来在Unix系统或者linux系统上重放网络包。这些包是由tcpdump、ethereal和wireshark等软件抓取到的，即pcap格式的数据包。
 
@@ -47,6 +48,7 @@ Tcpreplay是一系列工具的总称，包括tcpreplay、tcprewrite和tcpprep等
 pathname 是缓存文件的路径。
 
 ---
+
 ## 2.安装环境
 
 Tcpreplay要实现它的功能要用到其它一些库：
@@ -60,10 +62,12 @@ Libpcap可以从以下链接下载：[link](http://www.tcpdump.org/)  可以用�
 3）libnet库。非必需库。Tcpreplay也可用它来发送数据包，但由于libnet自身的bug比较多且已不再有人维护，Tcpreplay未来版本有可能取消对它的支持。（目前的版本还需要这个库的支持，因此建议也安装）
 
 ---
+
 ## 3.安装过程
 这个网上有很多，大家参考下就行。
 
 ---
+
 ## 4.基本介绍
 tcpprep 是一个在 tcprewrite 和 tcpreplay 之前使用的 pcap 文件的处理程序。使用 tcpprep 的目的 就是建立一个
 cache文件,用于分离通信流量中的两方(通常叫做主要的/次要的或者 客户端/服务器), 为 tcprewrite 和 tcpreplay 处理
@@ -73,6 +77,7 @@ cache文件,用于分离通信流量中的两方(通常叫做主要的/次要的
 等信息, 以达到 tcpreplay 回放时可以更加快速的发送报文的目的。
 
 ---
+
 ### 4.1.1 Tcpprep参数介绍
 tcpprep [-flag [value]]... [--opt-name [value]]...
 -a string,--auto=string自动分离模式,将自动分离出网络流量的 Client 端与 Server 端,记录在生成的 cache文件里。该模式将分别定义了 Client 与 Server 行为。 
@@ -83,11 +88,13 @@ cache文件,用于分离通信流量中的两方(通常叫做主要的/次要的
 	举例:[root@localhost src]# tcpprep -p -o ceshiftp.cache-i ftp.pcap
 
 ---
+
 ### 4.1.2 命令行解释	-a, --auto=str -c, --cidr=str 一般情况下都需要的参数,表示按模式自动分离通信流量生成 cache文件	-r, --regex=str   可选参数, 表示分离流量时采用 CIDR(无类别域间路由选择,是一个在 internet 上创建附加地址的方法,这些地址提供给服务提供商,再由服务提供商分配给客户。 CIDR 将路由集中起来,使一个 IP 地址代表主要骨干提供商提供的几千个 IP 地址, 从而减轻 internet 路由器的负担)	-p, --port  可选参数,表示使用 regex 模式分离通信流量,有点类似于 CIDR 模式,但是它匹 配的是服务器源 IP 可选参数,基于目的端口来分离通信流量,它区分的依据是任何 0-1023 端口都是 服务器的端发出的报文,其他的端口都是客户端发出的报文	-e,--mac=str  表示基于服务器源 MAC 地址分离通信流量	-C 可选参数,表示在 cache文件中嵌入注释内容,用于注释说明 cache文件的内容。使用位置不要放在最后,生成 cache后可以使用-P 查看写入的内容。	-x 重要可选参数,表示按照参数定义的需求来定义发送报文	-X 可选参数,是-x 的取反	-o 生成 cache文件必带参数,后跟 cache后缀的文件名,表示这个输出的 cache文件以这个文件名命名	-i 生成 cache文件必带参数,后跟 pcap 文件名,表示这个 pcap 文件需要处理	-P 可选参数,表示查看 cache文件的内容	-I 表示打印 cache文件的基本信息	-S 表示打印 cache文件的统计信息	-s 表示从服务器端口下载服务文件	-N 表示从服务器端口发送无 IP 流量	-R 可选参数,一个比例值。服务器端发起的连接数和客户端发起的连接数的比例,值大于 2 就视为服务器端	-m 可选参数,在选用 router 模式时使用,表示最小掩码,掩码默认是 30	-M 可选参数,在选用 router 模式时使用,表示最大掩码,默认是 8	-v 可选参数,显示 tcpprep 生成 cache文件的处理过程。信息的随时大于	-A 可选参数,在实验 tcpdump 风格打印输出信息时,同时再调用 tcpdump 中的参数 -h less help	-H help	-! more help### 4.1.3 Tcpprep用法举例
 ####  4.1.3.1根据报文源 IP 确定 client/server 报文	#tcpprep 的用法举例, 根据源 IP:	|$ tcpprep -c 172.22.64.2/24 -i mgcp.pcap -o mgcp.cache	上面的命令指定所有源 IP 为 172.22.64.2/24 的包, 都将从主网卡发出, 其它的从次网卡发出.	 输入文件是 mgcp.pcap, 输出文件为 mgcp.cache
 #### 4.1.3.2 使用自动模式确定 client/server 报文	#tcpprep 的用法举例, 自动模式:	|$ tcpprep -a client -i mgcp.pcap -o mgcp.cach	上面的命令采用自动/client 模式指定分包模式. 自动模式这里按我的理解解释一下:	tcpprep 在自动模式下认为有下面行为的 IP 为 client 端:1、发 TCP SYN 包的一方,2、发 DNS 包 的一方,3、 收入到 ICMP-Port Unreachable 的一方; 认为有下面行为的一方为 server 端: 1、发 TCP Syn/Ack 的一方, 2、发 DNS 应答的一方,3.发 ICMP-Port Unreachable 的一方.而被认定为 server 的那 一方发的那些包, 将从主网卡发出, 被认定为client的包则从次网卡发出. 而自动/client模式将所有没有认 出的包都归为 client, 同理自动/server 模式将没有认出的包都归为 server.这种模式貌似不如按 IP 地址分类的方式好用.
 
 ---
+
 ### 4.2.1 Tcpwrite基本介绍 简单地说, tcprewrite 就是改写 pcap 包里的报文头部, 包括 2 层, 3 层, 4 层,即 MAC 地址、IP 地址和 PORT等。tcpreplay只保证能把包送出去, 至于包真正能到达的地址, 我认为还是根据原来的包的IP和mac, 如果是在同一网段,可能需要把 mac 地址改成测试设备的 mac,如果需要经过网关, 就得将 IP 地址改为 测试设备的 IP 以及端口号。### 4.2.1 参数简介
 	$ tcprewrite 		--enet-smac=host_src_mac,client_src_mac \						--enet-dmac=host_dst_mac, client_dst_mac \ 						--endpoints=host_dst_ip:client_dst_ip \						 --portmap=old_port1:new_port1,old_port2, new_port2 \ 						 -i input.pcap -c input.cache-o out.pcap	--enet-smac=server_src_mac,client_src_mac 声明服务器源 MAC 地址,客户端源 MAC 地址 
 	--enet-dmac=server_dst_mac, client_dst_mac 声明服务器端目的 MAC 地址,客户端目的 MAC 地址 
@@ -111,7 +118,8 @@ cache文件,用于分离通信流量中的两方(通常叫做主要的/次要的
 	$tcpreplay --intf1=eth1 --intf2=eth0 –t --cachfile=cach_test.cachehttp_rewrite_pcap--intf1=eth1 是指主接口是 eth1,服务器->客户端的数据包通过这个接口发送。服务器和客户端的 区分是从 tcpprep 的处理结果 cach_test.cache中得到的。--intf2=eth0 是指从接口是 eth0,客户端->服务器的数据包通过这个接口发送。--cachfile=cach_test_cach是指tcpreplay用tcpprep 上步的处理结果--cach_test.cach来区分方 向。http_rewrite.pcap 是指 tcpreplay 发送的是来自 http_rewrite.pcap 这个文件中的数据包。 
 如[root@localhost src]#tcpreplay –i eth1 –I eth0 –c ceshiftp.cacheceshiftp.pcap 
  
-----###  4.4.1 Tcpreplay-edit 的介绍tcpreplay-edit 实时修改包数据并回放,它是将 tcprewrite 和 tcpreplay 用一条命令实现。其好处 是修改包数据不会新生成 pcap 文件。如果是需要不断的改写一个包文件并回放建议使用 tcpreplay-edit, 如果是需要一次改写一个包文件并多次回放建议使用 tcprewrite 和 tcpreplay 的结合,这样具有更好的 回放速率。### 4.4.2 用法举例编写脚本,不断改写包文件的 IP 地址并回放: 
+----
+###  4.4.1 Tcpreplay-edit 的介绍tcpreplay-edit 实时修改包数据并回放,它是将 tcprewrite 和 tcpreplay 用一条命令实现。其好处 是修改包数据不会新生成 pcap 文件。如果是需要不断的改写一个包文件并回放建议使用 tcpreplay-edit, 如果是需要一次改写一个包文件并多次回放建议使用 tcprewrite 和 tcpreplay 的结合,这样具有更好的 回放速率。### 4.4.2 用法举例编写脚本,不断改写包文件的 IP 地址并回放: 
 	for i in {1..255}	do	tcpreplay-edit --endpoints=1.1.2.$i:1.1.1.2 -t -i eth2 -I eth1 -c edit.cacheedit.pcap	done 通过 tcpreplay 来修改、转发通信流量需要考虑的一共需要考虑以下 3 点: 
  1.  确定哪有数据包是从客户端到服务器端的,哪有是从服务器端到客户端的 
  2.  确定新的 MAC、IP、Port 3. 确定回放速率、循环次数、执行方式根据以上 3 点按 3 步来完成操作:第一步:用 tcpreplay 分离源/目的端口的流量	tcpprep --port --cachfile=example.cache--pcap=example.pcap这种情况下,认为所有目的端口<1024 的,将被视为客户端->服务器的包,否则视为服务器->客户端的包。该信息被存储在 tcpprp 的一个名叫 example.cache的文件夹中 

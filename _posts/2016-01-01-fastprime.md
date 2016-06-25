@@ -12,7 +12,9 @@ excerpt: 快速素数测试的具体原理讲解
 ---
 
 #快速素数测试
+
 ---
+
 ##前提知识
 ###1. 费马小定理
 有一任意正整数N，P为素数，且N不能被P整除（显然N和P互质），则有：N^P%P=N(即：N的P次方除以P的余数是N)。
@@ -40,7 +42,9 @@ X=Z*I+A
 同理，当X比Z小而Y比Z大时，原式也成立。
 3.当X比Z小，且Y也比Z小时，X=X%Z，Y=Y%Z，所以原式成立。
 ```
+
 -----
+
 ##一些重要函数分析
 ###1. 蒙格马利算法快速求幂
 ```c
@@ -173,6 +177,9 @@ nt RabbinMillerTest( unsigned n )
 }
 
 ```
-参考：
+
+----
+
+# 参考：
 1. [判断一个数是否为素数](http://blog.csdn.net/arvonzhang/article/details/8564836 "判断一个数是否为素数")
 2. [欧拉函数](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)

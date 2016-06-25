@@ -13,9 +13,11 @@ excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖Sq
 #SqlMap用户手册
 
 ---
+
 ##1.一些基础知识
 
 ----
+
 ###SqlMap注入流程
 
 	http://www.test.com/get_int.php?id=1
@@ -30,6 +32,7 @@ excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖Sq
 4. 根据用户选择，读取哪些数据
 
 ---
+
 ###SqlMap五种注入模式
 sqlmap支持五种不同的注入模式：
 
@@ -44,10 +47,12 @@ sqlmap支持五种不同的注入模式：
 5. 堆查询注入，可以同时执行多条语句的执行时的注入。
 
 ---
+
 ###支持的数据库
 SqlMap支持的数据库有：
 
 	MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB
+
 ---
 
 可以提供一个简单的URL，Burp或WebScarab请求日志文件，文本文档中的完整http请求或者Google的搜索，匹配出结果页面，也可以自己定义一个正则来判断那个地址去测试。
@@ -69,6 +74,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 可以点击https://github.com/sqlmapproject/sqlmap/tarball/master下载最新版本sqlmap。
 
 ----
+
 ###获得SqlMap与更新
 ####获取sqlmap
 
@@ -82,8 +88,11 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	git pull
 
 ----
+
 ##2.参数讲解
+
 ---
+
 ###2.1信息显示程度
 参数：-v
 

