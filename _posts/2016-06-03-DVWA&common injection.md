@@ -13,9 +13,12 @@ excerpt: 基于DVWA学习SQL注入
 ---
 
 # Command injection
+
 ## low
+
 ### 目标
 执行其它命令
+
 ### 源码
 	<?php 
 
@@ -41,12 +44,14 @@ excerpt: 基于DVWA学习SQL注入
 
 
 ### 过程
+
 -  这里只需要输入&& 隔开即可或者；
 
 	![image](http://momomoxiaoxi.com/img/post/DVWA/9.png)
 
 
 ## Medium
+
 ### 源码
 
 
@@ -82,11 +87,15 @@ excerpt: 基于DVWA学习SQL注入
 	?> 
 
 ### 	过程
+
 - 这里过滤了&&，；  但是，我们还有一种方式绕过 通过 ｜ 或者｜｜
 
 ![image](momomoxiaoxi.com/img/post/DVWA/10.png)
+
 ## High
+
 ### 源码
+
 
 	<?php 
 
@@ -126,7 +135,9 @@ excerpt: 基于DVWA学习SQL注入
 
 	?> 
 	
+
 ### 过程
+
 这里其实多了一些过滤条件吧。
 暂时不会😂
 
