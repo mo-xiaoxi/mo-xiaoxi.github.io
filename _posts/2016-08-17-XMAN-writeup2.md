@@ -1,9 +1,9 @@
 ---
 
 
-title: XMAN writeup 1 
+title: XMAN writeup 2
 
-time: 2016.08.15 15:22:00
+time: 2016.08.17 15:22:00
 
 layout: post
 
@@ -13,11 +13,11 @@ tags:
 - XMAN
 - CTF
 
-excerpt: XMAN夏令营writeup1-MISC和Crypt相关，以及各类大杂项。
+excerpt: XMAN夏令营writeup2:这里是我一直想入门的Re相关主题
 
 ---
 
-### 0x00类似培根
+### 0x00课后作业－CM1
 
 #### 题目描述
 
