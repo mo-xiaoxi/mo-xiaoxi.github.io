@@ -10,15 +10,18 @@ excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖Sq
     
 ---
 
-#SqlMap用户手册
+# SqlMap用户手册
+
 
 ---
 
-##1.一些基础知识
+
+## 1.一些基础知识
+
 
 ----
 
-###SqlMap注入流程
+### SqlMap注入流程
 
 	http://www.test.com/get_int.php?id=1
 当给sqlmap这么一个url的时候，它会：
@@ -33,7 +36,8 @@ excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖Sq
 
 ---
 
-###SqlMap五种注入模式
+### SqlMap五种注入模式
+
 sqlmap支持五种不同的注入模式：
 
 1. 基于布尔的盲注，即可以根据返回页面判断条件真假的注入。
@@ -48,7 +52,8 @@ sqlmap支持五种不同的注入模式：
 
 ---
 
-###支持的数据库
+### 支持的数据库
+ 
 SqlMap支持的数据库有：
 
 	MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB
@@ -75,12 +80,12 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 ----
 
-###获得SqlMap与更新
-####获取sqlmap
+### 获得SqlMap与更新
+#### 获取sqlmap
 
 	git clone https://github.com/sqlmapproject/sqlmap.git sqlmap-dev
 
-####更新
+#### 更新
 
 	python sqlmap.py --update
 或者
@@ -89,11 +94,11 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 ----
 
-##2.参数讲解
+## 2.参数讲解
 
 ---
 
-###2.1信息显示程度
+### 2.1信息显示程度
 参数：-v
 
 共有七个等级，默认为1：
@@ -117,22 +122,23 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 ---
 
-###2.2获取目标方式
+### 2.2获取目标方式
 
-####从指定url中获得
+#### 从指定url中获得
+	
 	参数：-u或者--url
 
 	格式：http(s)://targeturl[:port]/[…]
 
 	例如：python sqlmap.py -u "http://www.target.com/test.php?id=1" -f --banner --dbs --users
 
-####从Burp或者WebScarab代理中获取日志
+#### 从Burp或者WebScarab代理中获取日志
 
 	参数：-l
 
 	可以直接把Burp proxy或者WebScarab proxy中的日志直接导出来交给sqlmap来一个一个检测是否有注入。
 
-####从文本中获取多个目标扫描
+#### 从文本中获取多个目标扫描
 
 	参数：-m
 
@@ -158,7 +164,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	id=1
 	当请求是HTTPS的时候你需要配合这个--force-ssl参数来使用，或者你可以在Host头后门加上:443
 
-####处理Google的搜索结果
+#### 处理Google的搜索结果
 
 	参数：-g
 
@@ -173,9 +179,9 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 ---
 
-###2.3请求方式
+### 2.3请求方式
 
-####http数据
+#### http数据
 
 	参数：--data
 
@@ -184,7 +190,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	例子：
 
 	python sqlmap.py -u "http://www.target.com/vuln.php" --data="id=1" -f --banner --dbs --users
-####参数拆分字符
+#### 参数拆分字符
 
 	参数：--param-del
 
@@ -193,7 +199,8 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	例子：
 
 	python sqlmap.py -u "http://www.target.com/vuln.php" --data="query=foobar;id=1" --param-del=";" -f --banner --dbs --users
-####HTTP cookie头
+
+#### HTTP cookie头
 
 	参数：--cookie,--load-cookies,--drop-set-cookie
 
@@ -211,7 +218,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	当你使用--cookie参数时，当返回一个Set-Cookie头的时候，sqlmap会询问你用哪个cookie来继续接下来的请求。当--level的参数设定为2或者2以上的时候，sqlmap会尝试注入Cookie参数。
 
-####HTTP User-Agent头
+#### HTTP User-Agent头
 
 	参数：--user-agent,--random-agent
 
@@ -222,19 +229,19 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	当--level参数设定为3或者3以上的时候，会尝试对User-Angent进行注入。
 
-####HTTP Referer头
+#### HTTP Referer头
 
 	参数：--referer
 
 	sqlmap可以在请求中伪造HTTP中的referer，当--level参数设定为3或者3以上的时候会尝试对referer注入。
 
-####额外的HTTP头
+#### 额外的HTTP头
 
 	参数：--headers
 
 	可以通过--headers参数来增加额外的http头
 
-####HTTP认证保护
+#### HTTP认证保护
 
 	参数：--auth-type,--auth-cred
 
@@ -249,7 +256,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	例子：
 
 	python sqlmap.py -u "http://192.168.136.131/sqlmap/mysql/basic/get_int.php?id=1" --auth-type Basic --auth-cred "testuser:testpass"
-####HTTP协议的证书认证
+#### HTTP协议的证书认证
 
 	参数：--auth-cert
 
@@ -257,7 +264,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	key_file是格式为PEM文件，包含着你的私钥，cert_file是格式为PEM的连接文件。
 
-####HTTP(S)代理
+#### HTTP(S)代理
 
 	参数：--proxy,--proxy-cred和--ignore-proxy
 
@@ -267,31 +274,31 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	--ignore-proxy拒绝使用本地局域网的HTTP(S)代理。
 
-####HTTP请求延迟
+#### HTTP请求延迟
 
 	参数：--delay
 
 	可以设定两个HTTP(S)请求间的延迟，设定为0.5的时候是半秒，默认是没有延迟的。
 
-####设定超时时间
+#### 设定超时时间
 
 	参数：--timeout
 
 	可以设定一个HTTP(S)请求超过多久判定为超时，10.5表示10.5秒，默认是30秒。
 
-####设定重试超时
+#### 设定重试超时
 
 	参数：--retries
 
 	当HTTP(S)超时时，可以设定重新尝试连接次数，默认是3次。
 
-####设定随机改变的参数值
+#### 设定随机改变的参数值
 
 	参数：--randomize
 
 	可以设定某一个参数值在每一次请求中随机的变化，长度和类型会与提供的初始值一样。
 
-####利用正则过滤目标网址
+#### 利用正则过滤目标网址
 
 	参数：--scope
 
@@ -308,13 +315,14 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	1、--safe-url：提供一个安全不错误的连接，每隔一段时间都会去访问一下。
 	2、--safe-freq：提供一个安全不错误的连接，每次测试请求之后都会再访问一边安全连接。
-####关掉URL参数值编码
+	
+#### 关掉URL参数值编码
 
 	参数：--skip-urlencode
 
 	根据参数位置，他的值默认将会被URL编码，但是有些时候后端的web服务器不遵守RFC标准，只接受不经过URL编码的值，这时候就需要用--skip-urlencode参数。
 
-####每次请求时候执行自定义的python代码
+#### 每次请求时候执行自定义的python代码
 
 	参数：--eval
 
@@ -327,9 +335,9 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 ---
 
-###2.4注入相关参数
+### 2.4注入相关参数
 
-####测试参数
+#### 测试参数
 
 	参数：-p,--skip
 
@@ -346,32 +354,33 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	python sqlmap.py -u "http://targeturl/param1/value1*/param2/value2/"
 	sqlmap将会测试value1的位置是否可注入。
 
-####指定数据库
+#### 指定数据库
 
 	参数：--dbms
 
 	默认情况系sqlmap会自动的探测web应用后端的数据库是什么，sqlmap支持的数据库有：
 
 	MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite、Firebird、Sybase、SAP MaxDB、DB2
-####指定数据库服务器系统
+	
+#### 指定数据库服务器系统
 
 	参数：--os
 
 	默认情况下sqlmap会自动的探测数据库服务器系统，支持的系统有：Linux、Windows。
 
-####指定无效的大数字
+#### 指定无效的大数字
 
 	参数：--invalid-bignum
 
 	当你想指定一个报错的数值时，可以使用这个参数，例如默认情况系id=13，sqlmap会变成id=-13来报错，你可以指定比如id=9999999来报错。
 
-####指定无效的逻辑
+#### 指定无效的逻辑
 
 	参数：--invalid-logical
 
 	原因同上，可以指定id=13把原来的id=-13的报错改成id=13 AND 18=19。
 
-####注入payload
+#### 注入payload
 
 	参数：--prefix,--suffix
 
@@ -386,7 +395,8 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	这样执行的SQL语句变成：
 
 	$query = "SELECT * FROM users WHERE id=(’1’) <PAYLOAD> AND (’abc’=’abc’) LIMIT 0, 1";
-####修改注入的数据
+	
+#### 修改注入的数据
 
 	参数：--tamper
 
@@ -465,9 +475,9 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	sqlmap_intro_secpulse
 
 
-###2.5探测
+### 2.5探测
 
-####探测等级
+#### 探测等级
 
 	参数：--level
 
@@ -477,7 +487,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	总之在你不确定哪个payload或者参数为注入点的时候，为了保证全面性，建议使用高的level值。
 
-####风险等级
+#### 风险等级
 
 	参数：--risk
 
@@ -487,19 +497,19 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	测试的语句同样可以在xml/payloads.xml中找到，你也可以自行添加payload。
 
-####页面比较
+#### 页面比较
 
 	参数：--string,--not-string,--regexp,--code
 
 	默认情况下sqlmap通过判断返回页面的不同来判断真假，但有时候这会产生误差，因为有的页面在每次刷新的时候都会返回不同的代码，比如页面当中包含一个动态的广告或者其他内容，这会导致sqlmap的误判。此时用户可以提供一个字符串或者一段正则匹配，在原始页面与真条件下的页面都存在的字符串，而错误页面中不存在（使用--string参数添加字符串，--regexp添加正则），同时用户可以提供一段字符串在原始页面与真条件下的页面都不存在的字符串，而错误页面中存在的字符串（--not-string添加）。用户也可以提供真与假条件返回的HTTP状态码不一样来注入，例如，响应200的时候为真，响应401的时候为假，可以添加参数--code=200。
 
-####参数：--text-only,--titles
+#### 参数：--text-only,--titles
 
 	有些时候用户知道真条件下的返回页面与假条件下返回页面是不同位置在哪里可以使用--text-only（HTTP响应体中不同）--titles（HTML的title标签中不同）。
 
-###2.6注入技术
+### 2.6注入技术
 
-####测试是否是注入
+#### 测试是否是注入
 
 	参数：--technique
 
@@ -512,63 +522,64 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	U: UNION query SQL injection（可联合查询注入）
 	S: Stacked queries SQL injection（可多语句查询注入）
 	T: Time-based blind SQL injection（基于时间延迟注入）
-####设定延迟注入的时间
+
+#### 设定延迟注入的时间
 
 	参数：--time-sec
 
 	当使用继续时间的盲注时，时刻使用--time-sec参数设定延时时间，默认是5秒。
 
-####设定UNION查询字段数
+#### 设定UNION查询字段数
 
 	参数：--union-cols
 
 	默认情况下sqlmap测试UNION查询注入会测试1-10个字段数，当--level为5的时候他会增加测试到50个字段数。设定--union-cols的值应该是一段整数，如：12-16，是测试12-16个字段数。
 
-####设定UNION查询使用的字符
+#### 设定UNION查询使用的字符
 
 	参数：--union-char
 
 	默认情况下sqlmap针对UNION查询的注入会使用NULL字符，但是有些情况下会造成页面返回失败，而一个随机整数是成功的，这是你可以用--union-char只定UNION查询的字符。
 
-####二阶SQL注入
+#### 二阶SQL注入
 
 	参数：--second-order
 
 	有些时候注入点输入的数据看返回结果的时候并不是当前的页面，而是另外的一个页面，这时候就需要你指定到哪个页面获取响应判断真假。--second-order后门跟一个判断页面的URL地址。
 
-###2.7列数据
+### 2.7列数据
 
-####标志
+#### 标志
 
 	参数：-b,--banner
 
 	大多数的数据库系统都有一个函数可以返回数据库的版本号，通常这个函数是version()或者变量@@version这主要取决与是什么数据库。
 
-####用户
+#### 用户
 
 	参数：-current-user
 
 	在大多数据库中可以获取到管理数据的用户。
 
-####当前数据库
+#### 当前数据库
 
 	参数：--current-db
 
 	返还当前连接的数据库。
 
-####当前用户是否为管理用
+#### 当前用户是否为管理用
 
 	参数：--is-dba
 
 	判断当前的用户是否为管理，是的话会返回True。
 
-####列数据库管理用户
+#### 列数据库管理用户
 
 	参数：--users
 
 	当前用户有权限读取包含所有用户的表的权限时，就可以列出所有管理用户。
 
-####列出并破解数据库用户的hash
+#### 列出并破解数据库用户的hash
 
 	参数：--passwords
 
@@ -599,13 +610,13 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 也可以提供-U参数来指定爆破哪个用户的hash。
 
-####列出数据库管理员权限
+#### 列出数据库管理员权限
 
 	参数：--privileges
 
 	当前用户有权限读取包含所有用户的表的权限时，很可能列举出每个用户的权限，sqlmap将会告诉你哪个是数据库的超级管理员。也可以用-U参数指定你想看哪个用户的权限。
 
-####列出数据库管理员角色
+#### 列出数据库管理员角色
 
 	参数：--roles
 
@@ -613,13 +624,13 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	仅适用于当前数据库是Oracle的时候。
 
-####列出数据库系统的数据库
+#### 列出数据库系统的数据库
 
 	参数：--dbs
 
 	当前用户有权限读取包含所有数据库列表信息的表中的时候，即可列出所有的数据库。
 
-####列举数据库表
+#### 列举数据库表
 
 	参数：--tables,--exclude-sysdbs,-D
 
@@ -631,7 +642,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	需要注意的是在Oracle中你需要提供的是TABLESPACE_NAME而不是数据库名称。
 
-####列举数据库表中的字段
+#### 列举数据库表中的字段
 
 	参数：--columns,-C,-T,-D
 
@@ -653,7 +664,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	| name    | TEXT    |
 	| surname | TEXT    |
 	+---------+---------+
-####列举数据库系统的架构
+#### 列举数据库系统的架构
 
 	参数：--schema,--exclude-sysdbs
 
@@ -714,7 +725,8 @@ MySQL例子：
 	| surname | varchar(1000) |
 	+---------+---------------+
 	[...]
-####获取表中数据个数
+	
+#### 获取表中数据个数
 
 	参数：--count
 
@@ -731,7 +743,8 @@ MySQL例子：
 	| dbo.users      | 4       |
 	| dbo.users_blob | 2       |
 	+----------------+---------+
-####获取整个表的数据
+	
+#### 获取整个表的数据
 
 	参数：--dump,-C,-T,-D,--start,--stop,--first,--last
 
@@ -764,13 +777,13 @@ sqlmap为每个表生成了一个CSV文件。
 
 也可以用--first与--last参数，获取第几个字符到第几个字符的内容，如果你想获取字段中地三个字符到第五个字符的内容，使用--first 3 --last 5，只在盲注的时候使用，因为其他方式可以准确的获取注入内容，不需要一个字符一个字符的猜解。
 
-####获取所有数据库表的内容
+#### 获取所有数据库表的内容
 
 	参数：--dump-all,--exclude-sysdbs
 
 	使用--dump-all参数获取所有数据库表的内容，可同时加上--exclude-sysdbs只获取用户数据库的表，需要注意在Microsoft SQL Server中master数据库没有考虑成为一个系统数据库，因为有的管理员会把他当初用户数据库一样来使用它。
 
-####搜索字段，表，数据库
+#### 搜索字段，表，数据库
 
 	参数：--search,-C,-T,-D
 
@@ -781,7 +794,8 @@ sqlmap为每个表生成了一个CSV文件。
 -C后跟着用逗号分割的列名，将会在所有数据库表中搜索指定的列名。
 -T后跟着用逗号分割的表名，将会在所有数据库中搜索指定的表名
 -D后跟着用逗号分割的库名，将会在所有数据库中搜索指定的库名。
-####运行自定义的SQL语句
+
+#### 运行自定义的SQL语句
 
 	参数：--sql-query,--sql-shell
 
@@ -813,9 +827,11 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[hh:mm:50] [INFO] retrieved: bar
 	[hh:mm:50] [DEBUG] performed 27 queries in 0 seconds
 	SELECT 'foo', 'bar':    'foo, bar'
-###2.8爆破
+	
+	
+### 2.8爆破
 
-####暴力破解表名
+#### 暴力破解表名
 
 	参数：--common-tables
 
@@ -853,21 +869,22 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	+-------+
 	| users |
 	+-------+
-####暴力破解列名
+	
+#### 暴力破解列名
 
 	参数：--common-columns
 
 与暴力破解表名一样，暴力跑的列名在txt/common-columns.txt中。
 
-####用户自定义函数注入
+#### 用户自定义函数注入
 
 	参数：--udf-inject,--shared-lib
 
 你可以通过编译MySQL注入你自定义的函数（UDFs）或PostgreSQL在windows中共享库，DLL，或者Linux/Unix中共享对象，sqlmap将会问你一些问题，上传到服务器数据库自定义函数，然后根据你的选择执行他们，当你注入完成后，sqlmap将会移除它们。
 
-###2.9系统文件操作
+### 2.9系统文件操作
 
-####从数据库服务器中读取文件
+#### 从数据库服务器中读取文件
 
 	参数：--file-read
 
@@ -895,7 +912,9 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	$ file output/192.168.136.129/files/C__example.exe 
 	output/192.168.136.129/files/C__example.exe: PE32 executable for MS Windows (GUI) Intel
 	80386 32-bit
-####把文件上传到数据库服务器中
+	
+	
+#### 把文件上传到数据库服务器中
 
 	参数：--file-write,--file-dest
 
@@ -924,7 +943,9 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[hh:mm:52] [INFO] retrieved: 31744
 	[hh:mm:52] [INFO] the file has been successfully written and its size is 31744 bytes, 
 	same size as the local file '/software/nc.exe.packed'
-####运行任意操作系统命令
+	
+	
+####  运行任意操作系统命令
 
 	参数：--os-cmd,--os-shell
 
@@ -968,7 +989,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 3、JSP
 4、PHP
 
-####Meterpreter配合使用
+####  Meterpreter配合使用
 
 	参数：--os-pwn,--os-smbrelay,--os-bof,--priv-esc,--msf-path,--tmp-path
 
@@ -979,7 +1000,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 3. 通过SMB攻击(MS08-068)来执行Metasploit的shellcode，当sqlmap获取到的权限足够高的时候（Linux/Unix的uid=0，Windows是Administrator），--os-smbrelay。
 4. 通过溢出Microsoft SQL Server 2000和2005的sp_replwritetovarbin存储过程(MS09-004)，在内存中执行
 
-####Metasploit的payload
+####  Metasploit的payload
 	参数：--os-bof
 列举一个MySQL例子：
 
@@ -1086,59 +1107,60 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 [*] Meterpreter session 1 closed.  Reason: User exit
 默认情况下MySQL在Windows上以SYSTEM权限运行，PostgreSQL在Windows与Linux中是低权限运行，Microsoft SQL Server 2000默认是以SYSTEM权限运行，Microsoft SQL Server 2005与2008大部分是以NETWORK SERVICE有时是LOCAL SERVICE。
 
-##3.补充
+##  3.补充
 
-###3.1对Windows注册表操作
+###  3.1对Windows注册表操作
 
 当数据库为MySQL，PostgreSQL或Microsoft SQL Server，并且当前web应用支持堆查询。 当然，当前连接数据库的用户也需要有权限操作注册表。
 
-####读取注册表值
+####  读取注册表值
 
 	参数：--reg-read
 
-####写入注册表值
+####  写入注册表值
 
 	参数：--reg-add
 
-####删除注册表值
+#### 删除注册表值
 
 	参数：--reg-del
 
-####注册表辅助选项
+#### 注册表辅助选项
 
 	参数：--reg-key，--reg-value，--reg-data，--reg-type
 
 需要配合之前三个参数使用，例子：
 
 	$ python sqlmap.py -u http://192.168.136.129/sqlmap/pgsql/get_int.aspx?id=1 --reg-add --reg-key="HKEY_LOCAL_MACHINE\SOFTWARE\sqlmap" --reg-value=Test --reg-type=REG_SZ --reg-data=1
-###3.2常规参数
+	
+### 3.2常规参数
 
-####从sqlite中读取session
+#### 从sqlite中读取session
 
 	参数：-s
 
 	sqlmap对每一个目标都会在output路径下自动生成一个SQLite文件，如果用户想指定读取的文件路径，就可以用这个参数。
 
-####保存HTTP(S)日志
+#### 保存HTTP(S)日志
 
 	参数：-t
 
 	这个参数需要跟一个文本文件，sqlmap会把HTTP(S)请求与响应的日志保存到那里。
 
-####非交互模式
+#### 非交互模式
 
 	参数：--batch
 
 	用此参数，不需要用户输入，将会使用sqlmap提示的默认值一直运行下去。
 
-####强制使用字符编码
+#### 强制使用字符编码
 
 	参数：--charset
 
 	不使用sqlmap自动识别的（如HTTP头中的Content-Type）字符编码，强制指定字符编码如：
 
 	--charset=GBK
-####爬行网站URL
+#### 爬行网站URL
 
 	参数：--crawl
 
@@ -1155,26 +1177,28 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[xx:xx:54] [INFO] heuristics detected web page charset 'ascii'
 	[xx:xx:00] [INFO] 42/56 links visited (75%)
 	[...]
-####规定输出到CSV中的分隔符
+	
+	
+#### 规定输出到CSV中的分隔符
 
 	参数：--csv-del
 
 	当dump保存为CSV格式时（--dump-format=CSV），需要一个分隔符默认是逗号，用户也可以改为别的 如：
 
 	--csv-del=";"
-####DBMS身份验证
+#### DBMS身份验证
 
 	参数：--dbms-cred
 
 	某些时候当前用户的权限不够，做某些操作会失败，如果知道高权限用户的密码，可以使用此参数，有的数据库有专门的运行机制，可以切换用户如Microsoft SQL Server的OPENROWSET函数
 
-####定义dump数据的格式
+#### 定义dump数据的格式
 
 	参数：--dump-format
 
 	输出的格式可定义为：CSV，HTML，SQLITE
 
-####预估完成时间
+#### 预估完成时间
 
 	参数：--eta
 
@@ -1200,25 +1224,25 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	banner:    'Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Prod'
 sqlmap先输出长度，预计完成时间，显示百分比，输出字符
 
-####刷新session文件
+#### 刷新session文件
 
 	参数：--flush-session
 
 如果不想用之前缓存这个目标的session文件，可以使用这个参数。 会清空之前的session，重新测试该目标。
 
-####自动获取form表单测试
+#### 自动获取form表单测试
 
 	参数：--forms
 
 如果你想对一个页面的form表单中的参数测试，可以使用-r参数读取请求文件，或者通过--data参数测试。 但是当使用--forms参数时，sqlmap会自动从-u中的url获取页面中的表单进行测试。
 
-####忽略在会话文件中存储的查询结果
+#### 忽略在会话文件中存储的查询结果
 
 	参数：--fresh-queries
 
 忽略session文件保存的查询，重新查询。
 
-####使用DBMS的hex函数
+#### 使用DBMS的hex函数
 
 	参数：--hex
 
@@ -1235,13 +1259,13 @@ sqlmap先输出长度，预计完成时间，显示百分比，输出字符
 	[xx:xx:15] [INFO] retrieved: PostgreSQL 8.3.9 on i486-pc-linux-gnu, compiled by
 	GCC gcc-4.3.real (Debian 4.3.2-1.1) 4.3.2
 	[...]
-####自定义输出的路径
+#### 自定义输出的路径
 
 	参数：--output-dir
 
 sqlmap默认把session文件跟结果文件保存在output文件夹下，用此参数可自定义输出路径 例如：--output-dir=/tmp
 
-####从响应中获取DBMS的错误信息
+#### 从响应中获取DBMS的错误信息
 
 	参数：--parse-errors
 
@@ -1261,9 +1285,10 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 	<b>/sqlmap/mssql/iis/get_int.asp, line 27</b>'
 	[11:12:17] [INFO] target URL appears to have 3 columns in query
 	[...]
-###3.3其他的一些参数
+	
+### 3.3其他的一些参数
 
-####使用参数缩写
+#### 使用参数缩写
 
 	参数：-z
 
@@ -1279,11 +1304,13 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 可以写成：
 
 	python sqlmap.py -z "ign,flu,bat,tec=U,dump,D=testdb,T=users" -u "www.target.com/vuln.php?id=1"
-####成功SQL注入时警告
+	
+	
+#### 成功SQL注入时警告
 
 	参数：--alert
 
-####设定会发的答案
+#### 设定会发的答案
 
 	参数：--answers
 
@@ -1295,13 +1322,14 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 	heuristic (parsing) test showed that the back-end DBMS could be 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
 	[xx:xx:56] [INFO] do you want to include all tests for 'MySQL' extending provided level (1) and risk (1)? [Y/n] N
 	[...]
-####发现SQL注入时发出蜂鸣声
+	
+#### 发现SQL注入时发出蜂鸣声
 
 	参数：--beep
 
 	发现sql注入时，发出蜂鸣声。
 
-####启发式检测WAF/IPS/IDS保护
+#### 启发式检测WAF/IPS/IDS保护
 
 	参数：--check-waf
 
@@ -1312,31 +1340,31 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 	&foobar=AND 1=1 UNION ALL SELECT 1,2,3,table_name FROM information_schema.tables WHERE 2>1
 如果有保护的话可能返回结果会不同。
 
-####清理sqlmap的UDF(s)和表
+#### 清理sqlmap的UDF(s)和表
 
 	参数：--cleanup
 
 清除sqlmap注入时产生的udf与表。
 
-####禁用彩色输出
+#### 禁用彩色输出
 
 	参数：--desable-coloring
 
 sqlmap默认彩色输出，可以使用此参数，禁掉彩色输出。
 
-####使用指定的Google结果页面
+#### 使用指定的Google结果页面
 
 	参数：--gpage
 
 默认sqlmap使用前100个URL地址作为注入测试，结合此选项，可以指定页面的URL测试。
 
-####使用HTTP参数污染
+#### 使用HTTP参数污染
 
 	参数：--hpp
 
 HTTP参数污染可能会绕过WAF/IPS/IDS保护机制，这个对ASP/IIS与ASP.NET/IIS平台很有效。
 
-####测试WAF/IPS/IDS保护
+#### 测试WAF/IPS/IDS保护
 
 参数：--identify-waf
 
@@ -1372,7 +1400,8 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:23] [DEBUG] checking for WAF/IDS/IPS product 'ModSecurity: Open Source Web Application Firewall (Trustwave)'
 	[xx:xx:23] [CRITICAL] WAF/IDS/IPS identified 'ModSecurity: Open Source Web Application Firewall (Trustwave)'. Please consider usage of tamper scripts (option '--tamper')
 	[...]
-####模仿智能手机
+	
+#### 模仿智能手机
 
 	参数：--mobile
 
@@ -1392,7 +1421,8 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[7] Samsung Galaxy S
 	> 1
 	[...]
-####安全的删除output目录的文件
+	
+#### 安全的删除output目录的文件
 
 	参数：--purge-output
 
@@ -1410,7 +1440,8 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:55] [DEBUG] renaming directory names to random values
 	[xx:xx:55] [DEBUG] deleting the whole directory tree
 	[...]
-####启发式判断注入
+	
+#### 启发式判断注入
 
 	参数：--smart
 
@@ -1451,7 +1482,8 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:24] [INFO] target URL appears to have 3 columns in query
 	[xx:xx:24] [INFO] GET parameter 'id' is 'MySQL UNION query (NULL) - 1 to 20 columns' injectable
 	[...]
-####初级用户向导参数
+	
+#### 初级用户向导参数
 
 	参数：--wizard 面向初级用户的参数，可以一步一步教你如何输入针对目标注入。
 
