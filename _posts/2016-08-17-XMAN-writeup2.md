@@ -162,3 +162,10 @@ md5 is good! xman{admin888}
 -----
 
 ### CM5
+
+首先发现这是一个RC4加密的代码，密钥是I_am_not_the_flag，密文是6EDCE5E7B7CF3CC581E7D0B5CBAA91DE。
+然后，就是一个反解，可以得到密码是rc4_i5_v3ry_e4sy
+
+------
+
+### CM6
