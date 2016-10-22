@@ -41,7 +41,11 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
 ## 0x01 基础语言
 
-1. 首先，花4天时间大略过一下最基础的语言语法HTML／CSS、JavaScript、PHP、SQL的基本知识（平均一个语言4小时足矣），要做到看到这些代码的时候不会畏惧，能看懂大部分，看到不懂的能通过google或者相关文档查懂。主要参考：http://www.w3school.com.cn/  http://www.runoob.com/
+1. 首先，花4天时间大略过一下最基础的语言语法HTML／CSS、JavaScript、PHP、SQL的基本知识（平均一个语言4小时足矣），要做到看到这些代码的时候不会畏惧，能看懂大部分，看到不懂的能通过google或者相关文档查懂。主要参考
+
+   [1]: http://www.w3school.com.cn/
+
+   ：http://www.w3school.com.cn/  http://www.runoob.com/
 
 2. 现在，你初步了解了一些语言知识，接下来你就需要开始在实践中学习与巩固。
 
@@ -103,9 +107,9 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
    2.  HTML字符实体编码、对应的命名实体、URL编码、JS编码、CSS编码、Base64编码
 
-             这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
+              这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
 
-             参考：
+              参考：
 
        1. http://www.ruanyifeng.com/blog/2010/02/url_encoding.html
 
@@ -117,7 +121,7 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
    3.  序列化编码问题
 
-             Java、PHP、Python序列化问题
+              Java、PHP、Python序列化问题
 
        1. http://www.crazydb.com/archive/Java%E3%80%81PHP%E3%80%81Python%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%97%AE%E9%A2%98
        2. http://www.hollischuang.com/archives/1140
@@ -356,7 +360,7 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 3.  旁注 
 
-         ​渗透的时候需要，CTF还没见过
+          ​渗透的时候需要，CTF还没见过
 
 4.  提权
 
@@ -406,9 +410,9 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 -  https://ringzer0team.com/challenge
 
-       ​
+        ​
 
-       ​
+        ​
 
 ## 0x05 高级技巧
 
