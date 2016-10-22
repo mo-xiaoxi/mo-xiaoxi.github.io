@@ -103,30 +103,31 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
    2.  HTML字符实体编码、对应的命名实体、URL编码、JS编码、CSS编码、Base64编码
 
-              这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
+       这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
 
-              参考：
+       参考：
 
+       1.  http://www.ruanyifeng.com/blog/2010/02/url_encoding.html
 
-       1. http://www.ruanyifeng.com/blog/2010/02/url_encoding.html
+       2.  https://security.yirendai.com/news/share/26
 
-       2. https://security.yirendai.com/news/share/26
-       3. http://www.freebuf.com/articles/web/43285.html
-       4. http://bobao.360.cn/learning/detail/292.html（比较推荐这个）
-       5. http://paper.seebug.org/papers/Archive/drops2/XSS%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%20---%E7%A7%91%E6%99%AE%E6%96%87.html（还有这个）
-       6. 对应的编解码工具：http://evilcos.me/lab/xssor/   http://evilcos.me/lab/xssee/
+       3.  http://www.freebuf.com/articles/web/43285.html
+       4.  http://bobao.360.cn/learning/detail/292.html（比较推荐这个）
+       5.  http://paper.seebug.org/papers/Archive/drops2/XSS%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%20---%E7%A7%91%E6%99%AE%E6%96%87.html（还有这个）
+       6.  对应的编解码工具：http://evilcos.me/lab/xssor/   http://evilcos.me/lab/xssee/
 
-3.    序列化编码问题
-
-      Java、PHP、Python序列化问题
+   3.  序列化编码问题
 
 
-       1. http://www.crazydb.com/archive/Java%E3%80%81PHP%E3%80%81Python%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%97%AE%E9%A2%98
-       2. http://www.hollischuang.com/archives/1140
-       3. http://www.wtoutiao.com/p/1e1gMC1.html
-       4. http://www.milw0rm.cn/Article/web/20161020/607.html
-    
-       编码安全问题在前端安全方面一直是一个很重要的方面，请大家务必重视。不过这个方面一开始很难完全掌握，大家一开始只需要有一个较为完整的概念即可，后面迭代深入学习。
+       Java、PHP、Python序列化问题
+
+       1.  http://www.crazydb.com/archive/Java%E3%80%81PHP%E3%80%81Python%E7%9A%84%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E9%97%AE%E9%A2%98
+       2.  http://www.hollischuang.com/archives/1140
+       3.  http://www.wtoutiao.com/p/1e1gMC1.html
+       4.  http://www.milw0rm.cn/Article/web/20161020/607.html
+
+   编码安全问题在前端安全方面一直是一个很重要的方面，请大家务必重视。不过这个方面一开始很难完全掌握，大家一开始只需要有一个较为完整的概念即可，后面迭代深入学习。
+
 
 5. 稍微了解下同源策略
 
@@ -358,7 +359,7 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 3.  旁注 
 
-           渗透的时候需要，CTF还没见过
+    ​    渗透的时候需要，CTF还没见过
 
 4.  提权
 
@@ -385,12 +386,9 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 18. 反弹shell
 
-19. 中间件解析漏洞
+19. 中间件解析漏洞http://thief.one/2016/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/（复制打开）IIS、Apache、Nginx
 
-- IIS
-- Apache
-   - Nginx
-     http://thief.one/2016/09/21/%E6%9C%8D%E5%8A%A1%E5%99%A8%E8%A7%A3%E6%9E%90%E6%BC%8F%E6%B4%9E/（复制打开）
+
 20. 乌云
 
 - 公开漏洞、知识库搜索 http://wooyun.bystudent.com/
@@ -408,7 +406,7 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 -  https://ringzer0team.com/challenge
 
-          ​
+   ​
 
 ## 0x05 高级技巧
 
