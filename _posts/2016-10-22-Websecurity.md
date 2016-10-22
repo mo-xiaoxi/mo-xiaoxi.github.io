@@ -27,7 +27,7 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
 ## 0x00 前言
 
-> 这是我依据我浅薄的学习经历来总结的，难免有很多缺漏甚至谬误的地方。一来是因为我个人能力的局限性，二来是Web安全这方面的知识点实在太多太杂，很难完全总结下来。所以，如果你发现有什么问题，请在下面评论或直接发email给我，我好修改，谢谢大家。😄
+> 这是我依据我浅薄的学习经历来总结的，难免有很多缺漏甚至谬误的地方。一来是因为我个人能力的局限性，二来是Web安全这方面的知识点实在太多太杂，很难完全总结下来。所以，如果你发现有什么问题，请在下面评论或直接发email给我，我好修改，谢谢大家。😄(orz链接编辑失效了，有点多。。大家自行复制吧)
 
 去年，我与我的团队在我母校创立了一个安全协会与对应的实验室，我们想通过一个这样的学生组织为一些对信息安全知识有充足兴趣的人提供一个较好的学习平台，让大家能够更加容易地跨入信息安全的大门。
 
@@ -113,9 +113,7 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
        2. https://security.yirendai.com/news/share/26
        3. http://www.freebuf.com/articles/web/43285.html
        4. http://bobao.360.cn/learning/detail/292.html（比较推荐这个）
-       5. http://paper.seebug.org/papers/Archive/drops2/XSS%E4%B8%8E%E5%AD%97%E7%AC%A6%E7
-          %BC%96%E7%A0%81%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%20---
-          %E7%A7%91%E6%99%AE%E6%96%87.html（还有这个）
+       5. http://paper.seebug.org/papers/Archive/drops2/XSS%E4%B8%8E%E5%AD%97%E7%AC%A6%E7%BC%96%E7%A0%81%E7%9A%84%E9%82%A3%E4%BA%9B%E4%BA%8B%E5%84%BF%20---%E7%A7%91%E6%99%AE%E6%96%87.html（还有这个）
        6. 对应的编解码工具：http://evilcos.me/lab/xssor/   http://evilcos.me/lab/xssee/
 
    3.  序列化编码问题
