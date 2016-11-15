@@ -7,7 +7,7 @@ description: "关于Web 安全 | 默小西，Web & Security | 这里是小西的
 keyword: "小西, 默小西, Xiaoxi, Moxiaoxi, momomomoxiaoxi, Hnu, 小西的博客, Xiaoxi Blog, 博客, 个人网站, 互联网, Web, Web安全, 信息安全, Github, Pegasus, Pegasus.X"
 url: "http://momomoxiaoxi.com"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-auther: Xiaoxi
+author: Xiaoxi
 
 # SNS settings
 RSS: false
