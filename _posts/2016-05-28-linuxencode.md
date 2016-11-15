@@ -2,11 +2,13 @@
 title: linux加固
 time: 2016.05.28 12:47:00
 layout: post
+catalog: true
 tags:
 - linux加固
-- 蓝盾
-- 安全相关
+- Security
 excerpt: 蓝盾比赛的一些准备与总结
+
+
 
 ---
 
@@ -121,7 +123,6 @@ ping包管理；
 
 防止无效的数据包
  iptables -A OUTPUT -p tcp –sport 22 -m state –state ESTABLISHED -j ACCEPT
-
 
 ----------------------------------------------
 

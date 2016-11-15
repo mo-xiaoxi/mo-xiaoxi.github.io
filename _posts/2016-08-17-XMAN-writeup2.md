@@ -1,19 +1,17 @@
 ---
-
-
 title: XMAN writeup 2
 
 time: 2016.08.17 15:22:00
 
 layout: post
-
+catalog: true
 tags:
 
-- Security
-- XMAN
+- Web Security
 - CTF
 
 excerpt: XMAN夏令营writeup2:这里是我一直想入门的二进制相关主题
+
 
 ---
 
@@ -36,7 +34,6 @@ excerpt: XMAN夏令营writeup2:这里是我一直想入门的二进制相关主�
 输入下就得到了下面的答案
 
 ![image](http://momomoxiaoxi.com/img/post/XMAN/3.png)
-
 
 ------
 
@@ -99,7 +96,6 @@ xman{B4se64_i5_c0mmon}
 
 ```
 
-
 ------
 
 ### CM4
@@ -107,7 +103,7 @@ xman{B4se64_i5_c0mmon}
 拉入IDA，如常，F5得到源码：
 
 ![image](http://momomoxiaoxi.com/img/post/XMAN/4.png)
- 
+
  ```
   printf(Format);
   scanf(a16s, &v4);
@@ -121,8 +117,8 @@ xman{B4se64_i5_c0mmon}
   system(Command);
  ```
  显然，我们可以推测这里应该用到了md5.依据上面的题的思路，我们首先猜一下这里可能就是做了一个md5加密。我们找到比较的字符串是什么。
- 
- 
+
+
  ```
  .data:00403010 unk_403010      db  7Fh ;              ; DATA XREF: _main+B4o
 .data:00403011                 db 0EFh ; 
@@ -143,7 +139,7 @@ xman{B4se64_i5_c0mmon}
 .data:00403020                 db    0
 .data:00403021                 db    0
 .data:00403022                 db    0
-```
+ ```
 
 解码下，
 7FEF6171469E80D32C0559F88B377245
@@ -157,7 +153,6 @@ md5 is good! xman{admin888}
 请按任意键继续. . .
 
 ```
-
 
 -----
 

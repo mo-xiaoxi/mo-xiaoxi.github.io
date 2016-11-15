@@ -1,19 +1,16 @@
 ---
-
-
 title: XMAN writeup 1 
 
 time: 2016.08.15 15:22:00
 
 layout: post
-
+catalog: true
 tags:
-
 - Security
-- XMAN
 - CTF
 
 excerpt: XMAN夏令营writeup1-MISC和Crypt相关，以及各类大杂项。
+
 
 ---
 
@@ -121,7 +118,6 @@ Plaintext:？
 
 kaoroubanfan
 
-
 -----
 
 ### 0x03 EASY_RSA
@@ -193,7 +189,6 @@ root@kali:~/桌面/XMAN/EASY_RSA# openssl rsautl -decrypt -in flag.enc -inkey pr
 root@kali:~/桌面/XMAN/EASY_RSA# cat flag.txt 
 flag{ea5y_r5a_is_0k}root@kali:~/桌面/XMAN/EASY_RSA#   
 ```
-
 
 -------
 
@@ -341,7 +336,7 @@ IGEgdmFyaWFudCBvZiBCYXNlNjT=
 IEEtWn==
 IC3=
 IGFuZCBfIGFzIGFkZGl0aW9uYWwgY2hhcmFjdGVycy5=
-``` 
+```
 
 #### 思路：
 
@@ -387,7 +382,6 @@ solve_stego()
 #### flag:
 
 flag{BASE64_i5_amaz1ng}
-
 
 ----
 

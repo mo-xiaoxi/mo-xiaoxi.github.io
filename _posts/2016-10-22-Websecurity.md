@@ -4,14 +4,15 @@ title: Web安全学习路线
 time: 2016.10.22 15:00:00
 
 layout: post
-
+catalog: true
 tags:
 
-- Web Security
-- 总结
+- Security
+- 学习总结
 - 学习路线
 
 excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大家一些帮助。🙏
+
 
 
 
@@ -103,9 +104,9 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
    2.  HTML字符实体编码、对应的命名实体、URL编码、JS编码、CSS编码、Base64编码
 
-        这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
+           这三种编码在挖掘XSS漏洞的时候尤为有用！当然，有时候其他的注入攻击的时候也会用到
 
-        参考：
+           参考：
 
        1.  http://www.ruanyifeng.com/blog/2010/02/url_encoding.html
 
@@ -359,7 +360,7 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 3.  旁注 
 
-     ​    渗透的时候需要，CTF还没见过
+        ​    渗透的时候需要，CTF还没见过
 
 4.  提权
 
@@ -406,7 +407,7 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 -  https://ringzer0team.com/challenge
 
-    ​
+       ​
 
 ## 0x05 高级技巧
 

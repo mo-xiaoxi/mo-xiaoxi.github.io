@@ -1,12 +1,22 @@
-{% include header.html %}
- 
-            <div class="rotLeft rotTop pageBack"></div>
-            <div class="rotRight rotTop pageBack"></div>
-            <div class="container page">
-                {{ content }}
-            </div>
-            <div class="rotLeft rotBottom pageBack"></div>
-            <div class="rotRight rotBottom pageBack"></div>
+<!DOCTYPE html>
+<html lang="en">
 
-{% include footer.html %}
- 
+{% include head.html %}
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    {% include nav.html %}
+
+    {{ content }}
+
+    {% include footer.html %}
+
+
+<!-- Image to hack wechat -->
+<img src="/img/avatar-xiaoxi.jpg" width="0" height="0" />
+<!-- Migrate from head to bottom, no longer block render and still work -->
+
+</body>
+
+</html>

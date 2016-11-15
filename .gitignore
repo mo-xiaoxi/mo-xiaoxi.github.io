@@ -4,3 +4,6 @@ css/*.map
 .DS_Store
 .Ulysses-Group.plist 
 *.bak
+*/.DS_Store
+*/*/.DS_Store
+*.sh

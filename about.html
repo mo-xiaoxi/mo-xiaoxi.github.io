@@ -1,0 +1,96 @@
+---
+layout: page
+title: "About"
+description: "Hey, this is Xiaoxi."
+header-img: "img/about-bg.jpg"
+---
+
+
+
+<!-- Chinese Version -->
+<div class="zh post-container">
+
+    <!--copied from markdown -->
+    <blockquote><p>业余CTF选手，偶尔搞搞开发。 <br>
+    一位梦想当厨神的黑暗料理师。</p></blockquote>
+
+    <p><h3>默小西</H3></p>
+
+    <p>幼时玩闹时，耍出来的小名。一场玩闹，一个名字。<br> 
+        该博客主要写一些个人的杂谈，偶尔写一写编程与安全相关的知识。<br> 
+          如果你觉得我很有趣，值得成为你的朋友。可以随时在博客下<a href="#comments">留言 </a>或者通过 <a href="mailto:{{ site.email }}?subject=Interested+In+Your+Blog+Posts" target="_blank">邮件</a> 联系我！</p>
+
+        <table id="content">
+    <tr>
+    <td colspan="2" class="title"><h3>目前状况：</h3></td>
+    </tr>
+    <tr>
+    <td>    <div class="content-left1"><h4>技能:</h4><p>1. 语言：C、C++、Python、nesC、PHP<br>2. 开发平台：Xcode、VS、MATLAB <br>3. 安全相关：Kali、sqlmap、Burp Suit、Metasploit <br> 4. 其它: Git、Cocos2d-x、Boost、jekyll<br></p></div></td>
+    <td>    <div class="content-right1"><h4>项目:</h4><p>1. 基于TinyOS的防窃听与入侵检测系统<br> 2. Github-leaks <br>3. 可抗密钥失窃的无线安全通信协议 <br>4. Zoomeye 大数据安全<br>5. 网络课堂禁锢项目</p></div></td>
+    </tr>
+
+    <tr>
+    <td><div class="content-left2"><h4>安全:</h4><p>1. Web安全<br>2. 业余CTF选手</p></div></td>
+    <td><div class="content-right2"><h4>其他:</h4><p>1. 网络与信息安全实验室（NISL）实习生<br>2. "帽子戏法"安全小组创始人</p></div></td>
+    </tr>
+    </table>
+    </div>
+
+
+
+
+{% if site.duoshuo_username %}
+<!-- 多说评论框 start -->
+<div class="comment">
+    <div class="ds-thread"
+    data-thread-key="{{site.duoshuo_username}}/about"
+
+    data-title="{{page.title}}"
+    data-url="{{site.url}}/about/"></div>
+</div>
+<!-- 多说评论框 end -->
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User hacking by Hux
+    var _user = '{{site.duoshuo_username}}';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+{% endif %}
+
+
+{% if site.disqus_username %}
+<!-- disqus 评论框 start -->
+<div class="comment">
+    <div id="disqus_thread" class="disqus-thread">
+
+    </div>
+</div>
+<!-- disqus 评论框 end -->
+
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "{{site.disqus_username}}";
+    var disqus_identifier = "{{site.disqus_username}}/{{page.url}}";
+    var disqus_url = "{{site.url}}{{page.url}}";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+{% endif %}

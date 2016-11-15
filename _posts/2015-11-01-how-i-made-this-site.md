@@ -2,13 +2,15 @@
 title: 建立这个博客的初衷与过程
 time: 2015.11.30 21:47:00
 layout: post
+catalog: true
 tags:
-- WebDesign
-- JavaScript
-- CSS
-- Project
+- Web
+- 博客
 excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，而且不是契合信息安全的主题。所以，我以jekyll在github上搭建了这个博客。
     
+
+
+
 ---
 
 #建立这个博客的过程
@@ -36,14 +38,14 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 1. jekyll主要就是将纯文本转化为静态网站和博客。
 2. jekyll对博客很专注
 3. 具体参考下列链接：
-[jekyll](http://jekyll.bootcss.com)
+   [jekyll](http://jekyll.bootcss.com)
 
 ###3.学习Wenli Zhang的代码
 1. 之所以选Wenli的代码，是因为一个偶然的契机－正好浏览到了她的网站，
-感觉她写的非常棒，而且也是用jekyll搭建的。所以，就发邮件联系了Wenli
-想她申请源码使用权。
+   感觉她写的非常棒，而且也是用jekyll搭建的。所以，就发邮件联系了Wenli
+   想她申请源码使用权。
 2. 然后，我花了3天的时间，学习了她的[代码](https://github.com/Ovilia/blog)
-不得不说，wenli的代码写的非常漂亮。
+   不得不说，wenli的代码写的非常漂亮。
 3. 再参照她的代码，修改到了如今的版本。
 4. 最后，在github pages中上线－[源码](https://github.com/momomoxiaoxi/momomoxiaoxi.github.io)
 

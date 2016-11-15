@@ -1,27 +1,101 @@
-name: "Blog of Xiaoxi Mo"
-description: "Web Security Blog by Xiaoxi "
+# Site settings
+title:  Blog of Xiaoxi
+SEOTitle: 小西的博客 | Xiaoxi's Blog
+header-img: img/home-bg.jpg
+email: momomomomoxiaoxi@gmail.com
+description: "关于Web 安全 | 默小西，Web & Security | 这里是小西的个人博客，与你一起发现更大的世界。"
+keyword: "小西, 默小西, Xiaoxi, Moxiaoxi, momomomoxiaoxi, Hnu, 小西的博客, Xiaoxi Blog, 博客, 个人网站, 互联网, Web, Web安全, 信息安全, Github, Pegasus, Pegasus.X"
+url: "http://momomoxiaoxi.com"              # your host, for absolute URL
+baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
+auther: Xiaoxi
 
-url: "http://momomoxiaoxi.com"
+# SNS settings
+RSS: false
+weibo_username:     moxiaoxi
+zhihu_username:     mo-xiao-xi-73-73
+github_username:    momomoxiaoxi
+#twitter_username:  huxpro
+#facebook_username:  moxiaoxi
+# linkedin_username:  firstname-lastname-idxxxx
 
 
-timezone: Asia/Shanghai
 
-paginate: 10
-
-paginate_path: "page:num"
-
+# Build settings
+# from 2016, 'pygments' is unsupported on GitHub Pages. Use 'rouge' for highlighting instead.
 highlighter: rouge
-
-markdown:  kramdown
-kramdown:
-  input: GFM
-  auto_ids:      true
-
-
-highlighter: rouge
-
 permalink: pretty
+paginate: 10
+exclude: ["README.md","_drafts/"]
+anchorjs: true                          # if you want to customize anchor. check out line:181 of `post.html`
 
+
+
+# Gems
+# from PR#40, to support local preview for Jekyll 3.0
 gems: [jekyll-paginate]
 
-email: momomomoxiaoxi@gamil.com
+
+
+# Markdown settings
+# replace redcarpet to kramdown,
+# although redcarpet can auto highlight code, the lack of header-id make the catalog impossible, so I switch to kramdown
+# document: http://jekyllrb.com/docs/configuration/#kramdown
+markdown: kramdown
+kramdown:
+  input: GFM                            # use Github Flavored Markdown !important
+
+
+
+# Disqus settings
+#disqus_username: _your_disqus_short_name_
+
+# Duoshuo settings
+duoshuo_username: momomoxiaoxi
+# Share component is depend on Comment so we can NOT use share only.
+duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+
+
+
+
+# Analytics settings
+# Baidu Analytics 
+# ba_track_id: [your track id]
+
+# Google Analytics
+ga_track_id: 'UA-87407377-1'            # Format: UA-xxxxxx-xx
+ga_domain: momomoxiaoxi.com
+
+
+
+# Sidebar settings
+sidebar: true                           # whether or not using Sidebar.
+sidebar-about-description: "业余CTF选手，偶尔搞搞开发。<br>一位梦想当厨神的黑暗料理师。"
+sidebar-avatar: /img/avatar-xiaoxi.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
+
+
+
+# Featured Tags
+featured-tags: true                     # whether or not using Feature-Tags
+featured-condition-size: 1              # A tag will be featured if the size of it is more than this condition value
+
+
+
+# Progressive Web Apps
+chrome-tab-theme-color: "#000000"
+service-worker: true
+
+
+
+# Friends
+friends: [
+    {
+        title: "UNIRANGER",
+        href: "http://www.inmyplace.cn/"
+    },{
+        title: "chiahao",
+        href: "http://chiahao.top/"
+    },{
+        title: "信鑫",
+        href: "http://ycjcl.cc"
+    }
+]

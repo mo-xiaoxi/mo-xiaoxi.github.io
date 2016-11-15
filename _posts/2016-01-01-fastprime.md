@@ -2,11 +2,14 @@
 title: 快速素数测试
 time: 2016.01.01 21:47:00
 layout: post
+catalog: true
 tags:
 - Security
 - 算法
 - 因式分解
 excerpt: 快速素数测试的具体原理讲解
+
+
 
 
 ---
@@ -120,7 +123,7 @@ int IsPrime(unsigned n)//判断是否是素数
        6.如果i=r，且尚未通过测试，则此A对于N的测试失败，说明N为合数。
        7.进行下一个A对N的测试，直到测试完指定个数的A
        通过验证得知，当T为素数，并且A是平均分布的随机数，那么测试有效率为1 / ( 4 ^ T )。如果T > 8那么测试失误的机率就会小于10^(-5)，这对于一般的应用是足够了。如果需要求的素数极大，或着要求更高的保障度，可以适当调高T的值。
-	   ```c
+       ```c
 nt RabbinMillerTest( unsigned n )
 {
     if (n<2)
@@ -128,7 +131,7 @@ nt RabbinMillerTest( unsigned n )
         // 小于2的数即不是合数也不是素数
         return 0;
     }
-
+    
     for(int i=0;i<nPrimeListSize;++i)
     {
         // 按照素数表中的数对当前素数进行判断
@@ -183,3 +186,4 @@ nt RabbinMillerTest( unsigned n )
 # 参考：
 1. [判断一个数是否为素数](http://blog.csdn.net/arvonzhang/article/details/8564836 "判断一个数是否为素数")
 2. [欧拉函数](http://www.ruanyifeng.com/blog/2013/06/rsa_algorithm_part_one.html)
+```

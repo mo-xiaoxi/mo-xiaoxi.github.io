@@ -1,121 +1,264 @@
-{% include header.html %}
+---
+layout: default
+---
 
-<title>{% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}
-    {% if page.series %}
-        : {{ page.series }}
+<!-- Image to hack wechat -->
+<!-- <img src="/img/icon_wechat.png" width="0" height="0"> -->
+<!-- <img src="{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}" width="0" height="0"> -->
+
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        position: relative;
+        background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')
+    }
+
+    {% if page.header-mask %}
+    header.intro-header .header-mask{
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: rgba(0,0,0, {{ page.header-mask }});
+    }
     {% endif %}
- - 小西的博客</title>
-
-<div class="rotLeft rotTop pageBack"></div>
-<div class="rotRight rotTop pageBack"></div>
-<div class="container page{% if isZn %} cn{% endif %}">
-    <div class="simpleNav">
-        <a href="{{ site.url }}" class="pageDiv" >首页</a>
-        <a href="{{ site.url }}" class="pageDiv" >博客</a>
+</style>
+<header class="intro-header" >
+    <div class="header-mask"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="post-heading">
+                    <div class="tags">
+                        {% for tag in page.tags %}
+                        <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
+                        {% endfor %}
+                    </div>
+                    <h1>{{ page.title }}</h1>
+                    {% comment %}
+                        always create a h2 for keeping the margin , Xiaoxi
+                    {% endcomment %}
+                    {% comment %} if page.subtitle {% endcomment %}
+                    <h2 class="subheading">{{ page.subtitle }}</h2>
+                    {% comment %} endif {% endcomment %}
+                    <span class="meta">Posted by {% if page.author %}{{ page.author }}{% else %}{{ site.auther }}{% endif %} on {{ page.date | date: "%B %-d, %Y" }}</span>
+                </div>
+            </div>
+        </div>
     </div>
-    {% assign time = page.time %}
-    {% if page.update_time %}
-        {% assign time = page.update_time %}
-    {% endif %}
-    <div class="timeago cn" title="{{ time | replace: '.', '-' | replace: ' ', 'T' }}+08:00">{{ time }}</div>
+</header>
 
-    {% if page.subtitle != null %}<h2 class="subtitle">{{ page.subtitle }}</h2>{% endif %}
-    <div class="pageTitle">{{ page.title }}</div>
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
 
-    {% if page.series %}
-        {% include series.html %}
-    {% endif %}
+    <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
 
-    <div class="tagPanel">
-    {% for tag in page.tags %}<a href="{{ site.url }}/all?tag={{ tag }}" ><div class="tag">{{ tag }}</div></a>{% endfor %}
-    </div>
+				{{ content }}
 
-    <div id="page-view"></div>
+                <hr style="visibility: hidden;">
 
-    {% if page.titleImg != null %}<img class="post-title-img" src="{{ site.url }}{{ page.titleImg }}" />{% endif %}
-
-    {% include license.html %}
-
-    {% if page.postClass != null %}<div class="{{ page.postClass }}">{% endif %}
-    {{ content }}
-    {% if page.postClass != null %}</div>{% endif %}
-
-    {% if page.series %}
-        {% include series.html %}
-    {% endif %}
-
-    {% assign tagStr = '' %}
-    {% capture url %}{{ site.url }}{{ page.url }}{% endcapture %}
-    {% if page.shortUrl != null %}
-        {% assign url = page.shortUrl %}
-        {% for tag in page.tags %}
-            {% capture len %}{{ tagStr | append: tag | append: page.title | append: page.subtitle }}{% endcapture %}
-            {% if len.size < 100 %}
-            {% capture tagStr %}{{ tagStr }},{{ tag }}{% endcapture %}
-            {% endif %}
-        {% endfor %}
-    {% endif %}
-    <hr />
-    
-    <p class="no-indent"><a href="{{ site.url }}/tip/" >觉得博文很赞？来打赏一下我吧！——送小西一本书，让他写出更棒的作品！:heart_eyes: </a></p>
-    
-    <div class="social-share">
-        <a class="social-share-element social-twitter" href="https://twitter.com/intent/tweet?text={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}&url={{ url }}&via=Xiaoxi Mo&hashtags={{ tagStr }}" target="_blank" title="Share this post on Twitter" ></a-->
-        <a class="social-share-element social-facebook" href="https://www.facebook.com/sharer/sharer.php?t={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}&u={{ url }}" target="_blank" title="Share this post on Facebook" ></a>
-        <a class="social-share-element social-google" href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}" target="_blank" title="Share this post on Google Plus" ></a>
-        <a class="social-share-element social-linkedin" href="http://www.linkedin.com/shareArticle?mini=true&title={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}&url={{ url }}&source=http%3a%2f%momomoxiaoxi.com" target="_blank" title="Share this post on LinkedIn" ></a>
-        <a class="social-share-element social-digg" href="http://digg.com/submit?url={{ site.url }}{{ page.url }}&title={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}" target="_blank" title="Share this post on Digg" ></a>
-        <a class="social-share-element social-reddit" href="http://reddit.com/submit?url={{ site.url }}{{ page.url }}&title={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}" target="_blank" title="Share this post on Reddit" ></a>
-        <a class="social-share-element social-stumble" href="http://www.stumbleupon.com/submit?url={{ site.url }}{{ page.url }}&title={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}" target="_blank" title="Share this post on StumbleUpon" ></a>
-        <a class="social-share-element social-weibo" href="http://v.t.sina.com.cn/share/share.php?title=来看看+%40小西+的博文吧：{% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}&url={{ url }}{% if page.titleImg != null %}&pic={{ page.titleImg }}{% endif %}" target="_blank" title="Share this post on Sina Weibo" ></a>
-        <a class="social-share-element social-douban" href="http://shuo.douban.com/!service/share?href={{ site.url }}{{ page.url }}&name={% if page.subtitle != null %}{{ page.subtitle }} {% endif %}{{ page.title }}{% if page.titleImg != null %}&image={{ page.titleImg }}{% endif %}" target="_blank" title="Share this post on Dounban" ></a>
-    </div>
-
-    <blockquote class="relatedPosts">
-        {% assign hasSimilar = '' %}
-        {% for post in site.posts %}
-            {% assign postHasSimilar = false %}
-            {% for tag in post.tags %}
-                {% if tag != '中文' and post.title != page.title %}
-                {% for thisTag in page.tags %}
-                    {% if postHasSimilar == false and hasSimilar.size < 5 and tag == thisTag %}
-                        {% if hasSimilar.size == 0 %}
-                        <h4>相似博文</h4>
-                        <ul>
-                        {% endif %}
-                        <li class="relatedPost">
-                            <a href="{{ site.url }}{{ post.url }}" >
-
-                                {{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}
-                            </a>
-                        </li>
-                        {% capture hasSimilar %}{{ hasSimilar }}*{% endcapture %}
-                        {% assign postHasSimilar = true %}
-                    {% endif %}
-                {% endfor %}
+                {% if site.duoshuo_share && site.duoshuo_username %}
+                <!-- 多说 Share start -->
+                <div class="ds-share"
+                    style="text-align: right"
+                    data-thread-key="{{page.id}}"
+                    data-title="{{page.title}}"
+                    data-url="{{site.url}}{{site.baseurl}}{{page.url}}"
+                    data-images="{{ site.url }}{{site.baseurl}}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}"
+                    data-content="{{ content | strip_html | truncate:80 }} | {{ site.SEOTitle }} " >
+                    <div class="ds-share-inline">
+                      <style> 
+                        .ds-share-icons-16 {display:none;} 
+                      </style>
+                      <ul class="ds-share-icons-16">
+                        <li data-toggle="ds-share-icons-more"><a class="ds-more" href="#">分享到：</a></li>
+                        <li><a class="ds-wechat flat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+                        <li><a class="ds-weibo flat" href="javascript:void(0);" data-service="weibo">微博</a></li>
+                        <li><a class="ds-douban flat" href="javascript:void(0);" data-service="douban">豆瓣</a></li>
+                      </ul>
+                      <div class="ds-share-icons-more">
+                      </div>
+                    </div>
+                <hr>
+                </div>
+                <!-- 多说 Share end-->
                 {% endif %}
-            {% endfor %}
-        {% endfor %}
-        {% if hasSimilar.size > 0 %}
-            </ul>
+
+
+                <ul class="pager">
+                    {% if page.previous.url %}
+                    <li class="previous">
+                        <a href="{{ page.previous.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.previous.title}}">
+                        Previous<br>
+                        <span>{{page.previous.title}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    {% if page.next.url %}
+                    <li class="next">
+                        <a href="{{ page.next.url | prepend: site.baseurl | replace: '//', '/' }}" data-toggle="tooltip" data-placement="top" title="{{page.next.title}}">
+                        Next<br>
+                        <span>{{page.next.title}}</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+
+
+                {% if site.duoshuo_username %}
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                        data-thread-key="{{page.id}}"
+                        data-title="{{page.title}}"
+                        data-url="{{site.url}}{{site.baseurl}}{{page.url}}" >
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                {% endif %}
+
+                {% if site.disqus_username %}
+                <!-- disqus 评论框 start -->
+                <div class="comment">
+                    <div id="disqus_thread" class="disqus-thread"></div>
+                </div>
+                <!-- disqus 评论框 end -->
+                {% endif %}
+
+            </div>  
+
+    <!-- Side Catalog Container -->
+        {% if page.catalog %}
+            <div class="
+                col-lg-2 col-lg-offset-0
+                visible-lg-block
+                sidebar-container
+                catalog-container">
+                <div class="side-catalog">
+                    <hr class="hidden-sm hidden-xs">
+                    <h5>
+                        <a class="catalog-toggle" href="#">CATALOG</a>
+                    </h5>
+                    <ul class="catalog-body"></ul>
+                </div>
+            </div>
         {% endif %}
 
-        <h4>最近发表</h4>
-        <ul>
-        {% for post in site.posts limit:5 %}
-            <li class="relatedPost">
-                <a href="{{ site.url }}{{ post.url }}" >
-                    {{ post.title }}{% if post.subtitle != null %}：{{ post.subtitle }}{% endif %}
-                </a>
-            </li>
-        {% endfor %}
-        </ul>
-        <a class="button" href="{{ site.url }}/all" >View All Posts</a></p>
-    </blockquote>
+    <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
 
-    {% include comment.html %}
-</div>
-<div class="rotLeft rotBottom pageBack"></div>
-<div class="rotRight rotBottom pageBack"></div>
+                <!-- Featured Tags -->
+                {% if site.featured-tags %}
+                <section>
+                    <hr class="hidden-sm hidden-xs">
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+        				{% for tag in site.tags %}
+                            {% if tag[1].size > {{site.featured-condition-size}} %}
+                				<a href="/tags/#{{ tag[0] }}" title="{{ tag[0] }}" rel="{{ tag[1].size }}">
+                                    {{ tag[0] }}
+                                </a>
+                            {% endif %}
+        				{% endfor %}
+        			</div>
+                </section>
+                {% endif %}
 
-{% include footer.html %}
+                <!-- Friends Blog -->
+                {% if site.friends %}
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+                    {% for friend in site.friends %}
+                        <li><a href="{{friend.href}}">{{friend.title}}</a></li>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</article>
+
+
+{% if site.duoshuo_username %}
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = '{{site.duoshuo_username}}';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user };
+    (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+{% endif %}
+
+
+{% if site.disqus_username %}
+<!-- disqus 公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES * * */
+    var disqus_shortname = "{{site.disqus_username}}";
+    var disqus_identifier = "{{page.id}}";
+    var disqus_url = "{{site.url}}{{page.url}}";
+
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<!-- disqus 公共JS代码 end -->
+{% endif %}
+
+
+{% if site.anchorjs %}
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("//cdnjs.cloudflare.com/ajax/libs/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'always',
+          placement: 'right',
+          icon: '#'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+<style>
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+{% endif %}
