@@ -101,5 +101,14 @@ friends: [
     ,{
         title: "vancir",
         href: "http://www.vancir.com/"
+    },{
+        title: "Randy",
+        href: "http://pengzhendong.cn"
+    },{
+        title: "louys",
+        href: "http://www.louys.net.cn"
+    },{
+        title: "冠成-pwn",
+        href: "http://gcli.cn"
     }
 ]
