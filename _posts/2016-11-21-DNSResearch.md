@@ -1,6 +1,6 @@
 ---
 title: 两篇CDN相关的论文阅读
-Subtitle: CDN路由循环攻击、CDN与HTTPS的冲突
+subtitle: CDN路由循环攻击、CDN与HTTPS的冲突
 time: 2016.11.21 00:01:00
 layout: post
 tags:
@@ -8,6 +8,7 @@ tags:
 - Research
 
 excerpt: 因为毕设选题与CDN相关，所以这两周主要花了一些时间研究CDN与HTTPS的技术。这里分享两篇CDN相关的论文。cdn_loop-final-camera-ready、https-in-cdn
+
 
 ---
 
