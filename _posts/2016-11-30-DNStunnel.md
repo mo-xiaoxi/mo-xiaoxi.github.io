@@ -1,14 +1,14 @@
 ---
-title: HCTF2016 Web WP
-time: 2016.10.29 10:00:00
+title: DNS tunnel+Socks代理
+subtitle: iodine+shadowsocks
+time: 2016.11.30 10:00:00
 layout: post
 catalog: true
 tags:
 - Security
-- CTF
-- Web
+- DNS
 
-excerpt: 上个周末，一起和大家打了HCTF比赛，比赛很有趣，质量也很高。前面三层难度适中，后面两层的题目就完全不会做了orz
+excerpt: 这里对iodine和shadowsocks进行了失败的配置。😢不过，具体的意思到了，只是macos sierria出现了一个段错误，暂时不知道如何处理。后续打算看源码解决这个问题
 ---
 
 
@@ -40,11 +40,11 @@ excerpt: 上个周末，一起和大家打了HCTF比赛，比赛很有趣，质�
 
 如图：
 
-![](../img/post/iodine/1.png)
+![](/img/post/iodine/1.png)
 
 此时，你在测试网站上看到的情景如下：
 
-![](../img/post/iodine/2.png)
+![](/img/post/iodine/2.png)
 
 ## 服务器配置iodine
 
@@ -97,12 +97,11 @@ Setting IP of dns0 to 192.168.99.1
 Setting MTU of dns0 to 1130
 Opened IPv4 UDP socket
 Listening to dns for domain xiaoxi.ilovefyy.top
-
 ```
 
 此时，测试数据如下
 
-![](../img/post/iodine/4.png)
+![](/img/post/iodine/4.png)
 
 ## 客户端安装iodine
 
@@ -144,19 +143,19 @@ sudo make install
 
 安装完成：
 
-![](../img/post/iodine/3.png)
+![](/img/post/iodine/3.png)
 
 下面采用kali的虚拟机进行测试：
 
-![](../img/post/iodine/5.png)
+![](/img/post/iodine/5.png)
 
 连接成功。
 
 互相ping一下：
 
-![](../img/post/iodine/6.png)
+![](/img/post/iodine/6.png)
 
-![](../img/post/iodine/7.png)
+![](/img/post/iodine/7.png)
 
 正常连接
 
@@ -171,7 +170,6 @@ Debian / Ubuntu:
 ```
 apt-get install python-pip
 pip install shadowsocks
-
 ```
 
 CentOS:
@@ -185,21 +183,18 @@ pip install shadowsocks
 
 ```
 ssserver -p 443 -k password -m aes-256-cfb
-
 ```
 
 To run in the background:
 
 ```
 sudo ssserver -p 443 -k password -m aes-256-cfb --user nobody -d start
-
 ```
 
 To stop:
 
 ```
 sudo ssserver -d stop
-
 ```
 
 To check the log:
@@ -210,7 +205,7 @@ sudo less /var/log/shadowsocks.log
 
 开启ssserver
 
-![](../img/post/iodine/8.png)
+![](/img/post/iodine/8.png)
 
 ### Client
 
@@ -222,23 +217,23 @@ sudo less /var/log/shadowsocks.log
 
 
 
-![](../img/post/iodine/10.png)
+![](/img/post/iodine/10.png)
 
-![](../img/post/iodine/9.png)
+![](/img/post/iodine/9.png)
 
 
 
-![](../img/post/iodine/12.png)
+![](/img/post/iodine/12.png)
 
 连接成功。
 
 成功连接上google
 
-![](../img/post/iodine/11.png)
+![](/img/post/iodine/11.png)
 
 ssh测试：
 
-![](../img/post/iodine/13.png)
+![](/img/post/iodine/13.png)
 
 ---
 
