@@ -26,10 +26,10 @@ excerpt: 这里对DNS、SNSSEC、QUIC协议进行一个简单的学习与总结�
 
 |  类型  |  助记符  |          说明           |
 | :--: | :---: | :-------------------: |
-|  1   |   A   |        IPv4地址         |
-|  2   |  NS   |         名字服务器         |
+|  1   |   A   |       名字到地址的映射        |
+|  2   |  NS   |     列出该区的一个名字服务器      |
 |  5   | CNAME |   规范名称定义主机的正式名字的别名    |
-|  6   |  SOA  |     开始授权标记一个区的开始      |
+|  6   |  SOA  |        指示该区的权威        |
 |  11  |  WKS  |    熟知服务定义主机提供的网络服务    |
 |  12  |  PTR  |     指针把IP地址转化为域名      |
 |  13  | HINFO | 主机信息给出主机使用的硬件和操作系统的表述 |
@@ -46,7 +46,7 @@ excerpt: 这里对DNS、SNSSEC、QUIC协议进行一个简单的学习与总结�
 
     [DNS解析过程详解](http://blog.csdn.net/crazw/article/details/8986504)
 
-#### 1. DNSSEC
+#### 2. DNSSEC
 
    > **域名系统安全扩展**（英语：Domain Name System Security Extensions，缩写为DNSSEC）是[Internet工程任务组](https://zh.wikipedia.org/wiki/IETF) （[IETF](https://zh.wikipedia.org/wiki/IETF)）的对确保由[域名系统](https://zh.wikipedia.org/wiki/%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F) （[DNS](https://zh.wikipedia.org/wiki/DNS)）中提供的关于互联网协议 （IP）网络使用特定类型的信息规格套件。它是对DNS提供给DNS客户端（解析器）的DNS数据来源进行认证，并验证不存在性和校验数据完整性验证，但不提供或机密性和可用性——wiki
 
@@ -57,7 +57,7 @@ excerpt: 这里对DNS、SNSSEC、QUIC协议进行一个简单的学习与总结�
    1. （推荐！！！很清晰）段老师的博客：[DNSSEC 原理、配置与布署简介](http://netsec.ccert.edu.cn/duanhx/?p=1479)
    2. [DNSSSEC验证的加密技术](http://www.jiamisoft.com/blog/18245-qinxi.html)
 
- #### 3. QUIC协议
+#### 3. QUIC协议
 
    Quick、UDP、Internet、Connections
 
@@ -130,5 +130,9 @@ excerpt: 这里对DNS、SNSSEC、QUIC协议进行一个简单的学习与总结�
 8. [QUIC和TCP](http://blog.chinaunix.net/uid-28387257-id-4335291.html)
 
 9. [QUICgoogle文档](https://docs.google.com/document/d/1RNHkx_VvKWyWg6Lr8SZ-saqsQx7rFV-ev2jRFUoVD34/edit#)
+
+10. [SPDY、HTTP/2、QUIC协议](http://blog.csdn.net/hursing/article/details/22785475)
+
+11. ​
 
    ​
