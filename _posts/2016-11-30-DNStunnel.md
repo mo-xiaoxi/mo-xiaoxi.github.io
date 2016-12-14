@@ -8,7 +8,7 @@ tags:
 - Security
 - DNS
 
-excerpt: 这里对iodine和shadowsocks进行了失败的配置。😢不过，具体的意思到了，只是macos sierria出现了一个段错误，暂时不知道如何处理。后续打算看源码解决这个问题
+excerpt: 这里对iodine和shadowsocks进行了配置。在日常生活中，我们可以通过DNS隧道解决很多问题，包括反弹shell或者绕过Web认证等等。
 ---
 
 
@@ -79,7 +79,7 @@ make[1]: Leaving directory `/home/iodine/src'
 make: *** [all] 错误 2
 ```
 
-可以通过安装zlib，解决即可
+可以通过安装zlib，解决即可`yum -y install zlib zlib-devel openssl openssl--devel pcre pcre-devel`
 
 ```
 [root@cloud iodine]# iodine
@@ -140,6 +140,10 @@ sudo make install
 ```
 
 >这里，我测试的时候不知道为什么一直会有段错误？求教？😢
+>
+>PS： On Mac OS X 10.6 and later, iodine supports the native utun devices built into the OS - use `-d utunX`.
+>
+>在Msc OS X 10.6 以后的版本，只需要加上-d utunX就可以运行。测试数据见补充
 
 安装完成：
 
@@ -268,47 +272,5 @@ sudo pip install shadowsocks
 
 ## 补充
 
-由于前面使用mac进行客户端运行iodine时失败了，这里尝试使用dns2tcp
-
-#### 服务器安装
-
-```bash
-wget http://www.hsc.fr/ressources/outils/dns2tcp/download/dns2tcp-0.5.2.tar.gz  
-tar zxf dns2tcp-0.5.2.tar.gz  
-cd dns2tcp-0.5.2  
-./configure  
-make & make install 
-```
-
-建立配置文件
-
-```bash
-[root@cloud dns2tcp-0.5.2]# touch /etc/dns2tcpd.conf
-[root@cloud dns2tcp-0.5.2]# vim /etc/dns2tcpd.conf 
-[root@cloud dns2tcp-0.5.2]# cat /etc/dns2tcpd.conf 
-listen=118.99.13.97
-port= 999
-user = nobody
-chroot = /tmp
-domain = xiaoxi.ilovefyy.top
-resources = ssh:127.0.0.1:22,socks:127.0.0.1,http:127.0.0.1:3128
-```
-
-最后的 resources 里面配置的是 DNS2TCP 供客户端使用的资源. 
-
-作用是: 客户端在本地监听一个22的端口,传送数据到指定端口，DNS2TCP 客户端将数据用DNS协议传动到服务器端口，然后服务器将数据转发到对应的资源配置的端口中
-
-运行dns2tcpd
-
-```bash
-[root@cloud dns2tcp-0.5.2]# dns2tcpd -f /etc/dns2tcpd.conf -F -d 2
-16:23:05 : Debug options.c:97	Add resource ssh:127.0.0.1 port 22
-16:23:05 : Debug options.c:97	Add resource http:127.0.0.1 port 3128
-16:23:05 : Debug socket.c:55	Listening on 118.99.13.97:999 for domain xiaoxi.ilovefyy.top
-Starting Server v0.5.2...
-16:23:05 : Debug main.c:132	Chroot to /tmp
-08:23:05 : Debug main.c:142	Change to user nobody
-```
-
-
+> 一开始测试的时候，发现Mac无法运行，现在经过阅读相关文档解决了这个问题，现在开始测试。
 
