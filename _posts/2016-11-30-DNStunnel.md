@@ -143,7 +143,7 @@ sudo make install
 >
 >PS： On Mac OS X 10.6 and later, iodine supports the native utun devices built into the OS - use `-d utunX`.
 >
->在Msc OS X 10.6 以后的版本，只需要加上-d utunX就可以运行。测试数据见补充
+>在Mac OS X 10.6 以后的版本，只需要加上-d utunX就可以运行
 
 安装完成：
 
@@ -268,9 +268,5 @@ sudo pip install shadowsocks
 
 
 
-----
 
-## 补充
-
-> 一开始测试的时候，发现Mac无法运行，现在经过阅读相关文档解决了这个问题，现在开始测试。
 
