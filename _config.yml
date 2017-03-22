@@ -47,12 +47,12 @@ kramdown:
 
 
 # Disqus settings
-#disqus_username: _your_disqus_short_name_
+disqus_username: httpmomomoxiaoxicom
 
-# Duoshuo settings
-duoshuo_username: momomoxiaoxi
+# Duoshuo settings 多说关闭 换用disqus
+# duoshuo_username: momomoxiaoxi
 # Share component is depend on Comment so we can NOT use share only.
-duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+# duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
 
 
