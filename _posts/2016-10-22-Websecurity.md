@@ -69,7 +69,7 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
 1. 了解最基本的C/S物理结构
 
-    ![1](https://momomoxiaoxi.com/img/post/Web.png)
+    ![1](http://momomoxiaoxi.com/img/post/Web.png)
 
 2. 了解基本的HTTP协议相关知识
 
@@ -85,7 +85,7 @@ excerpt: 个人总结的一个Web安全方面的学习路线，希望能给大�
 
    1. http://www.ruanyifeng.com/blog/2016/08/http.html
    2. http://www.cnblogs.com/li0803/archive/2008/11/03/1324746.html
-   3. https://momomoxiaoxi.com/2016/01/26/NetworkAnalysis/
+   3. http://momomoxiaoxi.com/2016/01/26/NetworkAnalysis/
 
 3. 了解基本的浏览器解析的流程与原理
 
@@ -435,11 +435,11 @@ PHP审计是一门很深的学问，也非常有趣，不会考验太多的脑�
 
 1. PHP代码审计
 
-   https://momomoxiaoxi.com/img/post/Web/PHP.jpg 有点大，不加载出来了。具体可以看pdf
+   http://momomoxiaoxi.com/img/post/Web/PHP.jpg 有点大，不加载出来了。具体可以看pdf
 
 2. Java
 
-   https://momomoxiaoxi.com/img/post/Web/JavaWeb.png
+   http://momomoxiaoxi.com/img/post/Web/JavaWeb.png
 
    ​
 

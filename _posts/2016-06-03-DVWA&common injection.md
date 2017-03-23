@@ -47,7 +47,7 @@ excerpt: 基于DVWA学习SQL注入
 
 -  这里只需要输入&& 隔开即可或者；
 
-   ![image](https://momomoxiaoxi.com/img/post/DVWA/9.png)
+   ![image](http://momomoxiaoxi.com/img/post/DVWA/9.png)
 
 
 ## Medium
