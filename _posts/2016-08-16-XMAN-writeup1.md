@@ -112,7 +112,7 @@ Plaintext:？
 
 丢进cap4解密即可
 
-![image](http://momomoxiaoxi.com/img/post/XMAN/1.png)
+![image](https://momomoxiaoxi.com/img/post/XMAN/1.png)
 
 #### flag:
 
