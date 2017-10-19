@@ -17,7 +17,7 @@ excerpt: Hack.lu CTF Web题解，共勉。
 
 ## Mistune
 
-![Markdownxss](/Users/moxiaoxi/Desktop/Markdownxss.png)
+![Markdownxss](http://momomoxiaoxi.com/img/post/hackluMarkdownxss.png)
 
 这是一道Markdown的XSS题，题目中有一个测试页面用来测试具体输入输出，与此同时admin页面存在提示:
 
