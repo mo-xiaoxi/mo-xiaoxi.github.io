@@ -112,7 +112,7 @@ socat TCP4-LISTEN:10001,fork EXEC:./leakmemory
 
 然而，如果此时addr中带有0x00会发生截断，因此我们修改payload为`%8$s+p32(0x8048000)`对应的堆栈图如下：
 
-![堆栈](http://momomoxiaoxi.com/img/post/Fmtstr/statck.png)
+![堆栈](http://momomoxiaoxi.com/img/post/Fmtstr/stack.png)
 
 
 
