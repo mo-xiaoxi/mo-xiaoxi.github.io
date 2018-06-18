@@ -25,20 +25,20 @@ tags:
 
 ##### 自动化大规模测试DL系统的挑战：
 
-- 1. 如何生成能够触发不同逻辑行为的测试数据
-- 1. 如何（在无标记情况下）识别DL系统的错误行为。
+- 如何生成能够触发不同逻辑行为的测试数据
+- 如何（在无标记情况下）识别DL系统的错误行为。
 
 ##### 传统测试的限制
 
-- 1. 昂贵的标签成本：对大量DNN测试集打标签是一个很耗费人力成本的工作，而且我们也无法保证人力模式下打出来的标签是否正确。
-- 1. 低测试覆盖率
+- 昂贵的标签成本：对大量DNN测试集打标签是一个很耗费人力成本的工作，而且我们也无法保证人力模式下打出来的标签是否正确。
+- 低测试覆盖率
 
 ##### 文章主要贡献
 
-- 1. 引入神经元覆盖技术作为DL系统的第一个白盒测试指标，可以估计一组测试输入所探测的DL逻辑数量
-- 1. 证明寻找DL系统之间的大量行为差异并同时最大化神经元覆盖旅的问题可以被表述为联合优化问题，并提出了一种基于梯度的算法来有效解决这个问题
-- 1. 研究者们将所有这些技术都实施为DeepXplore（一个白盒DL测试框架）
-- 1. DeepXplore生成的测试集也可以用于重新培训相应的DL系统，并能将分类准确度提高3%
+- 引入神经元覆盖技术作为DL系统的第一个白盒测试指标，可以估计一组测试输入所探测的DL逻辑数量
+- 证明寻找DL系统之间的大量行为差异并同时最大化神经元覆盖旅的问题可以被表述为联合优化问题，并提出了一种基于梯度的算法来有效解决这个问题
+- 研究者们将所有这些技术都实施为DeepXplore（一个白盒DL测试框架）
+- DeepXplore生成的测试集也可以用于重新培训相应的DL系统，并能将分类准确度提高3%
 
 
 
@@ -96,11 +96,11 @@ tags:
 
     ![8](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/8.png?raw=true)
 
-- 第二个约束模拟意外或故意用单个小矩形遮挡住的镜头。
+  - 第二个约束模拟意外或故意用单个小矩形遮挡住的镜头。
 
   ![9](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/9.png?raw=true)
 
-- 第三个约束通过允许使用多个微小的黑色矩形进行遮挡来模拟透镜上多处被污垢覆盖后的影响。
+  - 第三个约束通过允许使用多个微小的黑色矩形进行遮挡来模拟透镜上多处被污垢覆盖后的影响。
 
   ![10](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/10.png?raw=true)
 
@@ -116,81 +116,81 @@ tags:
 
 ## 4. 实验
 
-- [源码](https://github.com/peikexin9/deepxplore)
+[源码](https://github.com/peikexin9/deepxplore)
 
-- 源码共有5个数据集的数据，及其生成脚本。
+源码共有5个数据集的数据，及其生成脚本。
 
-- 我们选ImageNet进行研究
+我们选ImageNet进行研究
 
-  ```bash
-  ubuntu@ubuntu-virtual-machine:~/AOS/deepxplore/ImageNet$ python gen_diff.py  -h
-  Using TensorFlow backend.
-  usage: gen_diff.py [-h] [-t {0,1,2}] [-sp START_POINT]
-                     [-occl_size OCCLUSION_SIZE]
-                     {light,occl,blackout} weight_diff weight_nc step seeds
-                     grad_iterations threshold
-  
-  Main function for difference-inducing input generation in ImageNet dataset
-  
-  positional arguments:
-    {light,occl,blackout}
-                          realistic transformation type
-    weight_diff           weight hyperparm to control differential behavior
-    weight_nc             weight hyperparm to control neuron coverage
-    step                  step size of gradient descent
-    seeds                 number of seeds of input
-    grad_iterations       number of iterations of gradient descent
-    threshold             threshold for determining neuron activated
-  
-  optional arguments:
-    -h, --help            show this help message and exit
-    -t {0,1,2}, --target_model {0,1,2}
-                          target model that we want it predicts differently
-    -sp START_POINT, --start_point START_POINT
-                          occlusion upper left corner coordinate
-    -occl_size OCCLUSION_SIZE, --occlusion_size OCCLUSION_SIZE
-                          occlusion size
-  ```
+```bash
+ubuntu@ubuntu-virtual-machine:~/AOS/deepxplore/ImageNet$ python gen_diff.py  -h
+Using TensorFlow backend.
+usage: gen_diff.py [-h] [-t {0,1,2}] [-sp START_POINT]
+                   [-occl_size OCCLUSION_SIZE]
+                   {light,occl,blackout} weight_diff weight_nc step seeds
+                   grad_iterations threshold
 
-  主要参数如上。
+Main function for difference-inducing input generation in ImageNet dataset
 
-  下图作者给出了不同模式下的照片修改对比图，分别使用光照、遮挡矩形、多个遮挡物模式运行。
+positional arguments:
+  {light,occl,blackout}
+                        realistic transformation type
+  weight_diff           weight hyperparm to control differential behavior
+  weight_nc             weight hyperparm to control neuron coverage
+  step                  step size of gradient descent
+  seeds                 number of seeds of input
+  grad_iterations       number of iterations of gradient descent
+  threshold             threshold for determining neuron activated
 
-  ![12](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/12.png?raw=true)
+optional arguments:
+  -h, --help            show this help message and exit
+  -t {0,1,2}, --target_model {0,1,2}
+                        target model that we want it predicts differently
+  -sp START_POINT, --start_point START_POINT
+                        occlusion upper left corner coordinate
+  -occl_size OCCLUSION_SIZE, --occlusion_size OCCLUSION_SIZE
+                        occlusion size
+```
 
-  图片模式运行：
+主要参数如上。
 
-  ```bash
-  ubuntu@ubuntu-virtual-machine:~/AOS/deepxplore/ImageNet$ python gen_diff.py -t 0  light 0.3 0.2 1 2 3 0.1
-  /usr/local/lib/python2.7/dist-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
-    from ._conv import register_converters as _register_converters
-  Using TensorFlow backend.
-  2018-06-08 13:02:10.617459: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
-  2018-06-08 13:02:10.721914: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 13:02:11.041253: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 13:02:11.348274: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 13:02:11.697844: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg19_weights_tf_dim_ordering_tf_kernels.h5
-  574717952/574710816 [==============================] - 4353s 8us/step
-  574726144/574710816 [==============================] - 4353s 8us/step
-  2018-06-08 14:14:48.895939: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 14:14:49.212408: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 14:14:49.656251: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  2018-06-08 14:14:49.988666: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
-  Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels.h5
-  102858752/102853048 [==============================] - 782s 8us/step
-  102866944/102853048 [==============================] - 782s 8us/step
-  Downloading data from https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json
-  40960/35363 [==================================] - 1s 24us/step
-  49152/35363 [=========================================] - 1s 20us/step
-  input already causes different outputs: beer_glass, cocktail_shaker, packet
-  covered neurons percentage 14888 neurons 0.075, 16168 neurons 0.085, 94059 neurons 0.740
-  averaged covered neurons 0.576
-  covered neurons percentage 14888 neurons 0.151, 16168 neurons 0.156, 94059 neurons 0.751
-  averaged covered neurons 0.603
-  ```
+下图作者给出了不同模式下的照片修改对比图，分别使用光照、遮挡矩形、多个遮挡物模式运行。
 
-  
+![12](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/12.png?raw=true)
+
+图片模式运行：
+
+```bash
+ubuntu@ubuntu-virtual-machine:~/AOS/deepxplore/ImageNet$ python gen_diff.py -t 0  light 0.3 0.2 1 2 3 0.1
+/usr/local/lib/python2.7/dist-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+  from ._conv import register_converters as _register_converters
+Using TensorFlow backend.
+2018-06-08 13:02:10.617459: I tensorflow/core/platform/cpu_feature_guard.cc:140] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2018-06-08 13:02:10.721914: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 13:02:11.041253: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 13:02:11.348274: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 13:02:11.697844: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.1/vgg19_weights_tf_dim_ordering_tf_kernels.h5
+574717952/574710816 [==============================] - 4353s 8us/step
+574726144/574710816 [==============================] - 4353s 8us/step
+2018-06-08 14:14:48.895939: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 14:14:49.212408: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 14:14:49.656251: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+2018-06-08 14:14:49.988666: W tensorflow/core/framework/allocator.cc:101] Allocation of 411041792 exceeds 10% of system memory.
+Downloading data from https://github.com/fchollet/deep-learning-models/releases/download/v0.2/resnet50_weights_tf_dim_ordering_tf_kernels.h5
+102858752/102853048 [==============================] - 782s 8us/step
+102866944/102853048 [==============================] - 782s 8us/step
+Downloading data from https://s3.amazonaws.com/deep-learning-models/image-models/imagenet_class_index.json
+40960/35363 [==================================] - 1s 24us/step
+49152/35363 [=========================================] - 1s 20us/step
+input already causes different outputs: beer_glass, cocktail_shaker, packet
+covered neurons percentage 14888 neurons 0.075, 16168 neurons 0.085, 94059 neurons 0.740
+averaged covered neurons 0.576
+covered neurons percentage 14888 neurons 0.151, 16168 neurons 0.156, 94059 neurons 0.751
+averaged covered neurons 0.603
+```
+
+
 
 ## 5. 相关思考
 
