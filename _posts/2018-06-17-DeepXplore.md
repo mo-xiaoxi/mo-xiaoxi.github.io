@@ -66,7 +66,7 @@ tags:
 
 - 原理：这种测试主要是在探测输入空间介于不同DNN决策边界的部分。（参考4）
 
-  ![6](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/6.png?raw=true))
+  ![6](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/6.png?raw=true)
 
   此时的神经网络已经被训练过了，所以权重是固定的。DeepXplore设计了一个算法，用梯度上升来解决联合	优化问题。这种生成测试用例的目标是诱导DL系统给出错误的预测。
 
@@ -98,11 +98,11 @@ tags:
 
   - 第二个约束模拟意外或故意用单个小矩形遮挡住的镜头。
 
-  ![9](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/9.png?raw=true)
+    ![9](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/9.png?raw=true)
 
   - 第三个约束通过允许使用多个微小的黑色矩形进行遮挡来模拟透镜上多处被污垢覆盖后的影响。
 
-  ![10](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/10.png?raw=true)
+    ![10](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/DeepXplore/pic/10.png?raw=true)
 
   DeepXplore在所有测试的DNN中发现了数千的错误行为。 下表总结了在用对应测试集中随机选取的 2000个种子输入对 DNN进行测试时，DeepXplore在每个测试的 DNN中发现的错误行为的数量。
 
