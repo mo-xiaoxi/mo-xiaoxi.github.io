@@ -151,13 +151,17 @@ Hyperkernel使用Z3 SMT解算器来验证Hyperkernel的实施。实验过程中�
    procs_state.1(current.0)
    ok
    
-   ----------------------------------------------------------------------
+   
    Ran 1 test in 10.566s
    
    OK
    ```
 
+   
+
    整体测试
+
+   
 
    ```bash
    root@0ca0071ca44d:~/hv6#  make hv6-verify
