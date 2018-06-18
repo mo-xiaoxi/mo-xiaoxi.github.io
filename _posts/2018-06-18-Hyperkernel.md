@@ -2,17 +2,19 @@
 layout: post
 category: Papers
 title: Hyperkernel 论文阅读笔记
+subtitle: 高级操作系统论文阅读六
 catalog: true
-excerpt: 高级操作系统论文阅读六:Hyperkernel: Push-Button Verification of an OS Kernel
-first_time: 2018.06.18 20:57:00
-time: 2018.06.18 20:59:00
+excerpt: 论文简介、内容以及个人思考。Hyperkernel,Push-Button Verification of an OS Kernel
+time: 2018.06.18 20:35:00
 tags:
 - Papers
-- mTCP
+- Hyperkernel
 - AOS
 
 
 ---
+
+
 
 # Hyperkernel: Push-Button Verification of an OS Kernel
 

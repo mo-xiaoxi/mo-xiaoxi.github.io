@@ -2,10 +2,10 @@
 layout: post
 category: Papers
 title: Mnemosyne 论文阅读笔记
+subtitle: 高级操作系统论文阅读二
 catalog: true
-excerpt: 高级操作系统论文阅读二：Mnemosyne: Lightweight Persistent Memory
-first_time: 2018.06.18 20:45:00
-time: 2018.06.18 20:45:00
+excerpt: 论文简介、内容以及个人思考。Mnemosyne,Lightweight Persistent Memory
+time: 2018.06.18 20:30:00
 tags:
 - Papers
 - Mnemosyne
@@ -13,6 +13,8 @@ tags:
 
 
 ---
+
+
 
 # Mnemosyne: Lightweight Persistent Memory
 
