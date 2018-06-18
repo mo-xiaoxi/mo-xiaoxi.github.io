@@ -51,7 +51,7 @@ tags:
 
 系统架构：
 
-![1](/Users/moxiaoxi/Desktop/AOS_Paper_reading/Mnemosyne/pic/1.png)
+![1](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/Mnemosyne/pic/1.png?raw=true)
 
 ## 文章贡献
 

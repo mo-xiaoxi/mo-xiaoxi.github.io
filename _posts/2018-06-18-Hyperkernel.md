@@ -45,7 +45,7 @@ Hyperkernel使用Z3 SMT解算器来验证Hyperkernel的实施。实验过程中�
 
 - 内核代码中的虚拟内存管理。两个虚拟地址可能映射到同一个物理地址。因此，关于内核数据结构的推理需要关于虚拟到物理映射的推理。这种推理任务由于内核代码可以在执行过程中改变虚拟物理映射的事实而变得更加复杂。如下图所示：
 
-  ![1](/Users/moxiaoxi/Desktop/AOS_Paper_reading/Hyperkernel/pic/1.png)
+  ![1](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/Hyperkernel/pic/1.png?raw=true)
 
 - Hyperkernel也是一个以C语言编写的系统，而C语言是一种已知形式推理复杂化的编程语言。
 
@@ -61,7 +61,7 @@ Hyperkernel使用Z3 SMT解算器来验证Hyperkernel的实施。实验过程中�
 
   架构图如下：
 
-  ![2](/Users/moxiaoxi/Desktop/AOS_Paper_reading/Hyperkernel/pic/2.png)
+  ![2](https://github.com/m0xiaoxi/AOS_Paper_reading/blob/master/Hyperkernel/pic/2.png?raw=true)
 
 ##### 其他
 
