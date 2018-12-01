@@ -56,7 +56,7 @@ tags:
 >
 >去迪拜浪了一圈，玩的还是很high。: ) 
 
-##0x01 SEAFARING1
+## 0x01 SEAFARING1
 
 > 因为题目释放时间较晚，所以在释放前主动加了一个hint ,robots.txt防止选手走歪。robots.txt提示了漏洞存在的php点。
 
