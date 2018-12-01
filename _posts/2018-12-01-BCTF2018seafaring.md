@@ -270,7 +270,9 @@ while (True):
 
 ```
 
-而这里，限制了handle_message.php只能通过内网访问，因此只能通过CSRF+XSS去测试接口。
+接下来便是SQL注入了。
+
+而这里，限制了handle_message.php只能通过内网访问，因此只能通过CSRF+XSS去测试接口，进行SQL注入。
 
 为了降低测试的难度，这里我将所有的sql错误信息返回，用于方便选手测试。
 
@@ -294,6 +296,8 @@ case 'view_unreads':
 这里有一个另外的难点在于所有与handle_message的交互，存在csrftoken。因此，我们需要先通过某种方式窃取到csrftoken，才能进行注入。
 
 此外，为了保证不违反同源策略，我们并不能在自己的第三方页面，直接iframe窃取token数据。（除非受害者服务器错误配置了CORS策略）
+
+所以，一般方式为通过xss加载一个js，然后js去取token，再提交。这样便能在不违反同源策略的基础下，进行攻击。
 
 ```html
 POST /admin/handle_message.php HTTP/1.1
