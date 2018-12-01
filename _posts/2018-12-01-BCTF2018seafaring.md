@@ -4,14 +4,15 @@ category: CTF
 title: SEAFARING 出题笔记
 subtitle: BCTF 2018 Web SEAFARING 
 catalog: true
-excerpt: 
+excerpt:  BCTF2018，参与命题了两道Web，记录一下出题笔记。
 time: 2018.12.01 22:35:00
 tags:
 - CTF
 - Web
 
-
 ---
+
+
 
 
 # SEAFARING 
