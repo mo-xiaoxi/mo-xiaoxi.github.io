@@ -24,6 +24,7 @@ tags:
 - XSS
 - CSRF
 - SQLi
+- SSRF
 - Selenium Server
 
 
