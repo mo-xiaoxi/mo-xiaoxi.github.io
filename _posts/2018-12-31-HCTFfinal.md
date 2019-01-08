@@ -32,6 +32,10 @@ Web2 实现了一波守护型webshell，整体效果还是很符合预期，在�
 
 ## Web1
 
+> 源码：
+>
+> https://github.com/m0xiaoxi/CTF_Web_docker/tree/master/HCTF2018/finalweb1/html
+
 #### 预留后门
 
 路径config/emmm_version.php
@@ -580,6 +584,12 @@ create函数没有任何过滤
 ## Web2
 
 web2可以配.htaccess权限，比较好防御。
+
+> 源码：
+>
+> https://github.com/m0xiaoxi/CTF_Web_docker/tree/master/HCTF2018/finalweb2/www
+
+
 
 #### 内置后门
 
