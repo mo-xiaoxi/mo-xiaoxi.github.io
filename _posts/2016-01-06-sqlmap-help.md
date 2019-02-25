@@ -28,14 +28,16 @@ Options（选项）:
 
 -hh Show advanced help message and exit 展示详细帮助文档参数
 
---version Show program's version number and exit 显示程序的版本号
+--version Show program\'s version number and exit 显示程序的版本号
 
 
 -v VERBOSE Verbosity level: 0-6 (default 1) 详细级别：0-6（默认为1）
 
 Target（目标）:
 
+
 At least one of these options has to be provided to define the target(s)
+
 
 -d DIRECT Connection string for direct database connection 指定具体数据库
 
