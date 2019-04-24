@@ -181,15 +181,22 @@ Datacon-DNS方向题目一内测记录。
      - 影响域名列表:
        - 2667(实际没有攻击成功,因为无返回包)
 
-     > 这种攻击不成功的dns-zone-transfer使用snort检测，可以自己写一个规则：
-     >
-     >  alert tcp $EXTERNAL_NET any -> $HOME_NET 53 (msg:"DNS zone transfer TCP"; content:"|00 00 FC|"; offset:14; reference:moxiaoxi; classtype:attempted-recon; sid:9999; rev:6;)
-     >
-     > snort自带的检测dns zone transfer，针对TCP会检测TCP连接状态（established），因此会把上述攻击过滤掉。
-     >
-     > 运行命令行：
-     >
-     > sudo snort -r q1_tmp_00967_20190126002811.pcap -c /etc/snort/snort.conf  -l ./log/ -A fast
+     这种攻击不成功的dns-zone-transfer使用snort检测，可以自己写一个规则：
+
+     ```bash
+     alert tcp $EXTERNAL_NET any -> $HOME_NET 53 (msg:"DNS zone transfer TCP"; content:"|00 00 FC|"; offset:14; reference:moxiaoxi; classtype:attempted-recon; sid:9999; rev:6;)
+     
+     ```
+
+     snort自带的检测dns zone transfer，针对TCP会检测TCP连接状态（established），因此会把上述攻击过滤掉。
+
+     运行命令行：
+
+     ```bash
+     sudo snort -r q1_tmp_00967_20190126002811.pcap -c /etc/snort/snort.conf  -l ./log/ -A fast
+     ```
+
+     
 
 
 ### 非法DNS 动态更新：
