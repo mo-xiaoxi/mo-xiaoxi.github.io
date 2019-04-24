@@ -3,7 +3,7 @@ layout: post
 category: 数据分析
 title:  Datacon DNS攻击流量识别 内测笔记
 catalog: true
-excerpt:  4月下旬，抽空给DNS方向第一题进行了内部测试，将内部测试过程记录并分享给大家。
+excerpt:  3月下旬，抽空给DNS方向第一题进行了内部测试，将内部测试过程记录并分享给大家。
 time: 2019.04.24 15:35:00
 tags:
 - Python
