@@ -1,6 +1,6 @@
 ---
 layout: post
-title: TCTF 2019 final Web WP
+title: 2019 TCTF-Final Web WP
 category: CTF
 catalog: true
 excerpt: TCTF2019 final，Web 题解
@@ -10,7 +10,7 @@ tags:
 - WP
 
 ---
-# TCTF-Final
+# 2019 TCTF-Final Web WP
 
 很可惜，最后没有拿到第一，遗憾.
 
