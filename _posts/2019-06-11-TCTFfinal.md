@@ -34,7 +34,7 @@ org.apache.tapestry5.internal.services.assets.ContextAssetRequestHandler#Context
 
 读取到AppModule.class
 
-![image-20190609135415723](/Users/moxiaoxi/Library/Application Support/typora-user-images/image-20190609135415723.png)
+![image-20190609135415723](http://momomoxiaoxi.com/img/post/tctf2019final/image-20190609135415723.png)
 
 得到HMAC密钥后，就能伪造了。
 
