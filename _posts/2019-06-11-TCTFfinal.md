@@ -1,6 +1,7 @@
 ---
 layout: post
-category: TCTF 2019 final Web WP
+title: TCTF 2019 final Web WP
+category: CTF
 catalog: true
 excerpt: TCTF2019 final，Web 题解
 time: 2019.06.11 11:35:00
