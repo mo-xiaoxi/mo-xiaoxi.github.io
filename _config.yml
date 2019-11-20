@@ -4,7 +4,7 @@ SEOTitle: 小西的博客 | Xiaoxi's Blog
 header-img: img/home-bg.jpg
 email: momomomoxiaoxi@gmail.com
 description: "关于Web 安全 | 默小西，Web & Security | 这里是小西的个人博客，与你一起发现更大的世界。"
-keyword: "小西, 默小西, Xiaoxi, Moxiaoxi, momomomoxiaoxi, 小西的博客, Xiaoxi Blog, 博客, 个人网站, 互联网, Web, Web安全, 信息安全, Github, Pegasus, Pegasus.X, 蓝莲花, Blue-louts, 紫荆花, Redbud, 清华大学, Tsinghua"
+keyword: "小西, 默小西, Xiaoxi, Moxiaoxi, momomomoxiaoxi, 小西的博客, Xiaoxi Blog, 博客, 个人网站, 互联网, Web, Web安全, 信息安全, Github, 蓝莲花, Blue-louts, 紫荆花, Redbud, 清华大学, Tsinghua"
 url: "https://momomoxiaoxi.com"              # your host, for absolute URL
 baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
 author: Xiaoxi
@@ -89,16 +89,9 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "UNIRANGER",
-        href: "http://www.inmyplace.cn/"
-    },{
         title: "chiahao",
         href: "http://chiahao.top/"
     },{
-        title: "信鑫",
-        href: "http://ycjcl.cc"
-    }
-    ,{
         title: "vancir",
         href: "http://www.vancir.com/"
     },{
@@ -108,7 +101,10 @@ friends: [
         title: "louys",
         href: "http://www.louys.net.cn"
     },{
-        title: "Atum",
-        href: "http://gcli.cn"
+        title: "N1rv0us",
+​        href: "https://n1rv0us.github.io/"
+    },{
+        title: "Dawuge",
+        href: "https://dawuge.github.io"
     }
 ]
