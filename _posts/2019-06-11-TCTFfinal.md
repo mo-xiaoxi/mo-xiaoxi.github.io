@@ -14,7 +14,7 @@ tags:
 
 很可惜，最后没有拿到第一，遗憾.
 
-![WX20190609-160037@2x](http://momomoxiaoxi.com/img/post/tctf2019final/WX20190609-160037@2x.png)
+![WX20190609-160037@2x](https://momomoxiaoxi.com/img/post/tctf2019final/WX20190609-160037@2x.png)
 
 ## TCTF Hotel Booking System
 
@@ -34,7 +34,7 @@ org.apache.tapestry5.internal.services.assets.ContextAssetRequestHandler#Context
 
 读取到AppModule.class
 
-![image-20190609135415723](http://momomoxiaoxi.com/img/post/tctf2019final/image-20190609135415723.png)
+![image-20190609135415723](https://momomoxiaoxi.com/img/post/tctf2019final/image-20190609135415723.png)
 
 得到HMAC密钥后，就能伪造了。
 
@@ -162,7 +162,7 @@ t%3Asubmit=%5B%22submit_0%22%2C%22submit_0%22%5D&t%3Aformdata=LD5rGQtL2Qa2eqzSb1
 
 官方给的解答：
 
-![WX20190611-114345@2x](http://momomoxiaoxi.com/img/post/tctf2019final/WX20190611-114345@2x.png)
+![WX20190611-114345@2x](https://momomoxiaoxi.com/img/post/tctf2019final/WX20190611-114345@2x.png)
 
 
 
@@ -567,7 +567,7 @@ if __name__ == '__main__':
 
 ```
 
-![WX20190609-133008@2x](http://momomoxiaoxi.com/img/post/tctf2019final/WX20190609-133008@2x.png)
+![WX20190609-133008@2x](https://momomoxiaoxi.com/img/post/tctf2019final/WX20190609-133008@2x.png)
 
 使用<https://github.com/wuyunfeng/Python-FastCGI-Client>进行构造
 

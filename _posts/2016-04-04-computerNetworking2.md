@@ -66,12 +66,12 @@ tags:
    - 无连接，尽最大努力交付，面向报文，没有拥塞控制，支持一对一，一对多，多对一和多对多的交互通信，首部开销小
 3. UDP报文结构
    报头：
-   ![image](http://momomoxiaoxi.com/img/network/1.png)
+   ![image](https://momomoxiaoxi.com/img/network/1.png)
 
    ipv4结构：
-   ![image](http://momomoxiaoxi.com/img/network/2.png)
+   ![image](https://momomoxiaoxi.com/img/network/2.png)
 
-   ![image](http://momomoxiaoxi.com/img/network/3.jpg)
+   ![image](https://momomoxiaoxi.com/img/network/3.jpg)
 
    注意，图中的蓝色部分的两个源端口是错误的。正确的是先从左往右：源端口、目的端口。
 
@@ -81,7 +81,7 @@ tags:
 
    UDP的检验和求法采用的是IP的16位的反码求和。若UDP用户数据报的数据部分不是偶数个字节则填入一个全零字节（这个字节不发送），在接收方，对收到UDP数据报进行16位的反码求和，得到结果如果为全1则无差错。虽然UDP提供差错检测，但不提供差错恢复。
 
-   ![image](http://momomoxiaoxi.com/img/network/4.jpeg)
+   ![image](https://momomoxiaoxi.com/img/network/4.jpeg)
 
 4. UDP的注意点：
    1. UDP的检验和是可选的。
@@ -100,7 +100,7 @@ tags:
 
 TCP报文结构：
 
-![image](http://momomoxiaoxi.com/img/network/5.jpg)
+![image](https://momomoxiaoxi.com/img/network/5.jpg)
 
 1. 源端口或目的端口（分别2个字节）：略。
 2. 序号（4个字节）：TCP连接中传送的字节流中的每一个字节都按顺序编号。传送的字节流的起始序号必须在连接建立时设置。首部中的序号字段值的是本报文段所发送的数据的第一个字节的序号。例如一报文段序号值为101，数据共有100字节，那么下一报文段序号值就为201。因为序号的大小是[0,2^32 -1](),超出了循环从0开始，所以序号是使用mod2^32运算的。
@@ -150,7 +150,7 @@ TCP协议规定，接收方对于正确接收到的来自发送方的报文段�
 超时触发重传存在的另一个问题就是超时周期可能相对较长。这种长超时周期迫使发送方等待很长时间才重传丢失分组。幸运的是，发送方可以通过冗余ACK较好地检测丢包情况。
 >冗余ACK就是再次确认某个报文段的ACK，而发送方先前已经收到对该报文段的确认。
 
-![image](http://momomoxiaoxi.com/img/network/7.jpg)
+![image](https://momomoxiaoxi.com/img/network/7.jpg)
 
 如果TCP发送方接收到相同数据的3个冗余ACK，就认为跟在这个已被确认过3次的报文段之后的报文段已经丢失。一旦收到3个冗余ACK，TCP就执行快速重传。
 
@@ -163,7 +163,7 @@ TCP的差错恢复方法有两种：
 
 	GBN协议常常被称为滑动窗口协议。
 	来看一个发送方的示例图：
-	![image](http://momomoxiaoxi.com/img/network/gbn.jpeg)
+	![image](https://momomoxiaoxi.com/img/network/gbn.jpeg)
 	
 	base是基序号，指示最早的未确认分组的序号。 nextseqnum是下一个序号，指示最小的下一个待发送分组的序号。	window size就是窗口大小。
 	
@@ -177,7 +177,7 @@ TCP的差错恢复方法有两种：
 	由于接收方接收了分组就发送ACK，移动自身的接收窗口，而发送方有可能因为ACK丢失等原因迟迟没收到确认报文以至于窗口不移动。所以，对于SR协议而言，这就意味着发送方和接收方的窗口并不总是一致。
 	
 	对于SR协议而言，窗口的长度必须小于或等于序号空间大小的一半。因为序号空间是有限的，必须是循环利用的。假如序号空间总大为4，那么4之后会从0循环开始。当窗口大小大于序号空间的一半时，就有可能会出现接收方接收到一个分组到来是不能判断得到这个分组是一个新的分组抑或是一个重传。
-	![image](http://momomoxiaoxi.com/img/network/SR.png)
+	![image](https://momomoxiaoxi.com/img/network/SR.png)
 
 ---
 
@@ -240,12 +240,12 @@ TCP拥塞控制算法有：
 
 TCP拥塞控制协议的线性增长阶段被称为避免拥塞。CongWin值会重复地经历一个升降循环，即重复地线性增长又突然降至一半。所以CongWin的变化会是锯齿状的。
 
-![image](http://momomoxiaoxi.com/img/network/ai_md.png)
+![image](https://momomoxiaoxi.com/img/network/ai_md.png)
 
 ##### 慢启动(slow start)
 TCP连接开始时，CongWin的值初始为1。但发送方在初始阶段不是线性地增长的，而是以指数的形式。即每收到一个ACK，CongWin就会增加一个MSS。（CongWin=CongWin+MSS）
 当CongWin>Threshold(阀值)时，TCP就会由慢启动的状态转换到拥塞避免。
-![image](http://momomoxiaoxi.com/img/network/slowstart.jpeg)
+![image](https://momomoxiaoxi.com/img/network/slowstart.jpeg)
 
 ##### 对超时事件作出反应
 
@@ -275,7 +275,7 @@ ss或ca | 超时 | Threshold=CongWin/2,CongWin=1MSS，然后状态变为慢启�
 
 TCP建立连接是通过三次握手。
 
-![image](http://momomoxiaoxi.com/img/network/TCPthree-way handshaking.png)
+![image](https://momomoxiaoxi.com/img/network/TCPthree-way handshaking.png)
 
 步骤：
 
@@ -288,7 +288,7 @@ TCP建立连接是通过三次握手。
 #### 释放连接
 
 TCP释放连接是通过四次挥手。
-![image](http://momomoxiaoxi.com/img/network/TCPfour-way handshake.png)
+![image](https://momomoxiaoxi.com/img/network/TCPfour-way handshake.png)
 
 如图所示，客户端应用进程发出一个关闭连接命令。这会引起客户端TCP向服务端进程发送一个特殊的TCP报文段。这个特色的报文段首部中的FIN比特被置1。当服务接收到该报文段后，就向客户端会送一个确认报文段。这时，TCP连接处于半关闭状态。半关闭指的是客户端已经不能再给服务端发送数据了，但可以接收服务端发过来的数据。数据传送完毕之后，服务端发送其终止报文段，同样FIN被置1。最后客户端对这个服务端的终止报文段进行确认。两台主机的TCP连接成功释放。
 注意，如果服务端不需要向客户端传输数据了，那么ack=u+1的这个两个报文是可以结合为一个的。

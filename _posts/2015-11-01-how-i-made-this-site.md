@@ -61,7 +61,7 @@ excerpt: 我以前习惯在csdn上写博客，后来发现csdn的博客太丑，
 ####DNS 设置
 用 DNSpod，快，免费，稳定。
 注册[DNSpod](https://www.dnspod.cn)，添加域名，如下图设置
-![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site.png)
+![image](https://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site.png)
 其中A的两条记录指向的ip地址是github Pages的提供的ip
 
 - 192.30.252.153
@@ -78,7 +78,7 @@ www 指定的记录是你在 github 注册的仓库。
 ![image](http://cnfeat.qiniudn.com/16.png)
 
 ####6.测试博客
-![image](http://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site-2.png)
+![image](https://momomoxiaoxi.com/img/post/2015-11-01-how-i-made-this-site-2.png)
 测试成功，这样大体的博客框架就做好了。接下里就是写博文了：）
 (由于这个博文是后期写的，所以可能有点简略。想详细了解的，可以联系我－｀－)
 
