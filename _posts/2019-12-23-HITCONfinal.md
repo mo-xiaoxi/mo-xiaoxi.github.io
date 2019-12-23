@@ -12,7 +12,7 @@ tags:
 ---
 # 2019 HITCON-Final  Web WP
 
-CTF生涯的第一个国际赛冠军！！！Tea Deliverers tql！！！
+CTF生涯的第一个国际赛冠军，Tea Deliverers tql！！！
 
 ![TD](https://momomoxiaoxi.com/img/post/HITCON2019/TD.jpg)
 
