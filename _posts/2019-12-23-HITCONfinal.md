@@ -299,6 +299,8 @@ if __name__ == "__main__":
 
 ## NoobieWeb
 
+> 题目环境：[NoobieWeb](https://github.com/m0xiaoxi/CTF_Web_docker/tree/master/HITCON2019/noobieweb)
+
 ![noobie_bank](https://momomoxiaoxi.com/img/post/HITCON2019/noobie_bank.png)
 
 这个题目是一个传统的PHP题目。我们可以通过预加载的方式，加载一个waf.php，用来进行防御。不过，值得注意的一点是，waf.php有长度限制，大约只能写10来行。另外，选手并没有服务器的权限，运维理论上只能靠waf.php。
