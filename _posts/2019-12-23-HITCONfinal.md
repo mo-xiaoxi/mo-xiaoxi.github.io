@@ -28,7 +28,7 @@ KOH是一个股票题，杀猪盘炒股票。新型的Web打patch方式，也比
 
 ![9101576581720_.pic_hd](https://momomoxiaoxi.com/img/post/HITCON2019/9101576581720_.pic_hd.jpg)
 
-![9111576581721_.pic_hd](/Users/moxiaoxi/Library/Containers/com.tencent.xinWeChat/Data/Library/Application Support/com.tencent.xinWeChat/2.0b4.0.9/b44fb68b823831ec65fbbb3192cd0a8e/Message/MessageTemp/9e20f478899dc29eb19741386f9343c8/Image/9111576581721_.pic_hd.jpg)
+![9111576581721_.pic_hd](https://momomoxiaoxi.com/img/post/HITCON2019/9111576581721_.pic_hd.jpg)
 
 注：本博客仅放了三个题目的WP，具体的细节以及英文WP可以参考，我们的Github(https://github.com/tea-deliverers/ctf-writeups/tree/master/hitcon2019-final)。
 
