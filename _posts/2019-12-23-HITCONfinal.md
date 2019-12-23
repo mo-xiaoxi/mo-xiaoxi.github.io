@@ -18,7 +18,7 @@ CTF生涯的第一个国际赛冠军，Tea Deliverers tql！！！
 
 ![WX20191217-231111@2x](https://momomoxiaoxi.com/img/post/HITCON2019/WX20191217-231111@2x.png)
 
-主办方组织得很好～HITCON比赛非常有趣，尤其那个魔性的一血音乐，超级洗脑～😂
+主办方组织得很好～HITCON比赛非常有趣，尤其那个魔性的一血音乐，超级洗脑😂
 
 KOH是一个股票题，杀猪盘炒股票。新型的Web打patch方式，也比较有意思。食物、招待都很周到。
 
