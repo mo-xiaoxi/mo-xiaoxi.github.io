@@ -47,12 +47,26 @@ kramdown:
 
 
 # Disqus settings
-disqus_username: httpmomomoxiaoxicom
+# disqus_username: httpmomomoxiaoxicom
 
 # Duoshuo settings 多说关闭 换用disqus
 # duoshuo_username: momomoxiaoxi
 # Share component is depend on Comment so we can NOT use share only.
 # duoshuo_share: true                     # set to false if you want to use Comment without Sharing
+
+# Gitalk
+gitalk:
+    enable: true     # 是否开启评论功能
+    clientID: 76923e8af5c9ebe7c2b4    # 刚才生成的 Client ID
+    clientSecret: e833ce44377e12d08c5fba3def83e27d4ae4c03f    # Client Secret，同上
+    repo: blog-comment  # 刚才新建的用于保存评论的仓库名
+    owner: mo-xiaoxi # 这个项目的拥有者（填你的账户名）
+    admin: ['mo-xiaoxi'] # 管理员用户，可以填多个
+    ID: location.pathname   # 页面 ID默认值，用于生成的 Issues 的 Labels 的值
+    perPage: 15 # 每页最大评论数
+    pagerDirection: last    # 排序方式是从旧到新（first）还是从新到旧（last）
+    createIssueManually: true   #如果当前页面没有相应的 isssue ，且登录的用户属于 admin，则会自动创建 issue。如果设置为 true，则显示一个初始化页面，创建 issue 需要点击 init 按钮。
+    distractionFreeMode: false  #是否启用快捷键(cmd|ctrl + enter) 提交评论.
 
 
 
