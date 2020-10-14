@@ -47,7 +47,7 @@ kramdown:
 
 
 # Disqus settings
-# disqus_username: httpmomomoxiaoxicom
+disqus_username: httpmomomoxiaoxicom
 
 # Duoshuo settings 多说关闭 换用disqus
 # duoshuo_username: momomoxiaoxi
