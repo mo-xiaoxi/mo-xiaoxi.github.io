@@ -79,7 +79,7 @@ tags:
    - 隐藏数据的鲁棒性较差。   
 3. 分类
 
-![image](https://momomoxiaoxi.com/img/post/shuziyincang.png)
+![image](https://moxiaoxi.info/img/post/shuziyincang.png)
 
 ----
 
@@ -338,7 +338,7 @@ SQL注入是一种利用用户输入构造SQL语句的攻击。
 
 ## 蠕虫
 计算机蠕虫是指一种利用安全漏洞，在网络中主动传 播，并造成信息泄漏、系统破坏或拒绝服务等后果的 有害程序。
-![image](https://momomoxiaoxi.com/img/post/ruchongyubingdu.png)
+![image](https://moxiaoxi.info/img/post/ruchongyubingdu.png)
 
 -------
 

@@ -150,7 +150,7 @@ var_dump(in_array("1bc", $array2));
 
 对于上面的语句，如果$array1=array(0),$array2=array(1),语句会返回true
 
-![image](https://momomoxiaoxi.com/img/post/weak1.png)
+![image](https://moxiaoxi.info/img/post/weak1.png)
 
 同理，array_search也是一样的道理
 

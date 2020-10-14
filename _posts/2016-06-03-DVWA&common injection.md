@@ -47,7 +47,7 @@ excerpt: 基于DVWA学习SQL注入
 
 -  这里只需要输入&& 隔开即可或者；
 
-   ![image](https://momomoxiaoxi.com/img/post/DVWA/9.png)
+   ![image](https://moxiaoxi.info/img/post/DVWA/9.png)
 
 
 ## Medium
@@ -90,7 +90,7 @@ excerpt: 基于DVWA学习SQL注入
 
 - 这里过滤了&&，；  但是，我们还有一种方式绕过 通过 ｜ 或者｜｜
 
-![image](momomoxiaoxi.com/img/post/DVWA/10.png)
+![image](moxiaoxi.info/img/post/DVWA/10.png)
 
 ## High
 
