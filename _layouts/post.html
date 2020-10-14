@@ -275,14 +275,14 @@ layout: default
 
 <script type="text/javascript">
     var gitalk = new Gitalk({
-      clientID: '<%= theme.gitalk.clientID %>',
-      clientSecret: '<%= theme.gitalk.clientSecret %>',
-      repo: '<%= theme.gitalk.repo %>',
-      owner: '<%= theme.gitalk.owner %>',
-      admin: '<%= theme.gitalk.admin %>',
+      clientID: '{{site.gitalk.clientID}}',
+      clientSecret: '{{site.gitalk.clientSecret}}',
+      repo: '{{site.gitalk.repo}}',
+      owner: '{{site.gitalk.owner}}',
+      admin: '{{site.gitalk.admin}}',
       id: md5(location.pathname),   // 这里需要注意！稍后会说
-      createIssueManually: '<%= site.gitalk.createIssueManually %>',
-      distractionFreeMode: '<%= site.gitalk.distractionFreeMode %>'
+      createIssueManually: '{{site.gitalk.createIssueManually}}',
+      distractionFreeMode: '{{site.gitalk.distractionFreeMode}}'
     });
 
     gitalk.render('gitalk-container');
