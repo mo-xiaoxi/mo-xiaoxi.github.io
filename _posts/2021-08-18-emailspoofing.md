@@ -1,0 +1,122 @@
+---
+layout: post
+title: 眼见不一定为实：对电子邮件伪造攻击的大规模分析
+subtitle: Weak Links in Authentication Chains- A Large-scale Analysis of Email Sender Spoofing Attacks
+category: 邮件安全
+catalog: true
+excerpt: 邮件发件人地址伪造, 邮件安全
+time: 2021.08.18 11:25:00
+tags:
+- 邮件安全
+- 邮件发件人地址伪造
+
+---
+## 引言
+
+作为互联网上部署、应用最广泛的基础通信服务，电子邮件服务在企业和个人通信中都扮演着举足轻重的角色。基于电子邮件伪造攻击的钓鱼欺诈、勒索软件和病毒木马已成为当前威胁互联网安全最严重的攻击，并给相关企业和个人造成了重大财产损失。虽然不断有新的安全机制被引入来保护电子邮件的安全性（如发件人策略框架（SPF）、域名密钥识别标准（DKIM）和基于域的消息验证、报告和一致性（DMARC）等安全扩展协议），但是基于电子邮件伪造的攻击依然屡禁不止。
+为了找到目前邮件伪造攻击频发的原因，并从根源上提高电子邮件系统的安全性，该研究基于电子邮件传输过程对电子邮件伪造问题进行了系统性的实证研究。该研究共发现14种可绕过SPF、DKIM、DMARC以及UI保护机制的电子邮件伪造攻击方法。为了测量这些攻击在现实中的实际影响，该研究针对全球30家主流邮件和23个邮件客户端进行大规模实验与分析。实验结果表明这些主流邮件服务和客户端均受到了不同程度的影响，其中甚至包括Gmail、Outlook等知名邮件服务商。
+
+<img src="https://lh6.googleusercontent.com/PKyNYUIchl4T_WCRszDUXYQHe6eBDnTTzN70gUn87s5tDaaX4MyjXJJIGlSRuGM8Smu4p1CYDUQh6M5GY6BY6Ufhq0aXZvGJZOLm_L6PYi-TbHt6KY8ZwRBX0pR4skJgTYaFT8Q7" alt="img" style="zoom:60%;"/>
+
+<center>图1：邮件伪造攻击效果图</center>
+
+这一研究成果发表于网络安全领域顶级会议USENIX Security 2021上。
+
+- 论文题目：Weak Links in Authentication Chains: A Large-scale Analysis of Email Sender Spoofing Attacks（本文已被USENIX Security 2021录用）
+
+- 论文作者：沈凯文, 王楚涵(并列一作), 郭明磊, 郑晓峰, 陆超逸, 刘保君, 赵宇轩, 郝双, 段海新, 潘庆丰, 杨珉
+
+- 作者单位：清华大学，奇安信技术研究院，德州大学，复旦大学，Coremail论客技术有限公司
+
+- 论文下载：https://www.usenix.org/conference/usenixsecurity21/presentation/shen-kaiwen
+
+  
+
+## 研究背景
+
+### 电子邮件传递过程
+
+图 2展示了基本的电子邮件传递过程。发件人发送的电子邮件通过SMTP/HTTP协议从邮件用户代理（MUA）传输到邮件传输代理（MTA）。然后，发送方的MTA通过SMTP协议将邮件发送到接收方的MTA。接收方MUA通过HTTP、IMAP或者POP3协议，从接收方MTA获取电子邮件内容。 此外，当接收方配置了邮件自动转发时，接收方所在的电子邮件服务器会充当邮件中继将邮件进行转发。
+
+
+
+<img src="https://lh5.googleusercontent.com/l41kecBy4RQN0egfKr9JIP0SgibtHTenmHJuooE0XCn4xei9M70SEShmIKlzKOJOkn8ahFPGp3v6eWtWAaWc_EF622pznJfdtNC0w5QJ0tsAD9YzxDC4y98fiQ_HLjRnr-ipmxDb" alt="img" style="zoom:50%;" />
+
+<center>图 2：电子邮件传递过程</center>
+
+
+
+如上图所示，我们从电子邮件传输过程中提炼出四个重要的身份验证阶段：
+
+- **邮件发送验证阶段：** 发件人通过SMTP协议从MUA发送电子邮件时，发件者需要输入其用户名以及密码进行身份验证。在该过程中，发件方的MTA不仅需要验证用户的身份，还需要确保发送电子邮件中的Mail From与登陆的用户一致。
+- **邮件接收验证阶段：**收件方的MTA接收到邮件后，MTA将通过SPF、DKIM、DMARC协议校验结果来验证电子邮件发件人的真实性。
+- **邮件转发验证阶段：**当转发服务器自动转发电子邮件时，转发服务器应确保该邮件中发件人的真实性。转发者不应对未经验证的电子邮件提供额外担保，比如对未通过DKIM验证的电子邮件主动添加转发域自身的DKIM签名。
+- **邮件UI渲染阶段：**该阶段通常由邮件客户端实现，将邮件内容渲染为用户友好的显示界面。然而，大多数的电子邮件客户端不会向用户显示电子邮件的身份校验结果。此外，某些特殊字符、编码格式都有可能影响客户端对发件人地址的正确显示。
+
+### **现有的电子邮件安全拓展协议**
+
+目前，最流行的邮件安全扩展协议主要有SPF、DKIM 与 DMARC。
+
+- **SPF协议：** SPF协议是基于IP的身份验证协议。 收件人可以通过查询发件人邮箱域名的SPF记录（一组IP列表，由TXT类型的DNS记录标示）以及发件人IP来确定电子邮件是否来自真实的电子邮件域名。
+- **DKIM协议：**DKIM协议是基于数字签名的身份验证协议。基于非对称密钥加密算法，DKIM可以让发件人将数字签名添加到电子邮件的标头中，来确保电子邮件不被修改或者伪造。接收方可以通过查询邮件域名下的DNS记录获得DKIM公钥并对邮件进行验证。
+- **DMARC协议：** DMARC协议是基于SPF和DKIM验证结果的身份验证机制。它引入了身份标识符对齐检查和报告反馈机制，用以保护域名免受电子邮件伪造攻击的影响。
+
+### 主要发现
+
+该研究系统性地分析了电子邮件传递过程中涉及到身份验证的四个关键阶段：邮件发送验证阶段，邮件接收验证阶段，邮件转发验证阶段以及邮件UI渲染阶段。我们发现在这四个阶段均存在由协议设计或实现上的缺陷而引入的安全问题。**我们共发现了14种可分别绕过SPF、DKIM、DMARC或UI保护机制的邮件伪造攻击，其中9种为我们提出的新型攻击。**如图2所示，我们将这14种攻击方法归纳成了三种攻击模型：a. Shared MTA Attack. b. Direct MTA Attack. c. Forward MTA Attack. 
+
+<img src="https://lh5.googleusercontent.com/pwjHoqXOjvl-UgkE7PXP-LJQ5bdHgCpjBsVdXchJAoh6Sdejzs0-Drvzi0ujEUnitIRrxVoLqDv0jC1t4cNPSqLaNyWFH9eLdPp8821AKAkuoLw0ovkMDnYCB-fNk2f9hiFpHO6J" alt="img" style="zoom: 33%;" />
+
+<center>图 3： 三种攻击模型</center>
+
+
+
+<img src="https://lh6.googleusercontent.com/oU7THGjWCeUS1cVWImWRe784sK8Nh3RdSZMyyGsuCt-5t4z_kvhbUmLdqNRKdlsIjUplEhRdHAw-Jd4Zkd4oXVxMs2cOHkVa1mYqGNE8tT8txiN6DvAmgu8AqpMmzVFgmdpoDLyY" alt="img" style="zoom:33%;" />
+
+<center>表 1：14种邮件伪造攻击方法</center>
+
+在现实攻击过程中，攻击者还可以通过组合不同的攻击技巧来使得攻击更通用。攻击者可以通过组合攻击的方式构建出能够通过三个邮件安全协议（SPF、DKIM、DMARC）验证的伪造邮件。图3展示了一封来自与admin@aliyun.com发往victim@gmail.com的伪造邮件，并且该邮件可以通过Gmail的SPF、DKIM、DMARC验证。
+
+<img src="https://lh6.googleusercontent.com/lnSkrV6L1uQ1dlERg21ttP__8SJ5aOYhhYG1Oqh09w4iGZlh65DSp7H1JVRZx0D-fJKnlkGrJce1zhVLaOZqiLG8HLmcg99NrcmCut4bjE7rgUWsjw5lc4Y_emTH5pTXtbTjheSq" alt="img" style="zoom: 33%;" />
+
+<center>图 4 一封组合攻击伪造邮件示例</center>
+
+图4中的攻击是通过组合A2、A3、A10三种不同的伪造攻击技巧，同时结合了Direct MTA Attack、Forward MTA Attack两种攻击模型实现的，具体的攻击实现细节如图5所示。
+
+<img src="https://lh6.googleusercontent.com/CkyWWk5tRbAGRuR4-pW3WKl5joEvDv34h0pQEYGEOReBq5h0OvrhCPZtJZK-gK4LtidjYuFK8fwYhkZuPgY8xhvgufRznas_KfXizcGkz52u2QujrWltpV9srsya7_h2ndoQv9bD" alt="img" style="zoom:33%;" />
+
+<center>图 5： 伪造来自admin@aliyun.com发往victim@gmail.com的组合攻击</center>
+
+为了评估这些攻击方法对现实邮件生态系统的影响，我们对世界上最流行的30家邮件服务提供商以及23个电子邮件客户端进行了测量。测量结果非常令人惊讶，几乎所有的邮件服务都受到这些攻击的影响。我们已将发现的漏洞汇报给相关的厂商，并协助他们进行了修复。此外，我们还提出了多项缓解措施来应对这些攻击。同时，我们也在Github上开源了相关的测试工具，供邮件管理员评估和增强其邮件系统的安全
+
+性。
+
+<img src="https://lh3.googleusercontent.com/XIyIQBWYUTMwhoMky5NoutCCyP9_uLzxMQWOfKgg5WWmRps77pwTwB1fQCJWoRQjaJ-LlF_lvXuydzJ5cqzRKo4_SjSsluMu7HwlVJ-vm_tnpre6obhXm2sGS00TrGwFPnzKWZII" alt="img" style="zoom:50%;" />
+
+<center>表 2： 对30个流行电子邮件服务的测量结果</center>
+
+
+
+<img src="https://lh3.googleusercontent.com/MSwzmMDmQ1cMAAhHhafkQYkwVrrZ5haby4udq5c1kYbfZijeEQJAgQbWXjRCf8bV-fPRCKu0CH04nCGH0LHOhvJerY6hp0IjVWkJ0uPM3fAmy0JjT1MzoNBbQqHVMiH_L57CBzm3" alt="img" style="zoom:50%;" />
+
+<center>表 3： 对23个流行电子邮件客户端的测量结果</center>
+
+### 原因剖析
+
+这项研究发现电子邮件系统中的身份验证机制是一个由多个协议、不同的身份角色和邮件服务共同维护的身份验证链，同时揭示了这类基于多方的验证链结构的脆弱性。正如“木桶定律”，一个木桶的最大容量取决于其最短的那根木板。**电子邮件身份验证链需要多个协议、不同的身份角色和邮件服务相互配合，其中的任何一个环节存在安全问题都有可能破坏整个身份验证链的防御机制。**
+
+首先，在协议层面，SMTP协议设计了多个包含发件人身份信息的字段（Auth username, MAIL From, From, Sender）。这些字段的不一致为电子邮件伪造攻击提供了基础。 此外，如图6所示，邮件身份验证的安全性需要由SPF、DKIM、DMARC三个协议共同维护。然而，这三类协议具体保护的实体（字段）却并不一致。攻击者可以利用这些不一致通过构造具有歧义的邮件协议数据绕过SPF、DKIM、DMARC的验证机制，从而成功进行伪造电子邮件攻击。
+
+<img src="https://lh6.googleusercontent.com/azwpA0CwoE_e3HQgf4xeDTSiTz6eP-nUX5k5kRtH5uc4NZ0PscyKprx3_xfjt5JFPOKJvhbwvqGt3BuzEb7QKysQ5Fj2rZuqYlcTotFZOZ8re_zjsU8RClxa3MP_2Lm3T4vaEthY" alt="img" style="zoom:50%;" />
+
+<center>图 6: SPF、DKIM、DMARC分别从不同维度进行邮件身份验证</center>
+
+其次，考虑邮件身份验证链中涉及的四个重要角色：发送者、接收者、转发者以及UI渲染者。在该模型下，每个角色均需承担不同的安全职责。如果任一角色没有提供适当的安全防御解决措施，则整体邮件的真实性便无法保障。比如不同邮件服务的安全策略实施侧重点不同，有些邮件服务(A)侧重于在发送端实施严格的安全验证机制，而在接收方实行相对宽松的准入机制；而有些邮件服务(B)侧重在接收方进行严格的安全验证机制，但在发送时的检查就相对宽松。这导致攻击者可以很容易地从B邮件发送具有歧义的伪造邮件进入A邮件服务。最后，不同电子邮件服务对安全协议的实现往往不同，而且有些实现会在一定程度上违反RFC规定。因此，在处理带有歧义数据的电子邮件（如多个From头部)时，不同的邮件服务大概率会存在不一致的语义理解。这些不一致的缺陷最终也将导致邮件伪造攻击的形成。
+
+###  总结
+
+该研究证明了电子邮件生态中这种基于链结构的身份验证机制的脆弱性。在整个研究过程中，该研究共发现了14种不同的邮件伪造攻击技巧。此外，该研究还对30种流行的电子邮件服务和23个电子邮件客户端进行了大规模测量与分析。结果表明，目前主流的邮件服务均容易被相关的攻击影响。依据这些发现，该研究深入剖析了邮件伪造攻击频发且难以治理的根本原因之一：多方对安全机制理解和实现之间的不一致。我们希望这项工作能帮助电子邮件行业更有效地保护用户，减小邮件伪造攻击的危害，并切实提高电子邮件生态系统的整体安全性。
+限于篇幅，这里只对此项研究进行了简单介绍。
+
+对这项工作感兴趣的读者，可移步阅读完整论文：https://www.usenix.org/conference/usenixsecurity21/presentation/shen-kaiwen
+
