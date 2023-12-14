@@ -103,18 +103,6 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "chiahao",
-        href: "http://chiahao.top/"
-    },{
-        title: "vancir",
-        href: "http://www.vancir.com/"
-    },{
-        title: "Randy",
-        href: "http://pengzhendong.cn"
-    },{
-        title: "louys",
-        href: "http://www.louys.net.cn"
-    },{
         title: "N1rv0us",
 ​        href: "https://n1rv0us.github.io/"
     },{
