@@ -18,7 +18,7 @@ Datacon-DNS方向题目一内测记录。
 
 ## 题目
 
-![1](https://moxiaoxi.info/img/post/datacon/11.png)
+![1](https://mo-xiaoxi.github.io/img/post/datacon/11.png)
 
 
 
@@ -38,7 +38,7 @@ Datacon-DNS方向题目一内测记录。
 
 ## 比赛结果
 
-![WX20190424-164412@2x](https://moxiaoxi.info/img/post/datacon/WX20190424-164412@2x.png)
+![WX20190424-164412@2x](https://mo-xiaoxi.github.io/img/post/datacon/WX20190424-164412@2x.png)
 
 
 
@@ -70,11 +70,11 @@ Datacon-DNS方向题目一内测记录。
 
    用于了解数据集，pcap切分、UDP、TCP比率、数据包占比、重传、DNS服务器IP、客户端IP等等
 
-   ![WX20190307-232432](https://moxiaoxi.info/img/post/datacon/WX20190307-232432.png)
+   ![WX20190307-232432](https://mo-xiaoxi.github.io/img/post/datacon/WX20190307-232432.png)
 
-   ![WX20190307-232627](https://moxiaoxi.info/img/post/datacon/WX20190307-232627.png)
+   ![WX20190307-232627](https://mo-xiaoxi.github.io/img/post/datacon/WX20190307-232627.png)
 
-   ![WX20190307-232714](https://moxiaoxi.info/img/post/datacon/WX20190307-232714.png)
+   ![WX20190307-232714](https://mo-xiaoxi.github.io/img/post/datacon/WX20190307-232714.png)
 
 2. 4-8小时小时（学习Tshark、snort、suricata 规则，并对snort、suricata进行简单魔改，以达到适应该场景的需求）。
 
@@ -147,7 +147,7 @@ Datacon-DNS方向题目一内测记录。
 
      确实存在攻击
 
-     ![1](https://moxiaoxi.info/img/post/datacon/1.png)
+     ![1](https://mo-xiaoxi.github.io/img/post/datacon/1.png)
 
   2. 调整过滤规则,取更详细数据
 
@@ -205,7 +205,7 @@ Datacon-DNS方向题目一内测记录。
 >
 > 攻击由suricata检测出来，警报如下：
 >
-> ![WX20190309-142649](https://moxiaoxi.info/img/post/datacon/WX20190309-142649.png)
+> ![WX20190309-142649](https://mo-xiaoxi.github.io/img/post/datacon/WX20190309-142649.png)
 >
 > alert udp $EXTERNAL_NET any -> $HOME_NET 53 (msg:"ET POLICY DNS Update From External net"; byte_test:1,!&,128,2; byte_test:1,!&,6      4,2; byte_test:1,&,32,2; byte_test:1,!&,16,2; byte_test:1,&,8,2; reference:url,doc.emergingthreats.net/2009702; classtype:policy-      violation; sid:2009702; rev:5; metadata:created_at 2010_07_30, updated_at 2010_07_30;)
 
@@ -253,7 +253,7 @@ Datacon-DNS方向题目一内测记录。
 
 - 检测结果：
 
-  ![WX20190309-212125](https://moxiaoxi.info/img/post/datacon/WX20190309-212125.png)
+  ![WX20190309-212125](https://mo-xiaoxi.github.io/img/post/datacon/WX20190309-212125.png)
 
   检测出结果：
 
@@ -299,7 +299,7 @@ Datacon-DNS方向题目一内测记录。
 
 > 给答案之前没发现的类型。
 
-- 这个攻击可以参考之前写的博客：https://moxiaoxi.info/2017/11/05/EISCTF/#214--nsec%E8%AE%B0%E5%BD%95
+- 这个攻击可以参考之前写的博客：https://mo-xiaoxi.github.io/2017/11/05/EISCTF/#214--nsec%E8%AE%B0%E5%BD%95
 
   简单来讲，就是攻击者利用NSEC能获得下一条数据的信息，来重复获取下一个dns记录，从而达到泄漏的作用。
 

@@ -16,7 +16,7 @@ tags:
 作为互联网上部署、应用最广泛的基础通信服务，电子邮件服务在企业和个人通信中都扮演着举足轻重的角色。基于电子邮件伪造攻击的钓鱼欺诈、勒索软件和病毒木马已成为当前威胁互联网安全最严重的攻击，并给相关企业和个人造成了重大财产损失。虽然不断有新的安全机制被引入来保护电子邮件的安全性（如发件人策略框架（SPF）、域名密钥识别标准（DKIM）和基于域的消息验证、报告和一致性（DMARC）等安全扩展协议），但是基于电子邮件伪造的攻击依然屡禁不止。
 为了找到目前邮件伪造攻击频发的原因，并从根源上提高电子邮件系统的安全性，该研究基于电子邮件传输过程对电子邮件伪造问题进行了系统性的实证研究。该研究共发现14种可绕过SPF、DKIM、DMARC以及UI保护机制的电子邮件伪造攻击方法。为了测量这些攻击在现实中的实际影响，该研究针对全球30家主流邮件和23个邮件客户端进行大规模实验与分析。实验结果表明这些主流邮件服务和客户端均受到了不同程度的影响，其中甚至包括Gmail、Outlook等知名邮件服务商。
 
-<img src="https://moxiaoxi.info/img/post/email/0.png" alt="img" style="zoom:60%;"/>
+<img src="https://mo-xiaoxi.github.io/img/post/email/0.png" alt="img" style="zoom:60%;"/>
 
 <center>图1：邮件伪造攻击效果图</center>
 
@@ -40,7 +40,7 @@ tags:
 
 
 
-<img src="https://moxiaoxi.info/img/post/email/1.png" alt="img" style="zoom:50%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/1.png" alt="img" style="zoom:50%;" />
 
 <center>图 2：电子邮件传递过程</center>
 
@@ -65,25 +65,25 @@ tags:
 
 该研究系统性地分析了电子邮件传递过程中涉及到身份验证的四个关键阶段：邮件发送验证阶段，邮件接收验证阶段，邮件转发验证阶段以及邮件UI渲染阶段。我们发现在这四个阶段均存在由协议设计或实现上的缺陷而引入的安全问题。**我们共发现了14种可分别绕过SPF、DKIM、DMARC或UI保护机制的邮件伪造攻击，其中9种为我们提出的新型攻击。**如图2所示，我们将这14种攻击方法归纳成了三种攻击模型：a. Shared MTA Attack. b. Direct MTA Attack. c. Forward MTA Attack. 
 
-<img src="https://moxiaoxi.info/img/post/email/2.png" alt="img" style="zoom: 33%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/2.png" alt="img" style="zoom: 33%;" />
 
 <center>图 3： 三种攻击模型</center>
 
 
 
-<img src="https://moxiaoxi.info/img/post/email/3.png" alt="img" style="zoom:33%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/3.png" alt="img" style="zoom:33%;" />
 
 <center>表 1：14种邮件伪造攻击方法</center>
 
 在现实攻击过程中，攻击者还可以通过组合不同的攻击技巧来使得攻击更通用。攻击者可以通过组合攻击的方式构建出能够通过三个邮件安全协议（SPF、DKIM、DMARC）验证的伪造邮件。图3展示了一封来自与admin@aliyun.com发往victim@gmail.com的伪造邮件，并且该邮件可以通过Gmail的SPF、DKIM、DMARC验证。
 
-<img src="https://moxiaoxi.info/img/post/email/4.png" alt="img" style="zoom: 25%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/4.png" alt="img" style="zoom: 25%;" />
 
 <center>图 4 一封组合攻击伪造邮件示例</center>
 
 图4中的攻击是通过组合A2、A3、A10三种不同的伪造攻击技巧，同时结合了Direct MTA Attack、Forward MTA Attack两种攻击模型实现的，具体的攻击实现细节如图5所示。
 
-<img src="https://moxiaoxi.info/img/post/email/5.png" alt="img" style="zoom:33%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/5.png" alt="img" style="zoom:33%;" />
 
 <center>图 5： 伪造来自admin@aliyun.com发往victim@gmail.com的组合攻击</center>
 
@@ -91,13 +91,13 @@ tags:
 
 性。
 
-<img src="https://moxiaoxi.info/img/post/email/6.png" alt="img" style="zoom:50%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/6.png" alt="img" style="zoom:50%;" />
 
 <center>表 2： 对30个流行电子邮件服务的测量结果</center>
 
 
 
-<img src="https://moxiaoxi.info/img/post/email/7.png" alt="img" style="zoom:50%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/7.png" alt="img" style="zoom:50%;" />
 
 <center>表 3： 对23个流行电子邮件客户端的测量结果</center>
 
@@ -107,7 +107,7 @@ tags:
 
 首先，在协议层面，SMTP协议设计了多个包含发件人身份信息的字段（Auth username, MAIL From, From, Sender）。这些字段的不一致为电子邮件伪造攻击提供了基础。 此外，如图6所示，邮件身份验证的安全性需要由SPF、DKIM、DMARC三个协议共同维护。然而，这三类协议具体保护的实体（字段）却并不一致。攻击者可以利用这些不一致通过构造具有歧义的邮件协议数据绕过SPF、DKIM、DMARC的验证机制，从而成功进行伪造电子邮件攻击。
 
-<img src="https://moxiaoxi.info/img/post/email/8.png" alt="img" style="zoom:50%;" />
+<img src="https://mo-xiaoxi.github.io/img/post/email/8.png" alt="img" style="zoom:50%;" />
 
 <center>图 6: SPF、DKIM、DMARC分别从不同维度进行邮件身份验证</center>
 

@@ -17,7 +17,7 @@ excerpt: Hack.lu CTF Web题解，共勉。
 
 ## Mistune
 
-![Markdownxss](https://moxiaoxi.info/img/post/hacklu/Markdownxss.png)
+![Markdownxss](https://mo-xiaoxi.github.io/img/post/hacklu/Markdownxss.png)
 
 这是一道Markdown的XSS题，题目中有一个测试页面用来测试具体输入输出，与此同时admin页面存在提示:
 
@@ -78,7 +78,7 @@ text=[a](data:text/html;base64,PHNjcmlwdD5hbGVydCgnWFNTJyk8L3NjcmlwdD4K)\&test=T
 
 绕过，获得cookie。
 
-![markdownxss_flag](https://moxiaoxi.info/img/post/hacklu/markdownxss_flag.png)
+![markdownxss_flag](https://mo-xiaoxi.github.io/img/post/hacklu/markdownxss_flag.png)
 
 
 
@@ -423,7 +423,7 @@ def test(s):
 
 登录，得到flag
 
-![flatscience](https://moxiaoxi.info/img/post/hacklu/flatscience.png)
+![flatscience](https://mo-xiaoxi.github.io/img/post/hacklu/flatscience.png)
 
 
 

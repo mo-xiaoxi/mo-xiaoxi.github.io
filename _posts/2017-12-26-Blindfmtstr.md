@@ -88,7 +88,7 @@ socat TCP4-LISTEN:10001,fork EXEC:./leakmemory
 
 ### 题目逻辑：
 
-![题目逻辑](https://moxiaoxi.info/img/post/Fmtstr/logic.png)
+![题目逻辑](https://mo-xiaoxi.github.io/img/post/Fmtstr/logic.png)
 
 这是一个简单的格式化字符串漏洞。
 
@@ -106,13 +106,13 @@ socat TCP4-LISTEN:10001,fork EXEC:./leakmemory
 
 接下来，我们进行分析测试。
 
-![1](https://moxiaoxi.info/img/post/Fmtstr/1.png)
+![1](https://mo-xiaoxi.github.io/img/post/Fmtstr/1.png)
 
 测试出，偏移为7。这样我们就能得到payload: `addr + %7$s`, 返回值为`addr`指向的内存的字符串，直到`\0`为止.
 
 然而，如果此时addr中带有0x00会发生截断，因此我们修改payload为`%8$s+p32(0x8048000)`对应的堆栈图如下：
 
-![堆栈](https://moxiaoxi.info/img/post/Fmtstr/stack.png)
+![堆栈](https://mo-xiaoxi.github.io/img/post/Fmtstr/stack.png)
 
 
 
@@ -170,15 +170,15 @@ finally:
 
 内存数据dump下来后，虽然跟原始bin有很大不同，也运行不了，但是丢到ida中仍然是可以看的:
 
-![2](https://moxiaoxi.info/img/post/Fmtstr/2.png)
+![2](https://mo-xiaoxi.github.io/img/post/Fmtstr/2.png)
 
 > 注：这里由于是leak下来的二进制，没有偏移，我们需要手动rebase。
 >
-> ![rebase](https://moxiaoxi.info/img/post/Fmtstr/rebase.png)
+> ![rebase](https://mo-xiaoxi.github.io/img/post/Fmtstr/rebase.png)
 
 得到printf@plt地址：
 
-![printf](https://moxiaoxi.info/img/post/Fmtstr/printf.png)
+![printf](https://mo-xiaoxi.github.io/img/post/Fmtstr/printf.png)
 
 接下来就是覆盖got表并获取shell的流程是（以覆盖printf的got表为例）：
 
@@ -248,7 +248,7 @@ p.interactive()
 
 ```
 
-![3](https://moxiaoxi.info/img/post/Fmtstr/3.png)
+![3](https://mo-xiaoxi.github.io/img/post/Fmtstr/3.png)
 
 #### 远程EXP：
 
@@ -261,7 +261,7 @@ p.interactive()
 
 具体过程如下：
 
-![getlibc](https://moxiaoxi.info/img/post/Fmtstr/getlibc.png)
+![getlibc](https://mo-xiaoxi.github.io/img/post/Fmtstr/getlibc.png)
 
 这样我们就获取到了对应的偏移地址，就可以撰写最终的EXP了：
 ```python
@@ -310,7 +310,7 @@ r.interactive()
 
 
 
-![exp_remote](https://moxiaoxi.info/img/post/Fmtstr/exp_remote.png)
+![exp_remote](https://mo-xiaoxi.github.io/img/post/Fmtstr/exp_remote.png)
 
 
 

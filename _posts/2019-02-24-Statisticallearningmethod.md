@@ -15,9 +15,9 @@ tags:
 
 ## 统计学习方法相关基础
 
-![5](https://moxiaoxi.info/img/post/machinelearning/5.png)
+![5](https://mo-xiaoxi.github.io/img/post/machinelearning/5.png)
 
-![6](https://moxiaoxi.info/img/post/machinelearning/6.png)
+![6](https://mo-xiaoxi.github.io/img/post/machinelearning/6.png)
 
 - 关于数据的基本假设:同类数据具有一定的统计规律性.
 
@@ -130,7 +130,7 @@ tags:
 
 ## 感知机模型
 
-![1](https://moxiaoxi.info/img/post/machinelearning/1.png)
+![1](https://mo-xiaoxi.github.io/img/post/machinelearning/1.png)
 
 - 感知机(perceptron)是二类分类的线性分类模型，其输入为实例的特征向量，输出为实例的类别。
 
@@ -156,7 +156,7 @@ tags:
 
 ## K近邻法
 
-![2](https://moxiaoxi.info/img/post/machinelearning/2.png)
+![2](https://mo-xiaoxi.github.io/img/post/machinelearning/2.png)
 
 
 
@@ -164,7 +164,7 @@ tags:
 
 - K近邻算法，即是给定一个训练数据集，对新的输入实例，在训练数据集中找到与该实例**最邻近**的K个实例，**这K个实例的多数属于某个类**，就把该输入实例分类到这个类中。（**这就类似于现实生活中少数服从多数的思想**）更规范来讲,给定一个训练数据集,对新的输入实例,在训练数据集中找到于该实例最邻近的k个实例,这k个实例的多数属于某个类,就把该输入实例分为这个类.
 
-  ![3](https://moxiaoxi.info/img/post/machinelearning/3.png)
+  ![3](https://mo-xiaoxi.github.io/img/post/machinelearning/3.png)
 
   如上图所示，有两类不同的样本数据，分别用蓝色的小正方形和红色的小三角形表示，而图正中间的那个绿色的圆所标示的数据则是待分类的数据。这也就是我们的目的，来了一个新的数据点，我要得到它的类别是什么？好的，下面我们根据k近邻的思想来给绿色圆点进行分类。
 
@@ -189,7 +189,7 @@ tags:
 
 ## 朴素贝叶斯
 
-![7](https://moxiaoxi.info/img/post/machinelearning/7.png)
+![7](https://mo-xiaoxi.github.io/img/post/machinelearning/7.png)
 
 - 朴素贝叶斯法是基于贝叶斯定理与特征条件独立假设的分类方法.对于给定的训练数据集,首先基于特征条件独立假设学习输入/输入的联合概率分布;然后,基于此模型,对给定的输入x,利用贝叶斯定理求出后验概率最大的输出y.
 - 朴素贝叶斯最大的假设便是对条件概率分布作了条件独立性的假设.这是一个较强的假设,因为在现实生活中,一般条件两则都不会相互独立.这也是朴素贝叶斯之所以朴素的原因.
@@ -250,7 +250,7 @@ tags:
 
 - boosting算法系列的基本思想:
 
-  ![8](https://moxiaoxi.info/img/post/machinelearning/8.png)
+  ![8](https://mo-xiaoxi.github.io/img/post/machinelearning/8.png)
 
   Boosting算法的工作机制是首先从训练集用初始权重训练出一个弱学习器1，根据弱学习的学习误差率表现来更新训练样本的权重，使得之前弱学习器1学习误差率高的训练样本点的权重变高，使得这些误差率高的点在后面的弱学习器2中得到更多的重视。然后基于调整权重后的训练集来训练弱学习器2.，如此重复进行，直到弱学习器数达到事先指定的数目T，最终将这T个弱学习器通过集合策略进行整合，得到最终的强学习器。　　
 
@@ -308,7 +308,7 @@ tags:
 
 
 
-![9](https://moxiaoxi.info/img/post/machinelearning/9.png)
+![9](https://mo-xiaoxi.github.io/img/post/machinelearning/9.png)
 
 - 适用问题
 
@@ -340,15 +340,15 @@ tags:
 
   在二类分类的监督学习中，支持向量机、逻辑斯谛回归与最大熵模型、提升方法各自使用**合页损失函数、逻辑斯谛损失函数、指数损失函数**，分别写为
 
-  ![10](https://moxiaoxi.info/img/post/machinelearning/10.png)
+  ![10](https://mo-xiaoxi.github.io/img/post/machinelearning/10.png)
 
   这3种损失函数都是0-1损失函数的上界，具有相似的形状。
 
-  ![11](https://moxiaoxi.info/img/post/machinelearning/11.png)
+  ![11](https://mo-xiaoxi.github.io/img/post/machinelearning/11.png)
 
   从上图可以认为支持向量机、逻辑斯谛回归与最大熵模型、提升方法使用不同的代理损失函数(surrogateloas Punotion)表示分类的损失，定义经验风险或结构风险函数，实现二类分类学习任务。学习的策略是优化以下结构风险函数
 
-  ![12](https://moxiaoxi.info/img/post/machinelearning/12.png)
+  ![12](https://mo-xiaoxi.github.io/img/post/machinelearning/12.png)
 
   第1项为经验风险(经验损失)，第2项为正则化项，L为损失函数，J(f)为模型的复杂度。
 

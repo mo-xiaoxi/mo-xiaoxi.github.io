@@ -140,7 +140,7 @@ Content-Type: text/html //被发送对象的类型
 
   3. 对FTP而言，控制连接贯穿整个用户会话期间而数据连接对于每一个文件传输都需要建立一条新的。并且FTP服务器必须在整个会话期间保留用户的状态，相比之下HTTP则是无状态的。
 
-  ![image](https://moxiaoxi.info/img/post/comNet/3.gif)
+  ![image](https://mo-xiaoxi.github.io/img/post/comNet/3.gif)
 
 ----
 
@@ -159,7 +159,7 @@ Content-Type: text/html //被发送对象的类型
 	SMTP 架起了A的服务器和B的服务器发送的流程（是一种推协议）。
 ​	
 
-![image](https://moxiaoxi.info/img/post/comNet/1.gif)
+![image](https://mo-xiaoxi.github.io/img/post/comNet/1.gif)
 
 
 #### c. SMTP协议和HTTP协议的比较
@@ -173,7 +173,7 @@ Content-Type: text/html //被发送对象的类型
 #### d.邮件访问协议（读取邮件：POP3，IMAP）
 
 - SMTP 是推协议。因此当邮件由A发送给B的代理服务器时，B的用户代理并不能通过SMTP来从其对应的服务器取回邮件。所以得借助 POP3/IMAP/基于Web的电子邮件这类拉协议来取回。
-  ![image](https://moxiaoxi.info/img/post/comNet/2.gif)
+  ![image](https://mo-xiaoxi.github.io/img/post/comNet/2.gif)
 - 邮件转发的原理：
 
   1. 首先用户是用用户代理(user agent，通常是outlook/apple mail再或者现在很多基于Web的邮箱如QQ邮箱)要发送一封邮件。

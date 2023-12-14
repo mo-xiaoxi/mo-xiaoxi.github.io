@@ -14,9 +14,9 @@ tags:
 
 CTF生涯的第一个国际赛冠军，Tea Deliverers tql！！！
 
-![TD](https://moxiaoxi.info/img/post/HITCON2019/TD.jpg)
+![TD](https://mo-xiaoxi.github.io/img/post/HITCON2019/TD.jpg)
 
-![WX20191217-231111@2x](https://moxiaoxi.info/img/post/HITCON2019/WX20191217-231111@2x.png)
+![WX20191217-231111@2x](https://mo-xiaoxi.github.io/img/post/HITCON2019/WX20191217-231111@2x.png)
 
 主办方组织得很好。HITCON比赛非常有趣，尤其那个魔性的一血音乐，超级洗脑。😂
 
@@ -26,9 +26,9 @@ KOH是一个股票题，杀猪盘炒股票。新型的Web打patch方式，也比
 
 比赛现场图：
 
-![9101576581720_.pic_hd](https://moxiaoxi.info/img/post/HITCON2019/9101576581720_pic_hd.jpg)
+![9101576581720_.pic_hd](https://mo-xiaoxi.github.io/img/post/HITCON2019/9101576581720_pic_hd.jpg)
 
-![9111576581721_.pic_hd](https://moxiaoxi.info/img/post/HITCON2019/9111576581721_pic_hd.jpg)
+![9111576581721_.pic_hd](https://mo-xiaoxi.github.io/img/post/HITCON2019/9111576581721_pic_hd.jpg)
 
 注：本博客仅放了三个题目的WP，具体的细节以及英文WP可以参考，Tea Deliverers的[Github](https://github.com/tea-deliverers/ctf-writeups/tree/master/hitcon2019-final)。
 
@@ -36,9 +36,9 @@ KOH是一个股票题，杀猪盘炒股票。新型的Web打patch方式，也比
 
 ## Market
 
-![market1](https://moxiaoxi.info/img/post/HITCON2019/market1.jpg)
+![market1](https://mo-xiaoxi.github.io/img/post/HITCON2019/market1.jpg)
 
-![market2](https://moxiaoxi.info/img/post/HITCON2019/market2.jpg)
+![market2](https://mo-xiaoxi.github.io/img/post/HITCON2019/market2.jpg)
 
 题干：
 
@@ -57,7 +57,7 @@ Please do not attack the service. Enjoy the market itself. If any unintended beh
 
 在第一天，kericwy和我在低价的位置大量收购了一波货币。后面，突然HXP、LCBC进行了拉盘，价格一度爆拉到1w多一枚币。这时候，我们趁机疯狂出货，赚的第一桶金，直接刷到750多万。事实证明，想要暴富还是得割韭菜。当然，你还需要一个手速贼快的神级股票交易员@kericwy。这个时候，我们已经拥有整个市场40%左右的资金了。
 
-![market3](https://moxiaoxi.info/img/post/HITCON2019/market3.png)
+![market3](https://mo-xiaoxi.github.io/img/post/HITCON2019/market3.png)
 
 这时候，我们准备学习庄家操盘手法，进行拉盘。尝试了几次，实在不会拉杀猪盘，非常尴尬。
 
@@ -302,7 +302,7 @@ if __name__ == "__main__":
 
 > 题目环境：[NoobieWeb](https://github.com/m0xiaoxi/CTF_Web_docker/tree/master/HITCON2019/noobieweb)
 
-![noobie_bank](https://moxiaoxi.info/img/post/HITCON2019/noobie_bank.png)
+![noobie_bank](https://mo-xiaoxi.github.io/img/post/HITCON2019/noobie_bank.png)
 
 这个题目是一个传统的PHP题目。我们可以通过预加载的方式，加载一个waf.php，用来进行防御。不过，值得注意的一点是，waf.php有长度限制，大约只能写10来行。另外，选手并没有服务器的权限，运维理论上只能靠waf.php。
 
@@ -458,7 +458,7 @@ def vulnerable_attack(target, target_port, cmd):
 
 因为特别难修，我们前期靠这个脚本长期收割全场。
 
-![1](https://moxiaoxi.info/img/post/HITCON2019/1.png)
+![1](https://mo-xiaoxi.github.io/img/post/HITCON2019/1.png)
 
 
 
@@ -1016,13 +1016,13 @@ enum Ord {
 
 流量如下：
 
-![9301576583757_.pic_hd](https://moxiaoxi.info/img/post/HITCON2019/9301576583757_pic_hd.jpg)
+![9301576583757_.pic_hd](https://mo-xiaoxi.github.io/img/post/HITCON2019/9301576583757_pic_hd.jpg)
 
 
 
 事后和hear7v讨论，他提起或许可以通过APP jar包调用的方式，进行调试这种无源码的jar文件。不过，因为这个jar代码进行了混淆，导致效果不是很好。
 
-![WechatIMG945](https://moxiaoxi.info/img/post/HITCON2019/WechatIMG945.jpeg)
+![WechatIMG945](https://mo-xiaoxi.github.io/img/post/HITCON2019/WechatIMG945.jpeg)
 
 ----
 
