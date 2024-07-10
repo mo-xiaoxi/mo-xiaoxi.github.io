@@ -1,0 +1,15 @@
+{
+  "name": "moxiaoxi",
+  "short_name": "moxiaoxi",
+  "description": "这里是小西的个人博客，与你一起发现更大的世界！",
+  "icons": [{
+    "src": "icons/128.png",
+    "sizes": "128x128",
+    "type": "image/png"
+  }],
+  "background_color": "#fff",
+  "theme_color": "#000",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "portrait"
+}
